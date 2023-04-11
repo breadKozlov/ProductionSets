@@ -16,14 +16,14 @@ public class WorkerDao implements Dao<Integer, Worker>{
     private static final WorkerDao INSTANCE = new WorkerDao();
 
     private static final String FIND_ALL = """
-            SELECT w.id,w.name_worker,w.surname_worker,w.speciality,w.rank,w.experience,
+            SELECT w.id,w.name_worker,w.surname_worker,w.speciality,w.rank,w.experience,w.brigade_number,
             b.name_of_brigade,b.phone_number_of_foreman
             FROM public.workers w
             LEFT JOIN public.brigades b on b.id = w.brigade_number
             """;
 
     private static final String UPDATE_SQL = """
-            UPDATE public.worker SET
+            UPDATE public.workers SET
             name_worker = ?,
             surname_worker = ?,
             speciality = ?,
@@ -126,7 +126,7 @@ public class WorkerDao implements Dao<Integer, Worker>{
 
     private Worker buildWorker(ResultSet result) throws SQLException {
 
-        var brigade = new Brigade(result.getInt("id"),
+        var brigade = new Brigade(result.getInt("brigade_number"),
                 result.getString("name_of_brigade"),
                 result.getString("phone_number_of_foreman"));
         return new Worker(result.getInt("id"),

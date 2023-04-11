@@ -12,6 +12,10 @@ public class JdbcRunner {
         var brigadeDao = BrigadeDao.getInstance();
         var workerDao = WorkerDao.getInstance();
         var setDao = SetDao.getInstance();
+        var productionDao = ProductionDao.getInstance();
+        var scheduleDao = ScheduleDao.getInstance();
+        var productionOfMaterialDao = ProductionOfMaterialDao.getInstance();
+        var requirementDao = RequirementDao.getInstance();
 
         System.out.println(materialDao.findAll());
         System.out.println(materialDao.findById(2));
@@ -22,6 +26,17 @@ public class JdbcRunner {
         System.out.println(shiftHourDao.findAll());
         System.out.println(setDao.findAll());
         System.out.println(setDao.findById(2));
+        System.out.println();
+        System.out.println(productionDao.findAll());
+        System.out.println("----------------");
+        System.out.println(productionDao.findById(5));
+        System.out.println("---------------");
+        System.out.println(scheduleDao.findAll());
+        System.out.println("---------------");
+        System.out.println(productionOfMaterialDao.findAll());
+        System.out.println("-------------------");
+        System.out.println(requirementDao.findAll());
+
 
     }
 }
