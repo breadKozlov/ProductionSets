@@ -5,6 +5,6 @@
 <title>Hello</title>
 </head>
 <body>
-<h2>Hello user</h2>
+<p><a href="./login">Hello, user</a></p>
 </body>
 </html>

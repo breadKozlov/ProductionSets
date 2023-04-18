@@ -3,8 +3,10 @@ package by.kozlov.jdbc.starter.service;
 import by.kozlov.jdbc.starter.dao.BrigadeDao;
 import by.kozlov.jdbc.starter.dao.WorkerDao;
 import by.kozlov.jdbc.starter.dto.WorkerDto;
+import by.kozlov.jdbc.starter.entity.Worker;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class WorkerService {
@@ -26,6 +28,22 @@ public class WorkerService {
                         )
                 )
         ).collect(Collectors.toList());
+    }
+
+    public Optional<WorkerDto> findByEmail(String email) {
+
+        return workerDao.findByEmail(email).map(
+                worker -> new WorkerDto(
+                        worker.getId(),
+                        """
+                        %s - %s - %s
+                        """.formatted(
+                                worker.getNameOfWorker(),
+                                worker.getSurnameOfWorker(),
+                                worker.getBrigade().getNameOfBrigade()
+                        )
+                )
+        );
     }
 
     public List<WorkerDto> findAll() {

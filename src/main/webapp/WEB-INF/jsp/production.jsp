@@ -7,7 +7,7 @@
 <body>
 <%@ include file="header.jsp"%>
 
-<h1>Sets: </h1>
+<h1>Released sets: </h1>
 <ul>
     <c:if test="${not empty requestScope.sets}">
         <c:forEach var="set" items="${requestScope.sets}">

@@ -18,9 +18,12 @@ public class RoleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        var role = ((UserDto) req.getSession().getAttribute("user")).getRole().name();
+        var user = ((UserDto) req.getSession().getAttribute("user"));
+        var role = user.getRole().name();
         if ("ADMIN".equals(role)) {
-
+                onRoleAdmin(user,req,resp);
+        } else {
+            onRoleUser(user,req,resp);
         }
 
     }
@@ -28,10 +31,12 @@ public class RoleServlet extends HttpServlet {
     @SneakyThrows
     private void onRoleUser(UserDto user, HttpServletRequest req, HttpServletResponse resp) {
 
+        resp.sendRedirect("./user");
     }
 
     @SneakyThrows
     private void onRoleAdmin(UserDto user, HttpServletRequest req, HttpServletResponse resp) {
 
+        resp.sendRedirect("./admin");
     }
 }

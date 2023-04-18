@@ -9,12 +9,13 @@ public class Worker {
     private Integer rank;
     private Integer experience;
     private Brigade brigade;
+    private String email;
 
     public Worker() {
     }
 
     public Worker(Integer id, String nameOfWorker, String surnameOfWorker,
-                  String speciality, Integer rank, Integer experience, Brigade brigade) {
+                  String speciality, Integer rank, Integer experience, Brigade brigade, String email) {
         this.id = id;
         this.nameOfWorker = nameOfWorker;
         this.surnameOfWorker = surnameOfWorker;
@@ -22,6 +23,7 @@ public class Worker {
         this.rank = rank;
         this.experience = experience;
         this.brigade = brigade;
+        this.email = email;
     }
 
     public Worker(String nameOfWorker, String surnameOfWorker,
@@ -90,6 +92,14 @@ public class Worker {
         this.brigade = brigade;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         return "Worker{" +
@@ -100,6 +110,7 @@ public class Worker {
                 ", rank=" + rank +
                 ", experience=" + experience +
                 ", brigade=" + brigade +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

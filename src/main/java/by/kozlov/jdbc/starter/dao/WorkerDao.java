@@ -16,7 +16,7 @@ public class WorkerDao implements Dao<Integer, Worker>{
     private static final WorkerDao INSTANCE = new WorkerDao();
 
     private static final String FIND_ALL = """
-            SELECT w.id,w.name_worker,w.surname_worker,w.speciality,w.rank,w.experience,w.brigade_number,
+            SELECT w.id,w.name_worker,w.surname_worker,w.speciality,w.rank,w.experience,w.brigade_number,w.email,
             b.name_of_brigade,b.phone_number_of_foreman
             FROM public.workers w
             LEFT JOIN public.brigades b on b.id = w.brigade_number
@@ -28,12 +28,18 @@ public class WorkerDao implements Dao<Integer, Worker>{
             surname_worker = ?,
             speciality = ?,
             rank = ?,
-            experience = ?
+            experience = ?,
+            brigade_number = ?,
+            email = ?
             WHERE id = ?
             """;
 
     private static final String FIND_BY_ID = FIND_ALL + """
             WHERE w.id = ?
+            """;
+
+    private static final String FIND_BY_EMAIL = FIND_ALL + """
+            WHERE w.email = ?
             """;
 
     private static final String DELETE_SQL = """
@@ -42,8 +48,8 @@ public class WorkerDao implements Dao<Integer, Worker>{
             """;
 
     private static final String SAVE_SQL = """
-            INSERT INTO public.workers (name_worker,surname_worker,speciality,rank,experience,brigade_number) 
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO public.workers (name_worker,surname_worker,speciality,rank,experience,brigade_number,email) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)
             """;
     @Override
     public boolean update(Worker worker) {
@@ -55,7 +61,8 @@ public class WorkerDao implements Dao<Integer, Worker>{
             statement.setInt(4,worker.getRank());
             statement.setInt(5,worker.getExperience());
             statement.setInt(6,worker.getBrigade().getId());
-            statement.setInt(7,worker.getId());
+            statement.setString(7,worker.getEmail());
+            statement.setInt(8,worker.getId());
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
             throw new DaoException(ex);
@@ -68,6 +75,20 @@ public class WorkerDao implements Dao<Integer, Worker>{
              var statement = connection.prepareStatement(FIND_BY_ID)) {
             Worker worker = null;
             statement.setInt(1, id);
+            var result = statement.executeQuery();
+            if (result.next())
+                worker = buildWorker(result);
+            return Optional.ofNullable(worker);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    public Optional<Worker> findByEmail(String email) {
+        try (var connection = ConnectionManager.get();
+             var statement = connection.prepareStatement(FIND_BY_EMAIL)) {
+            Worker worker = null;
+            statement.setString(1, email);
             var result = statement.executeQuery();
             if (result.next())
                 worker = buildWorker(result);
@@ -114,6 +135,7 @@ public class WorkerDao implements Dao<Integer, Worker>{
             statement.setInt(4, worker.getRank());
             statement.setInt(5, worker.getExperience());
             statement.setInt(6, worker.getBrigade().getId());
+            statement.setString(7,worker.getEmail());
             statement.executeUpdate();
             var generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next())
@@ -135,7 +157,7 @@ public class WorkerDao implements Dao<Integer, Worker>{
                 result.getString("speciality"),
                 result.getInt("rank"),
                 result.getInt("experience"),
-                brigade);
+                brigade, result.getString("email"));
     }
 
     private WorkerDao() {}

@@ -10,8 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet("/workers")
-public class WorkerServlet extends HttpServlet {
+@WebServlet("/admin")
+public class AdminServlet extends HttpServlet {
 
     private static final WorkerService workerService = WorkerService.getInstance();
 
@@ -33,6 +33,5 @@ public class WorkerServlet extends HttpServlet {
             );
             writer.write("</ul>");
         }
-
     }
 }
