@@ -1,4 +1,4 @@
-package by.itacademy.jdbc.starter.entity;
+package by.kozlov.jdbc.starter.entity;
 
 import java.util.Arrays;
 import java.util.Optional;

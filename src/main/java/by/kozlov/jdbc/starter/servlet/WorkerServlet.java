@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet("/hello")
+@WebServlet("/workers")
 public class WorkerServlet extends HttpServlet {
 
     private static final WorkerService workerService = WorkerService.getInstance();
@@ -26,7 +26,7 @@ public class WorkerServlet extends HttpServlet {
             workerService.findAll().stream().forEach(workerDto -> {
                         writer.write("""
                                     <li>
-                                    <a href='/worker?workerId=%d'>%s</a>
+                                    <a href='./production?workerId=%d'>%s</a>
                                     </li>
                                 """.formatted(workerDto.id(), workerDto.description()));
                     }

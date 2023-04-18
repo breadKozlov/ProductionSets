@@ -2,6 +2,7 @@ package by.kozlov.jdbc.starter.utils;
 
 import by.kozlov.jdbc.starter.dao.*;
 import by.kozlov.jdbc.starter.entity.Material;
+import by.kozlov.jdbc.starter.service.ProductionService;
 
 public class JdbcRunner {
 
@@ -36,6 +37,9 @@ public class JdbcRunner {
         System.out.println(productionOfMaterialDao.findAll());
         System.out.println("-------------------");
         System.out.println(requirementDao.findAll());
+
+        var productionService = ProductionService.getInstance();
+        System.out.println(productionService.findAllByWorkerId(1));
 
 
     }

@@ -38,6 +38,10 @@ public class ProductionDao implements Dao<Integer, Production> {
             WHERE id = ?
             """;
 
+    private static final String FIND_BY_ID_WORKER = FIND_ALL + """
+            WHERE id_worker = ?
+            """;
+
     private static final String DELETE_SQL = """
             DELETE FROM public.production
             WHERE id = ?
@@ -47,6 +51,8 @@ public class ProductionDao implements Dao<Integer, Production> {
             INSERT INTO public.production (id_worker,id_set,made_sets,date_of_production) 
             VALUES (?, ?, ?, ?)
             """;
+
+
     @Override
     public boolean update(Production production) {
         try(var connection = ConnectionManager.get();
@@ -77,6 +83,21 @@ public class ProductionDao implements Dao<Integer, Production> {
         }
     }
 
+    public List<Production> findAllByWorkerId(Integer idWorker) {
+        try(var connection = ConnectionManager.get();
+            var statement = connection.prepareStatement(FIND_BY_ID_WORKER)) {
+            List<Production> productions = new ArrayList<>();
+            statement.setInt(1, idWorker);
+            var result = statement.executeQuery();
+            while (result.next()) {
+                productions.add(buildProduction(result));
+            }
+            return productions;
+        } catch (SQLException ex) {
+            throw new DaoException(ex);
+        }
+    }
+
     @Override
     public List<Production> findAll() {
         try(var connection = ConnectionManager.get();
@@ -91,6 +112,8 @@ public class ProductionDao implements Dao<Integer, Production> {
             throw new DaoException(ex);
         }
     }
+
+
 
     @Override
     public boolean delete(Integer id) {

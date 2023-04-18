@@ -2,16 +2,16 @@
 
 <html>
 <head>
-    <title>Билеты</title>
+    <title>Productions</title>
 </head>
 <body>
 <%@ include file="header.jsp"%>
 
-<h1>Комплекты: </h1>
+<h1>Sets: </h1>
 <ul>
     <c:if test="${not empty requestScope.sets}">
         <c:forEach var="set" items="${requestScope.sets}">
-            <li>${fn:toLowerCase(ticket.nameOfSets)}</li>
+            <li>${fn:toLowerCase(set.nameOfSets)}</li>
         </c:forEach>
     </c:if>
 </ul>
