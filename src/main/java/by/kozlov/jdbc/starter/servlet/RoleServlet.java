@@ -1,8 +1,6 @@
 package by.kozlov.jdbc.starter.servlet;
 
 import by.kozlov.jdbc.starter.dto.UserDto;
-import by.kozlov.jdbc.starter.entity.Role;
-import by.kozlov.jdbc.starter.entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

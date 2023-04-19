@@ -1,6 +1,7 @@
 package by.kozlov.jdbc.starter.servlet;
 
 import by.kozlov.jdbc.starter.dto.UserDto;
+import by.kozlov.jdbc.starter.service.ProductionService;
 import by.kozlov.jdbc.starter.service.WorkerService;
 import by.kozlov.jdbc.starter.service.WorkersSetsService;
 import by.kozlov.jdbc.starter.utils.JspHelper;
@@ -17,6 +18,7 @@ public class UserServlet extends HttpServlet {
 
     private WorkerService workerService = WorkerService.getInstance();
     private WorkersSetsService workersSetsService = WorkersSetsService.getInstance();
+    private ProductionService productionService = ProductionService.getInstance();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -24,8 +26,10 @@ public class UserServlet extends HttpServlet {
         var email = user.getEmail();
         var worker = workerService.findByEmail(email).orElseThrow();
         var workersSets = workersSetsService.findAllByWorkerId(worker.getId());
+        var releasedSets = productionService.findAllByWorkerId(worker.getId());
         req.setAttribute("worker",worker);
         req.setAttribute("sets",workersSets);
+        req.setAttribute("released",releasedSets);
         req.getRequestDispatcher(JspHelper.getPath("user"))
                 .forward(req, resp);
     }

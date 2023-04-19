@@ -16,10 +16,22 @@ public class ProductionService {
         return productionDao.findAllByWorkerId(id).stream().map(
                 e -> new ProductionDto(
                         e.getId(),
-                        e.getWorker().getId(),
-                        e.getSet().getNameOfSet(),
-                        e.getMadeSets(),
-                        e.getDateOfProduction()
+                        """
+                                %s - %s -%s
+                                """.formatted(e.getSet().getNameOfSet(),
+                                e.getMadeSets(),e.getDateOfProduction())
+                )
+        ).collect(Collectors.toList());
+    }
+
+    public List<ProductionDto> findAll() {
+        return productionDao.findAll().stream().map(
+                e -> new ProductionDto(
+                        e.getId(),
+                        """
+                                %s - %s -%s
+                                """.formatted(e.getSet().getNameOfSet(),
+                                e.getMadeSets(),e.getDateOfProduction())
                 )
         ).collect(Collectors.toList());
     }

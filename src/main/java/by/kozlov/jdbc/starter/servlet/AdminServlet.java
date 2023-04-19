@@ -21,7 +21,7 @@ public class AdminServlet extends HttpServlet {
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
         try (var writer = resp.getWriter()) {
-            writer.write("<h1>Workers: </h1>");
+            writer.write("<html><body><h1>Workers: </h1>");
             writer.write("<ul>");
             workerService.findAll().stream().forEach(workerDto -> {
                         writer.write("""
@@ -31,7 +31,9 @@ public class AdminServlet extends HttpServlet {
                                 """.formatted(workerDto.getId(), workerDto.getDescription()));
                     }
             );
-            writer.write("</ul>");
+            writer.write("</ul></br>");
+            writer.write("<a href='./production'>Production</a></br>");
+            writer.write("<a href='./requirement'>Requirement</a></body></html>");
         }
     }
 }

@@ -7,7 +7,7 @@
 </head>
 <body>
 <form action="./registration" method="post">
-    <label for="name">Name:
+    <label for="name">Your login:
         <input type="text" name="name" id="name">
     </label><br/>
     <label for="birthday">Birthday:

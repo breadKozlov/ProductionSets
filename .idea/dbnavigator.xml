@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -12,7 +12,7 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="8fb55a2e-712f-46ea-9eeb-8b8f43788d06">
+    <connection id="ede3653d-f0e7-49e9-9d46-e05aa7ead7bf">
       <console name="Connection" type="STANDARD" schema="eurosets_db" session="Main"><![CDATA[/* create database eurosets_db;
    create schema public;
  */
@@ -376,10 +376,7 @@ where sch.name_month = 'January';
 select sch.name_month, h.name_of_hour from public.schedule as sch
 join public.schedule_hours as h on sch.id_hour = h.id
 join public.brigades as b on sch.id_brigade = b.id
-where b.name_of_brigade = 'Brigade 2';
-
-select ws.id_set, ws.id_worker, ws.requirement
-            from public.workers_sets as ws]]></console>
+where b.name_of_brigade = 'Brigade 2';]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -405,13 +402,13 @@ select ws.id_set, ws.id_worker, ws.requirement
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="8fb55a2e-712f-46ea-9eeb-8b8f43788d06" active="true" signed="true">
+      <connection id="ede3653d-f0e7-49e9-9d46-e05aa7ead7bf" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />
           <database-type value="POSTGRES" />
           <config-type value="BASIC" />
-          <database-version value="13.1" />
+          <database-version value="15.1" />
           <driver-source value="BUILTIN" />
           <driver-library value="" />
           <driver value="" />
