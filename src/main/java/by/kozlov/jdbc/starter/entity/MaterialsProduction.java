@@ -1,10 +1,8 @@
 package by.kozlov.jdbc.starter.entity;
 
-import by.kozlov.jdbc.starter.dao.Dao;
-
 import java.time.LocalDateTime;
 
-public class ProductionOfMaterial {
+public class MaterialsProduction {
 
     private Integer id;
     private Material material;
@@ -12,11 +10,11 @@ public class ProductionOfMaterial {
     private Double quantity;
     private LocalDateTime dateOfProduction;
 
-    public ProductionOfMaterial() {
+    public MaterialsProduction() {
     }
 
-    public ProductionOfMaterial(Integer id, Material material, Brigade brigade, Double quantity,
-                                LocalDateTime dateOfProduction) {
+    public MaterialsProduction(Integer id, Material material, Brigade brigade, Double quantity,
+                               LocalDateTime dateOfProduction) {
         this.id = id;
         this.material = material;
         this.brigade = brigade;
@@ -24,8 +22,8 @@ public class ProductionOfMaterial {
         this.dateOfProduction = dateOfProduction;
     }
 
-    public ProductionOfMaterial(Material material, Brigade brigade, Double quantity,
-                                LocalDateTime dateOfProduction) {
+    public MaterialsProduction(Material material, Brigade brigade, Double quantity,
+                               LocalDateTime dateOfProduction) {
         this.material = material;
         this.brigade = brigade;
         this.quantity = quantity;

@@ -1,7 +1,6 @@
 package by.kozlov.jdbc.starter.utils;
 
 import by.kozlov.jdbc.starter.dao.*;
-import by.kozlov.jdbc.starter.entity.Material;
 import by.kozlov.jdbc.starter.service.ProductionService;
 
 public class JdbcRunner {
@@ -15,7 +14,7 @@ public class JdbcRunner {
         var setDao = SetDao.getInstance();
         var productionDao = ProductionDao.getInstance();
         var scheduleDao = ScheduleDao.getInstance();
-        var productionOfMaterialDao = ProductionOfMaterialDao.getInstance();
+        var productionOfMaterialDao = MaterialsProductionDao.getInstance();
         var requirementDao = RequirementDao.getInstance();
 
         System.out.println(materialDao.findAll());

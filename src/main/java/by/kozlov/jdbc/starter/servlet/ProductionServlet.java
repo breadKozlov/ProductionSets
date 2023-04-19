@@ -20,7 +20,6 @@ public class ProductionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("text/html");
-        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
         if (req.getParameter("workerId") != null) {
             Integer workerId = Integer.valueOf(req.getParameter("workerId"));

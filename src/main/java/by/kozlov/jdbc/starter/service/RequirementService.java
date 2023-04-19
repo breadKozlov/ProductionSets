@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class RequirementService {
 
     private static final RequirementService INSTANCE = new RequirementService();
-    private static RequirementDao requirementDao = RequirementDao.getInstance();
+    private final RequirementDao requirementDao = RequirementDao.getInstance();
 
     public List<RequirementDto> findAll() {
         return requirementDao.findAll().stream().map(

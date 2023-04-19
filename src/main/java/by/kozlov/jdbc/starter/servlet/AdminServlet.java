@@ -18,7 +18,6 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
         try (var writer = resp.getWriter()) {
             writer.write("<html><body><h1>Workers: </h1>");
@@ -33,7 +32,8 @@ public class AdminServlet extends HttpServlet {
             );
             writer.write("</ul></br>");
             writer.write("<a href='./production'>Production</a></br>");
-            writer.write("<a href='./requirement'>Requirement</a></body></html>");
+            writer.write("<a href='./requirement'>Requirement</a>");
+            writer.write("<a href='./materialsProduction'>Materials production</a></body></html>");
         }
     }
 }

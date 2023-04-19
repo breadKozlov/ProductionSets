@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class WorkersSetsService {
 
     private static final WorkersSetsService INSTANCE = new WorkersSetsService();
-    private static final WorkersSetsDao workersSetsDao = WorkersSetsDao.getInstance();
+    private final WorkersSetsDao workersSetsDao = WorkersSetsDao.getInstance();
 
     public List<WorkersSetsDto> findAllByWorkerId(Integer id) {
 
