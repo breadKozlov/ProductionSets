@@ -27,7 +27,7 @@ public class WorkerServlet extends HttpServlet {
                                     <li>
                                     <a href='./production?workerId=%d'>%s</a>
                                     </li>
-                                """.formatted(workerDto.getId(), workerDto.getDescription()));
+                                """.formatted(workerDto.getId(), workerDto.getNameOfWorker()+ " " + workerDto.getSurnameOfWorker()));
                     }
             );
             writer.write("</ul>");

@@ -20,14 +20,15 @@ public class AdminServlet extends HttpServlet {
         resp.setContentType("text/html");
 
         try (var writer = resp.getWriter()) {
-            writer.write("<html><body><h1>Workers: </h1>");
+
+            writer.write("<h1>Workers: </h1>");
             writer.write("<ul>");
             workerService.findAll().stream().forEach(workerDto -> {
                         writer.write("""
                                     <li>
                                     <a href='./production?workerId=%d'>%s</a>
                                     </li>
-                                """.formatted(workerDto.getId(), workerDto.getDescription()));
+                                """.formatted(workerDto.getId(), workerDto.getNameOfWorker() + " " + workerDto.getSurnameOfWorker()));
                     }
             );
             writer.write("</ul></br>");

@@ -16,6 +16,7 @@
 </head>
 <body>
 <%@ include file="header.jsp"%>
+<%@ include file="return.jsp"%>
 <div>
     <c:if test="${not empty requestScope.sets}">
         <h2>His released sets: </h2>
@@ -55,5 +56,10 @@
    </c:if>
    </tbody>
 </table>
+<div>
+        <form action="${pageContext.request.contextPath}/saveProduction">
+            <button type="submit">Add a note</button>
+        </form>
+</div>
 </body>
 </html>

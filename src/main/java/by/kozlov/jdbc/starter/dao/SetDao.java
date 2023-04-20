@@ -118,10 +118,12 @@ public class SetDao implements Dao<Integer, Set>{
     }
 
     private Set buildSet(ResultSet result) throws SQLException {
-        return new Set(result.getInt("id"),
-                result.getString("name_of_set"),
-                result.getInt("num_of_parts"),
-                result.getDouble("rate_of_set"));
+        return Set.builder()
+                .id(result.getObject("id",Integer.class))
+                .nameOfSet(result.getObject("name_of_set",String.class))
+                .numberOfPartsIncluded(result.getObject("num_of_parts",Integer.class))
+                .rateOfSet(result.getDouble("rate_of_set"))
+                .build();
     }
 
     private SetDao() {}

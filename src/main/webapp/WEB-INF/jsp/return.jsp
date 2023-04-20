@@ -3,8 +3,8 @@
 
 <div>
     <c:if test="${not empty sessionScope.user}">
-        <form action="${pageContext.request.contextPath}/logout" method="post">
-            <button type="submit">Logout</button>
+        <form action="${pageContext.request.contextPath}/return" method="post">
+            <button type="submit">Back</button>
         </form>
     </c:if>
 </div>

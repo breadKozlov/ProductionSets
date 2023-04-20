@@ -7,6 +7,8 @@
     <title>Requirement</title>
 </head>
 <body>
+<%@ include file="header.jsp"%>
+<%@ include file="return.jsp"%>
 <h2>Requirement: </h2>
 <ul>
     <c:if test="${not empty requestScope.requirements}">

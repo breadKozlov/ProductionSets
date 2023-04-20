@@ -19,7 +19,7 @@
 <body>
 <%@ include file="header.jsp"%>
 <p><a href="./login">Hello, ${sessionScope.user.name}</a></p>
-<p>${requestScope.worker.description}</p>
+<p>${requestScope.description}</p>
 <h2>Your sets is: </h2>
 <table>
    <thead>

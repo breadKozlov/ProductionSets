@@ -148,16 +148,22 @@ public class WorkerDao implements Dao<Integer, Worker>{
 
     private Worker buildWorker(ResultSet result) throws SQLException {
 
-        var brigade = new Brigade(result.getInt("brigade_number"),
-                result.getString("name_of_brigade"),
-                result.getString("phone_number_of_foreman"));
-        return new Worker(result.getInt("id"),
-                result.getString("name_worker"),
-                result.getString("surname_worker"),
-                result.getString("speciality"),
-                result.getInt("rank"),
-                result.getInt("experience"),
-                brigade, result.getString("email"));
+        var brigade = Brigade.builder()
+                .id(result.getObject("brigade_number",Integer.class))
+                .nameOfBrigade(result.getObject("name_of_brigade",String.class))
+                .phoneNumberOfForeman(result.getObject("phone_number_of_foreman",String.class))
+                .build();
+
+        return Worker.builder()
+                .id(result.getObject("id",Integer.class))
+                .nameOfWorker(result.getObject("name_worker",String.class))
+                .surnameOfWorker(result.getObject("surname_worker",String.class))
+                .speciality(result.getObject("speciality",String.class))
+                .rank(result.getObject("rank",Integer.class))
+                .experience(result.getObject("experience",Integer.class))
+                .brigade(brigade)
+                .email(result.getObject("email",String.class))
+                .build();
     }
 
     private WorkerDao() {}

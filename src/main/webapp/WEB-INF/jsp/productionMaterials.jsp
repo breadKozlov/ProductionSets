@@ -7,6 +7,8 @@
     <title>Materials production</title>
 </head>
 <body>
+<%@ include file="header.jsp"%>
+<%@ include file="return.jsp"%>
 <h2>Materials production: </h2>
 <ul>
     <c:if test="${not empty requestScope.materials}">
