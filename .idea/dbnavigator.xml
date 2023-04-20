@@ -376,7 +376,12 @@ where sch.name_month = 'January';
 select sch.name_month, h.name_of_hour from public.schedule as sch
 join public.schedule_hours as h on sch.id_hour = h.id
 join public.brigades as b on sch.id_brigade = b.id
-where b.name_of_brigade = 'Brigade 2';]]></console>
+where b.name_of_brigade = 'Brigade 2';
+
+SELECT id,id_set_material,id_brigade,quantity_of_raw_materials,date_of_production
+            FROM public.production_materials
+
+select * from public.users;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

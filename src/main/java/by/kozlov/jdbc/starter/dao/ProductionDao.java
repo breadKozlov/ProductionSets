@@ -149,11 +149,18 @@ public class ProductionDao implements Dao<Integer, Production> {
 
         var worker = workerDao.findById(result.getInt("id_worker")).orElseThrow();
         var set = setDao.findById(result.getInt("id_set")).orElseThrow();
-        return new Production(result.getInt("id"),
+        /*return new Production(result.getInt("id"),
                 worker,set,
                 result.getInt("made_sets"),
                 result.getTimestamp("date_of_production").toLocalDateTime()
-                );
+                );*/
+
+        return Production.builder()
+                .id(result.getObject("id",Integer.class))
+                .worker(worker).set(set)
+                .madeSets(result.getObject("made_sets",Integer.class))
+                .dateOfProduction(result.getObject("date_of_production",Timestamp.class).toLocalDateTime())
+                .build();
     }
 
     private ProductionDao() {}

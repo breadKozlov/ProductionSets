@@ -4,6 +4,7 @@ import by.kozlov.jdbc.starter.dao.WorkerDao;
 import by.kozlov.jdbc.starter.dao.WorkersSetsDao;
 import by.kozlov.jdbc.starter.dto.WorkerDto;
 import by.kozlov.jdbc.starter.dto.WorkersSetsDto;
+import by.kozlov.jdbc.starter.mapper.WorkersSetsMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,34 +14,18 @@ public class WorkersSetsService {
 
     private static final WorkersSetsService INSTANCE = new WorkersSetsService();
     private final WorkersSetsDao workersSetsDao = WorkersSetsDao.getInstance();
+    private final WorkersSetsMapper workersSetsMapper = WorkersSetsMapper.getInstance();
 
     public List<WorkersSetsDto> findAllByWorkerId(Integer id) {
 
         return workersSetsDao.findAllByWorkerId(id).stream().map(
-                workersSets -> new WorkersSetsDto(
-                        workersSets.getId(),
-                        """
-                        %s - %s
-                        """.formatted(
-                                workersSets.getSet().getNameOfSet(),
-                                workersSets.getRequirement()
-                        )
-                )
-        ).collect(Collectors.toList());
+                workersSetsMapper::mapFrom
+                ).collect(Collectors.toList());
     }
 
     public List<WorkersSetsDto> findAll() {
         return workersSetsDao.findAll().stream().map(
-                workersSets -> new WorkersSetsDto(
-                        workersSets.getId(),
-                        """
-                           %s - %s - %s
-                        """.formatted(
-                                workersSets.getWorker(),
-                                workersSets.getSet(),
-                                workersSets.getRequirement()
-                        )
-                )
+                workersSetsMapper::mapFrom
         ).collect(Collectors.toList());
     }
 

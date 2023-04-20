@@ -5,26 +5,55 @@
 <html>
 <head>
     <title>Productions</title>
+    <style> table,th,td{
+                    width: 900px;
+                    height:30px;
+                    border: solid 1px silver;
+                    text-align:center;
+                    border-collapse: collapse;
+                    }
+    </style>
 </head>
 <body>
 <%@ include file="header.jsp"%>
 <div>
     <c:if test="${not empty requestScope.sets}">
         <h2>His released sets: </h2>
-        <ul>
-        <c:forEach var="set" items="${requestScope.sets}">
-             <li>${fn:toLowerCase(set.getDescription())}</li>
-        </c:forEach>
-        </ul>
+        <table>
+           <thead>
+              <tr><th>Name of set</th><th>Made sets</th><th>Date of production</th><tr>
+           </thead>
+           <tbody>
+                   <c:forEach var="set" items="${requestScope.sets}">
+                       <tr><td>${set.set.nameOfSet}</td>
+                       <td>${set.madeSets}</td>
+                       <td>${set.dateOfProduction}</td>
+                       <td><a href='./deleteSet?id=${set.id}'>Delete</a></td>
+                       <td><a href='./updateSet?id=${set.id}'>Update</a></td></tr>
+                   </c:forEach>
+           </tbody>
+        </table>
     </c:if>
 </div>
 <h2>Production: </h2>
-<ul>
-    <c:if test="${not empty requestScope.productions}">
-        <c:forEach var="product" items="${requestScope.productions}">
-            <li>${fn:toLowerCase(product.getDescription())}</li>
-        </c:forEach>
-    </c:if>
-</ul>
+<table>
+   <thead>
+      <tr><th>Name of worker</th><th>Surname of worker</th><th>Name of set</th>
+      <th>Made sets</th><th>Date of production</th><tr>
+   </thead>
+   <tbody>
+   <c:if test="${not empty requestScope.productions}">
+           <c:forEach var="product" items="${requestScope.productions}">
+               <tr><td>${product.worker.nameOfWorker}</td>
+               <td>${product.worker.surnameOfWorker}</td>
+               <td>${product.set.nameOfSet}</td>
+               <td>${product.madeSets}</td>
+               <td>${product.dateOfProduction}</td>
+               <td><a href='./deleteSet?id=${set.id}'>Delete</a></td>
+               <td><a href='./updateSet?id=${set.id}'>Update</a></td></tr>
+           </c:forEach>
+   </c:if>
+   </tbody>
+</table>
 </body>
 </html>

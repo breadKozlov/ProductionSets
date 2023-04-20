@@ -11,7 +11,7 @@
 <ul>
     <c:if test="${not empty requestScope.materials}">
         <c:forEach var="material" items="${requestScope.materials}">
-            <li>${fn:toLowerCase(requirement.description)}</li>
+            <li>${fn:toLowerCase(material.description)}</li>
         </c:forEach>
     </c:if>
 </ul>

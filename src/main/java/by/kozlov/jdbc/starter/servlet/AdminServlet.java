@@ -32,7 +32,7 @@ public class AdminServlet extends HttpServlet {
             );
             writer.write("</ul></br>");
             writer.write("<a href='./production'>Production</a></br>");
-            writer.write("<a href='./requirement'>Requirement</a>");
+            writer.write("<a href='./requirement'>Requirement</a></br>");
             writer.write("<a href='./materialsProduction'>Materials production</a></body></html>");
         }
     }

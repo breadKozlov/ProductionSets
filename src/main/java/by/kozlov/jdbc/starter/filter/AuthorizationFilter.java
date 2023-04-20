@@ -11,7 +11,7 @@ import java.util.Set;
 import static by.kozlov.jdbc.starter.utils.UrlPath.LOGIN;
 import static by.kozlov.jdbc.starter.utils.UrlPath.REGISTRATION;
 
-@WebFilter("/*")
+@WebFilter("/filter")
 public class AuthorizationFilter implements Filter {
 
     private static final Set<String> PUBLIC_PATH = Set.of(LOGIN, REGISTRATION);
@@ -23,7 +23,7 @@ public class AuthorizationFilter implements Filter {
         if (isPublicPath(uri) || isUserLoggedIn(servletRequest)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            ((HttpServletResponse) servletResponse).sendRedirect("/login");
+            ((HttpServletResponse) servletResponse).sendRedirect("./login");
         }
     }
 

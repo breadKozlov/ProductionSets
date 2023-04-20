@@ -11,6 +11,7 @@ import lombok.SneakyThrows;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +45,19 @@ public class WorkersSetsDao implements Dao<Integer, WorkersSets> {
 
     @Override
     public List<WorkersSets> findAll() {
-        return null;
+        try(var connection = ConnectionManager.get();
+            var statement = connection.prepareStatement(FIND_ALL)) {
+            List<WorkersSets> workersSets = new ArrayList<>();
+            var result = statement.executeQuery();
+            while (result.next()) {
+                workersSets.add(buildWorkersSets(result));
+            }
+            return workersSets;
+        } catch (SQLException ex) {
+            throw new DaoException(ex);
+        }
+
+
     }
 
     @SneakyThrows
@@ -64,13 +77,19 @@ public class WorkersSetsDao implements Dao<Integer, WorkersSets> {
 
     private WorkersSets buildWorkersSets(ResultSet result) throws SQLException {
 
-        var worker = workerDao.findById(result.getInt("id_worker")).orElseThrow();
-        var set = setDao.findById(result.getInt("id_set")).orElseThrow();
+            var worker = workerDao.findById(result.getInt("id_worker")).orElseThrow();
+            var set = setDao.findById(result.getInt("id_set")).orElseThrow();
+        /*return new Production(result.getInt("id"),
+                worker,set,
+                result.getInt("made_sets"),
+                result.getTimestamp("date_of_production").toLocalDateTime()
+                );*/
 
-        return new WorkersSets(result.getInt("id"),
-                set,worker,
-                result.getInt("requirement")
-        );
+            return WorkersSets.builder()
+                    .id(result.getObject("id",Integer.class))
+                    .set(set).worker(worker)
+                    .requirement(result.getObject("requirement",Integer.class))
+                    .build();
     }
 
 
