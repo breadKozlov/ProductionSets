@@ -1,8 +1,6 @@
 package by.kozlov.jdbc.starter.servlet;
 
-
 import by.kozlov.jdbc.starter.dto.CreateProductionDto;
-import by.kozlov.jdbc.starter.dto.CreateUserDto;
 import by.kozlov.jdbc.starter.exception.ValidationException;
 import by.kozlov.jdbc.starter.service.ProductionService;
 import by.kozlov.jdbc.starter.service.SetService;
@@ -13,10 +11,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
-@WebServlet("/saveProduction")
-public class SaveProductionServlet extends HttpServlet {
+@WebServlet("/saveProductionWorker")
+public class SaveProductionWorkerServlet extends HttpServlet {
 
     private final SetService setService = SetService.getInstance();
     private final WorkerService workerService = WorkerService.getInstance();
@@ -29,12 +28,8 @@ public class SaveProductionServlet extends HttpServlet {
         var workers = workerService.findAll();
         req.setAttribute("sets",sets);
         req.setAttribute("workers",workers);
-        if (req.getParameter("id") != null) {
-
-            req.getRequestDispatcher(JspHelper.getPath("saveProductionWorker")).forward(req, resp);
-        } else  {
-            req.getRequestDispatcher(JspHelper.getPath("saveProduction")).forward(req, resp);
-        }
+        req.setAttribute("id",req.getParameter("id"));
+        req.getRequestDispatcher(JspHelper.getPath("saveProductionWorker")).forward(req, resp);
     }
 
     @Override
@@ -49,7 +44,7 @@ public class SaveProductionServlet extends HttpServlet {
 
         try {
             productionService.create(productDto);
-            resp.sendRedirect("./production");
+            resp.sendRedirect("./user");
         } catch (ValidationException exception) {
             req.setAttribute("errors", exception.getErrors());
             doGet(req, resp);
@@ -57,3 +52,4 @@ public class SaveProductionServlet extends HttpServlet {
 
     }
 }
+

@@ -52,6 +52,11 @@
                    </c:forEach>
            </c:if>
       </tbody>
-</table>
+</table></br>
+<div>
+        <form action="${pageContext.request.contextPath}/saveProductionWorker?id=${worker.id}">
+            <button type="submit">Add a note</button>
+        </form>
+</div>
 </body>
 </html>
