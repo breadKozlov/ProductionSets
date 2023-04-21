@@ -56,6 +56,7 @@
    </c:if>
    </tbody>
 </table>
+<br/>
 <div>
         <form action="${pageContext.request.contextPath}/saveProduction">
             <button type="submit">Add a note</button>

@@ -7,19 +7,22 @@
 </head>
 <body>
 <form action="./saveProduction" method="post">
-    <select name="worker" id="worker">
+    <select name="workerId" id="worker">
         <c:forEach var="worker" items="${requestScope.workers}">
-            <option label="${worker.id}">${worker.nameOfWorker} ${worker.surnameOfWorker}</option><br>
+            <option label="${worker.nameOfWorker}" value="${worker.id}">${worker.nameOfWorker} ${worker.surnameOfWorker}</option><br>
         </c:forEach>
     </select><br/>
-    <select name="set" id="set">
+    <select name="setId" id="set">
             <c:forEach var="set" items="${requestScope.sets}">
-                <option label="${set.id}">${set.nameOfSet}</option><br>
+                <option label="${set.nameOfSet}" value="${set.id}" >${set.nameOfSet}</option><br>
             </c:forEach>
-        </select><br/>
+    </select><br/>
+    <label for="madeSets">Made sets:
+            <input type="number" required step="1" min="10" max="1000" name="madeSets">
+    </label><br/>
     <label for="dateOfProduction">Date of production:
             <input type="date" name="dateOfProduction">
-        </label><br/>
+    </label><br/>
     <input type="submit" value="Add">
 </form>
 <c:if test="${not empty requestScope.errors}">

@@ -20,7 +20,7 @@
 <%@ include file="header.jsp"%>
 <p><a href="./login">Hello, ${sessionScope.user.name}</a></p>
 <p>${requestScope.description}</p>
-<h2>Your sets is: </h2>
+<h2>Your planned sets: </h2>
 <table>
    <thead>
       <tr><th>Name of set</th><th>Plan</th></tr>
@@ -36,7 +36,7 @@
    </c:if>
    </tbody>
 </table>
-<h2>Your released sets is: </h2>
+<h2>Your released sets: </h2>
 <table>
       <thead>
            <tr><th>Name of set</th><th>Made sets</th><th>Date of production</th><tr>

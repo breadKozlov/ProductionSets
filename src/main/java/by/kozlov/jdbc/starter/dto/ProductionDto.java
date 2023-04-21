@@ -5,7 +5,7 @@ import by.kozlov.jdbc.starter.entity.Worker;
 import lombok.Builder;
 import lombok.Value;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Value
 @Builder
@@ -14,5 +14,5 @@ public class ProductionDto {
         private Worker worker;
         private Set set;
         private Integer madeSets;
-        private LocalDateTime dateOfProduction;
+        private LocalDate dateOfProduction;
 }

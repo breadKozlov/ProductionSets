@@ -25,7 +25,8 @@ public class UserServlet extends HttpServlet {
         var user = ((UserDto) req.getSession().getAttribute("user"));
         var email = user.getEmail();
         var worker = workerService.findByEmail(email).orElseThrow();
-        var description = worker.getNameOfWorker() + " " + worker.getSurnameOfWorker() + " - " + worker.getBrigade();
+        var description = worker.getNameOfWorker() + " " + worker.getSurnameOfWorker() + " - "
+                + worker.getBrigade().getNameOfBrigade() + ", " + worker.getBrigade().getPhoneNumberOfForeman();
         var workersSets = workersSetsService.findAllByWorkerId(worker.getId());
         var releasedSets = productionService.findAllByWorkerId(worker.getId());
 

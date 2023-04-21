@@ -6,10 +6,7 @@ import by.kozlov.jdbc.starter.entity.Worker;
 import by.kozlov.jdbc.starter.exception.DaoException;
 import by.kozlov.jdbc.starter.utils.ConnectionManager;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -60,7 +57,7 @@ public class ProductionDao implements Dao<Integer, Production> {
             statement.setInt(1,production.getWorker().getId());
             statement.setInt(2,production.getSet().getId());
             statement.setInt(3,production.getMadeSets());
-            statement.setTimestamp(4, Timestamp.valueOf(production.getDateOfProduction()));
+            statement.setDate(4, Date.valueOf(production.getDateOfProduction()));
             statement.setInt(5,production.getId());
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -134,7 +131,7 @@ public class ProductionDao implements Dao<Integer, Production> {
             statement.setInt(1,production.getWorker().getId());
             statement.setInt(2,production.getSet().getId());
             statement.setInt(3,production.getMadeSets());
-            statement.setTimestamp(4, Timestamp.valueOf(production.getDateOfProduction()));
+            statement.setDate(4, Date.valueOf(production.getDateOfProduction()));
             statement.executeUpdate();
             var generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next())
@@ -159,7 +156,7 @@ public class ProductionDao implements Dao<Integer, Production> {
                 .id(result.getObject("id",Integer.class))
                 .worker(worker).set(set)
                 .madeSets(result.getObject("made_sets",Integer.class))
-                .dateOfProduction(result.getObject("date_of_production",Timestamp.class).toLocalDateTime())
+                .dateOfProduction(result.getObject("date_of_production",Date.class).toLocalDate())
                 .build();
     }
 

@@ -4,10 +4,7 @@ import by.kozlov.jdbc.starter.entity.MaterialsProduction;
 import by.kozlov.jdbc.starter.exception.DaoException;
 import by.kozlov.jdbc.starter.utils.ConnectionManager;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +50,7 @@ public class MaterialsProductionDao implements Dao<Integer, MaterialsProduction>
             statement.setInt(1, materialsProduction.getMaterial().getId());
             statement.setInt(2, materialsProduction.getBrigade().getId());
             statement.setDouble(3, materialsProduction.getQuantity());
-            statement.setTimestamp(4, Timestamp.valueOf(materialsProduction.getDateOfProduction()));
+            statement.setDate(4, Date.valueOf(materialsProduction.getDateOfProduction()));
             statement.setInt(5, materialsProduction.getId());
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -110,7 +107,7 @@ public class MaterialsProductionDao implements Dao<Integer, MaterialsProduction>
             statement.setInt(1, materialsProduction.getMaterial().getId());
             statement.setInt(2, materialsProduction.getBrigade().getId());
             statement.setDouble(3, materialsProduction.getQuantity());
-            statement.setTimestamp(4, Timestamp.valueOf(materialsProduction.getDateOfProduction()));
+            statement.setDate(4, Date.valueOf(materialsProduction.getDateOfProduction()));
             statement.executeUpdate();
             var generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next())
@@ -128,7 +125,7 @@ public class MaterialsProductionDao implements Dao<Integer, MaterialsProduction>
         return new by.kozlov.jdbc.starter.entity.MaterialsProduction(result.getInt("id"),
                 material,brigade,
                 result.getDouble("quantity_of_raw_materials"),
-                result.getTimestamp("date_of_production").toLocalDateTime()
+                result.getDate("date_of_production").toLocalDate()
         );
     }
 

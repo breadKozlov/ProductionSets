@@ -2,6 +2,7 @@ package by.kozlov.jdbc.starter.service;
 
 import by.kozlov.jdbc.starter.dao.BrigadeDao;
 import by.kozlov.jdbc.starter.dao.WorkerDao;
+import by.kozlov.jdbc.starter.dto.SetDto;
 import by.kozlov.jdbc.starter.dto.WorkerDto;
 import by.kozlov.jdbc.starter.entity.Worker;
 import by.kozlov.jdbc.starter.mapper.WorkerMapper;
@@ -16,11 +17,11 @@ public class WorkerService {
     private final WorkerDao workerDao = WorkerDao.getInstance();
     private final WorkerMapper workerMapper = WorkerMapper.getInstance();
 
-    public List<WorkerDto> findId(Integer id) {
+    public Optional<WorkerDto> findId(Integer id) {
 
-        return workerDao.findById(id).stream().map(
+        return workerDao.findById(id).map(
                 workerMapper::mapFrom
-        ).collect(Collectors.toList());
+        );
     }
 
     public Optional<WorkerDto> findByEmail(String email) {
@@ -35,6 +36,13 @@ public class WorkerService {
                 workerMapper::mapFrom
         ).collect(Collectors.toList());
     }
+
+    public Optional<WorkerDto> find(String id) {
+        return workerDao.findById(Integer.parseInt(id)).map(
+                workerMapper::mapFrom
+        );
+    }
+
 
     private WorkerService() {
     }

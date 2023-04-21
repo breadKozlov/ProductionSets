@@ -75,7 +75,7 @@ create table public.production (
   id_worker int references public.workers(id),
   id_set int references public.sets_for_cars(id),
   made_sets int not null,
-  date_of_production timestamp not null
+  date_of_production date not null
 );
 
 create table public.production_materials (
@@ -83,7 +83,7 @@ create table public.production_materials (
   id_set_material int references public.set_materials(id),
   id_brigade int references public.brigades(id),
   quantity_of_raw_materials decimal not null,
-  date_of_production timestamp not null
+  date_of_production date not null
 );
 
 create table public.users (
