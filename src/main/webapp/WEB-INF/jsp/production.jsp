@@ -50,8 +50,8 @@
                <td>${product.set.nameOfSet}</td>
                <td>${product.madeSets}</td>
                <td>${product.dateOfProduction}</td>
-               <td><a href='./deleteSet?id=${set.id}'>Delete</a></td>
-               <td><a href='./updateSet?id=${set.id}'>Update</a></td></tr>
+               <td><a href='./deleteProduction?id=${product.id}'>Delete</a></td>
+               <td><a href='./updateProduction?id=${product.id}'>Update</a></td></tr>
            </c:forEach>
    </c:if>
    </tbody>

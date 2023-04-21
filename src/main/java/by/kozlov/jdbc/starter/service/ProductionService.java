@@ -4,12 +4,16 @@ import by.kozlov.jdbc.starter.dao.ProductionDao;
 import by.kozlov.jdbc.starter.dto.CreateProductionDto;
 import by.kozlov.jdbc.starter.dto.CreateUserDto;
 import by.kozlov.jdbc.starter.dto.ProductionDto;
+import by.kozlov.jdbc.starter.dto.UpdateProductionDto;
 import by.kozlov.jdbc.starter.exception.ValidationException;
 import by.kozlov.jdbc.starter.mapper.CreateProductionMapper;
 import by.kozlov.jdbc.starter.mapper.ProductionMapper;
+import by.kozlov.jdbc.starter.mapper.UpdateProductionMapper;
 import by.kozlov.jdbc.starter.validator.CreateProductionValidator;
+import by.kozlov.jdbc.starter.validator.UpdateProductionValidator;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ProductionService {
@@ -20,6 +24,8 @@ public class ProductionService {
     private final ProductionMapper productionMapper = ProductionMapper.getInstance();
     private final CreateProductionValidator createProductionValidator = CreateProductionValidator.getInstance();
     private final CreateProductionMapper createProductionMapper = CreateProductionMapper.getInstance();
+    private final UpdateProductionMapper updateProductionMapper = UpdateProductionMapper.getInstance();
+    private final UpdateProductionValidator updateProductionValidator = UpdateProductionValidator.getInstance();
 
     public List<ProductionDto> findAllByWorkerId(Integer id) {
         return productionDao.findAllByWorkerId(id).stream().map(
@@ -33,6 +39,10 @@ public class ProductionService {
         ).collect(Collectors.toList());
     }
 
+    public Optional<ProductionDto> findById(Integer id) {
+        return productionDao.findById(id).map(productionMapper::mapFrom);
+    }
+
     public Integer create(CreateProductionDto productionDto) {
         var validationResult = createProductionValidator.isValid(productionDto);
         if (!validationResult.isValid()) {
@@ -41,6 +51,20 @@ public class ProductionService {
         var productionEntity = createProductionMapper.mapFrom(productionDto);
         productionDao.save(productionEntity);
         return productionEntity.getId();
+    }
+
+    public boolean delete(Integer id) {
+        return productionDao.delete(id);
+    }
+
+    public boolean update(UpdateProductionDto productionDto) {
+
+        var validationResult = updateProductionValidator.isValid(productionDto);
+        if (!validationResult.isValid()) {
+            throw new ValidationException(validationResult.getErrors());
+        }
+        var productionEntity = updateProductionMapper.mapFrom(productionDto);
+        return productionDao.update(productionEntity);
     }
 
     private ProductionService() {}

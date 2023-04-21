@@ -27,7 +27,7 @@ public class ProductionDao implements Dao<Integer, Production> {
             id_worker = ?,
             id_set = ?,
             made_sets = ?,
-            date_of_production = ?,
+            date_of_production = ?
             WHERE id = ?
             """;
 
