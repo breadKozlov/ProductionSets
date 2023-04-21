@@ -30,7 +30,7 @@ public class UserServlet extends HttpServlet {
         var workersSets = workersSetsService.findAllByWorkerId(worker.getId());
         var releasedSets = productionService.findAllByWorkerId(worker.getId());
 
-        req.setAttribute("worker",worker);
+        req.setAttribute("id",worker.getId());
         req.setAttribute("description",description);
         req.setAttribute("workersSets",workersSets);
         req.setAttribute("releasedSets",releasedSets);
