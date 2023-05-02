@@ -42,10 +42,6 @@ public class MaterialDao implements Dao<Integer, Material> {
             VALUES (?, ?)
             """;
 
-
-
-
-
     @Override
     public boolean update(Material material) {
         try(var connection = ConnectionManager.get();

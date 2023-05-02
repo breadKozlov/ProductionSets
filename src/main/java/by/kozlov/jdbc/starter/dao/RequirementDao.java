@@ -37,6 +37,10 @@ public class RequirementDao implements Dao<Integer, Requirement> {
             WHERE id = ?
             """;
 
+    private static final String FIND_BY_ID_SET = FIND_ALL + """
+            WHERE id_set = ?
+            """;
+
     private static final String DELETE_SQL = """
             DELETE FROM public.requirement
             WHERE id = ?
@@ -75,6 +79,22 @@ public class RequirementDao implements Dao<Integer, Requirement> {
         } catch (SQLException e) {
             throw new DaoException(e);
         }
+    }
+
+    public List<Requirement> findAllBySetId(Integer id) {
+        try (var connection = ConnectionManager.get();
+             var statement = connection.prepareStatement(FIND_BY_ID)) {
+            List<Requirement> requirements = new ArrayList<>();
+            statement.setInt(1, id);
+            var result = statement.executeQuery();
+            while (result.next()) {
+                requirements.add(buildRequirement(result));
+            }
+            return requirements;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+
     }
 
     @Override

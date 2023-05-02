@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Value
 @Builder
 public class ProductionDto {
+
         private Integer id;
         private Worker worker;
         private Set set;
