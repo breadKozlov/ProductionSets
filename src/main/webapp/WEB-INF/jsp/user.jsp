@@ -53,10 +53,10 @@
            </c:if>
       </tbody>
 </table></br>
-<div>
-        <form action="${pageContext.request.contextPath}/saveProductionWorker?id=${worker.id}">
-            <button type="submit">Add a note</button>
-        </form>
-</div>
+
+<form action='./saveProductionWorker'>
+    <input type="hidden" name="id" value="${requestScope.id}">
+    <button type="submit">Add a note</button>
+</form>
 </body>
 </html>
