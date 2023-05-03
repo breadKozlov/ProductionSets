@@ -18,16 +18,13 @@ import java.io.IOException;
 public class SaveProductionWorkerServlet extends HttpServlet {
 
     private final SetService setService = SetService.getInstance();
-    private final WorkerService workerService = WorkerService.getInstance();
     private final ProductionService productionService = ProductionService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         var sets = setService.findAll();
-        var workers = workerService.findAll();
         req.setAttribute("sets",sets);
-        req.setAttribute("workers",workers);
         req.setAttribute("id",req.getParameter("id"));
         req.getRequestDispatcher(JspHelper.getPath("saveProductionWorker")).forward(req, resp);
     }

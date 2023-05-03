@@ -1,7 +1,6 @@
 package by.kozlov.jdbc.starter.servlet;
 
 import by.kozlov.jdbc.starter.service.MaterialsProductionService;
-import by.kozlov.jdbc.starter.utils.JspHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,16 +9,17 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/materialsProduction")
-public class MaterialsProductionServlet extends HttpServlet {
+@WebServlet("/deleteMaterialsProduction")
+public class DeleteMaterialsProductionServlet extends HttpServlet {
 
     private final MaterialsProductionService materialsProductionService = MaterialsProductionService.getInstance();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        req.setAttribute("materials",materialsProductionService.findAll());
-        req.getRequestDispatcher(JspHelper.getPath("productionMaterials"))
-                .forward(req, resp);
+        if (materialsProductionService.delete(Integer.parseInt(req.getParameter("id")))) {
+            resp.sendRedirect("./materialsProductionUser");
+        } else {
+            req.setAttribute("message", "Sorry incorrect id. Retry please");
+            getServletContext().getRequestDispatcher("error").forward(req, resp);
+        }
     }
 }

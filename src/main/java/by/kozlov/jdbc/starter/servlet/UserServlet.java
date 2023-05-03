@@ -1,6 +1,7 @@
 package by.kozlov.jdbc.starter.servlet;
 
 import by.kozlov.jdbc.starter.dto.UserDto;
+import by.kozlov.jdbc.starter.service.MaterialsProductionService;
 import by.kozlov.jdbc.starter.service.ProductionService;
 import by.kozlov.jdbc.starter.service.WorkerService;
 import by.kozlov.jdbc.starter.service.WorkersSetsService;
@@ -16,9 +17,10 @@ import java.io.IOException;
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 
-    private WorkerService workerService = WorkerService.getInstance();
-    private WorkersSetsService workersSetsService = WorkersSetsService.getInstance();
-    private ProductionService productionService = ProductionService.getInstance();
+    private final WorkerService workerService = WorkerService.getInstance();
+    private final WorkersSetsService workersSetsService = WorkersSetsService.getInstance();
+    private final ProductionService productionService = ProductionService.getInstance();
+    private final MaterialsProductionService materialsProductionService = MaterialsProductionService.getInstance();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -30,6 +32,9 @@ public class UserServlet extends HttpServlet {
         var workersSets = workersSetsService.findAllByWorkerId(worker.getId());
         var releasedSets = productionService.findAllByWorkerId(worker.getId());
 
+        if (worker.getSpeciality().equals("extruder foreman")) {
+            req.getSession().setAttribute("worker",worker);
+        }
         req.setAttribute("id",worker.getId());
         req.setAttribute("description",description);
         req.setAttribute("workersSets",workersSets);

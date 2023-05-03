@@ -33,6 +33,10 @@ public class MaterialsProductionDao implements Dao<Integer, MaterialsProduction>
             WHERE id = ?
             """;
 
+    private static final String FIND_BY_ID_BRIGADE = FIND_ALL + """
+            WHERE id_brigade = ?
+            """;
+
     private static final String DELETE_SQL = """
             DELETE FROM public.production_materials
             WHERE id = ?
@@ -78,6 +82,21 @@ public class MaterialsProductionDao implements Dao<Integer, MaterialsProduction>
         try(var connection = ConnectionManager.get();
             var statement = connection.prepareStatement(FIND_ALL)) {
             List<MaterialsProduction> productions = new ArrayList<>();
+            var result = statement.executeQuery();
+            while (result.next()) {
+                productions.add(buildMaterialsProduction(result));
+            }
+            return productions;
+        } catch (SQLException ex) {
+            throw new DaoException(ex);
+        }
+    }
+
+    public List<MaterialsProduction> findAllByBrigadeId(Integer brigadeId) {
+        try(var connection = ConnectionManager.get();
+            var statement = connection.prepareStatement(FIND_BY_ID_BRIGADE)) {
+            List<MaterialsProduction> productions = new ArrayList<>();
+            statement.setInt(1,brigadeId);
             var result = statement.executeQuery();
             while (result.next()) {
                 productions.add(buildMaterialsProduction(result));

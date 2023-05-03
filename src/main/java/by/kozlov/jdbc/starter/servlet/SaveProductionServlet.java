@@ -30,7 +30,6 @@ public class SaveProductionServlet extends HttpServlet {
         req.setAttribute("sets",sets);
         req.setAttribute("workers",workers);
         if (req.getParameter("id") != null) {
-
             req.getRequestDispatcher(JspHelper.getPath("saveProductionWorker")).forward(req, resp);
         } else  {
             req.getRequestDispatcher(JspHelper.getPath("saveProduction")).forward(req, resp);

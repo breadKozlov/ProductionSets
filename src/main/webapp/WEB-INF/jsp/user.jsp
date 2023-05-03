@@ -18,7 +18,7 @@
 </head>
 <body>
 <%@ include file="header.jsp"%>
-<p><a href="./login">Hello, ${sessionScope.user.name}</a></p>
+<p>Hello, ${sessionScope.user.name}</p>
 <p>${requestScope.description}</p>
 <h2>Your planned sets: </h2>
 <table>
@@ -58,5 +58,13 @@
     <input type="hidden" name="id" value="${requestScope.id}">
     <button type="submit">Add a note</button>
 </form>
+
+<div>
+    <c:if test="${not empty sessionScope.worker}">
+        <form action="${pageContext.request.contextPath}/materialsProductionUser">
+            <button type="submit">Go to release report</button>
+        </form>
+    </c:if>
+</div>
 </body>
 </html>
