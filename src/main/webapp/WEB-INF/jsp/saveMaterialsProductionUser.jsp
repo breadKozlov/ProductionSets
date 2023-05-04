@@ -7,7 +7,6 @@
 </head>
 <body>
 <form action="./saveMaterialsProductionUser" method="post">
-    <input type="hidden" name="brigadeId" value="${requestScope.id}">
     <select name="materialId" id="material">
         <c:forEach var="material" items="${requestScope.materials}">
             <option label="${material.nameOfMaterial}" value="${material.id}" >${material.nameOfMaterial}</option><br>

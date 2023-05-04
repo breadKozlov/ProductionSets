@@ -1,6 +1,7 @@
 package by.kozlov.jdbc.starter.servlet;
 
 import by.kozlov.jdbc.starter.dto.CreateProductionDto;
+import by.kozlov.jdbc.starter.dto.WorkerDto;
 import by.kozlov.jdbc.starter.exception.ValidationException;
 import by.kozlov.jdbc.starter.service.ProductionService;
 import by.kozlov.jdbc.starter.service.SetService;
@@ -25,15 +26,17 @@ public class SaveProductionWorkerServlet extends HttpServlet {
 
         var sets = setService.findAll();
         req.setAttribute("sets",sets);
-        req.setAttribute("id",req.getParameter("id"));
+        var id = ((WorkerDto) req.getSession().getAttribute("worker")).getId();
+        req.setAttribute("id",id);
         req.getRequestDispatcher(JspHelper.getPath("saveProductionWorker")).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        var id = ((WorkerDto) req.getSession().getAttribute("worker")).getId();
         var productDto = CreateProductionDto.builder()
-                .worker(req.getParameter("workerId"))
+                .worker(String.valueOf(id))
                 .set(req.getParameter("setId"))
                 .madeSets(req.getParameter("madeSets"))
                 .dateOfProduction(req.getParameter("dateOfProduction"))

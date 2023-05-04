@@ -6,7 +6,6 @@
 </head>
 <body>
 <form action="./saveWorkersSets" method="post">
-    <input type="hidden" name="workerId" value="${requestScope.id}">
     <select name="setId" id="set">
         <c:forEach var="set" items="${requestScope.sets}">
             <option label="${set.nameOfSet}" value="${set.id}" >${set.nameOfSet}</option><br>

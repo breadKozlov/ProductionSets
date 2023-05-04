@@ -30,17 +30,17 @@ public class SaveWorkersSetsServlet extends HttpServlet {
         var id = ((WorkerDto) req.getSession().getAttribute("worker")).getId();
         var workerSets = workersSetsService.findAllByWorkerId(id);
         var freeSets = setService.findAllFreeSets(workerSets);
-
         req.setAttribute("sets",freeSets);
-        req.setAttribute("id",id);
+
         req.getRequestDispatcher(JspHelper.getPath("saveWorkersSets")).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        var id = ((WorkerDto) req.getSession().getAttribute("worker")).getId();
         var workersSetsDto = CreateWorkersSetsDto.builder()
-                .worker(req.getParameter("workerId"))
+                .worker(String.valueOf(id))
                 .set(req.getParameter("setId"))
                 .requirement(req.getParameter("requirement"))
                 .build();

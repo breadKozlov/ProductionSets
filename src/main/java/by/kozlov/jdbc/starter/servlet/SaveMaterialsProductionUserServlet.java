@@ -25,17 +25,16 @@ public class SaveMaterialsProductionUserServlet extends HttpServlet {
 
         var materials = materialService.findAll();
         req.setAttribute("materials",materials);
-        var idBrigade = ((WorkerDto) req.getSession().getAttribute("worker")).getBrigade().getId();
-        req.setAttribute("id",idBrigade);
         req.getRequestDispatcher(JspHelper.getPath("saveMaterialsProductionUser")).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        var idBrigade = ((WorkerDto) req.getSession().getAttribute("worker")).getBrigade().getId();
         var materialsProduction = CreateMaterialsProductionDto.builder()
                 .material(req.getParameter("materialId"))
-                .brigade(req.getParameter("brigadeId"))
+                .brigade(String.valueOf(idBrigade))
                 .quantity(req.getParameter("quantity"))
                 .dateOfProduction(req.getParameter("dateOfProduction"))
                 .build();

@@ -38,6 +38,7 @@ public class UpdateProductionServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         var productDto = UpdateProductionDto.builder()
                 .id(req.getParameter("idProduction"))
                 .worker(req.getParameter("workerId"))
@@ -50,6 +51,7 @@ public class UpdateProductionServlet extends HttpServlet {
             resp.sendRedirect("./production");
         } catch (ValidationException exception) {
             req.setAttribute("errors", exception.getErrors());
+            req.setAttribute("id",req.getParameter("idProduction"));
             doGet(req, resp);
         }
     }

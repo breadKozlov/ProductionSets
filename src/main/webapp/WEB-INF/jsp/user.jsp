@@ -37,7 +37,6 @@
    </tbody>
 </table></br>
 <form action='./saveWorkersSets'>
-    <input type="hidden" name="id" value="${requestScope.id}">
     <button type="submit">Add a note</button>
 </form>
 <h2>Your released sets: </h2>
@@ -59,7 +58,6 @@
 </table></br>
 
 <form action='./saveProductionWorker'>
-    <input type="hidden" name="id" value="${requestScope.id}">
     <button type="submit">Add a note</button>
 </form>
 
