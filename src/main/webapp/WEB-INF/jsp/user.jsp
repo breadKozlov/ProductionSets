@@ -30,12 +30,16 @@
            <c:forEach var="workersSet" items="${requestScope.workersSets}">
                <tr><td>${workersSet.set.nameOfSet}</td>
                <td>${workersSet.requirement}</td>
-               <td><a href='./deleteSet?id=${set.id}'>Delete</a></td>
-               <td><a href='./updateSet?id=${set.id}'>Update</a></td></tr>
+               <td><a href='./deleteWorkersSets?id=${workersSet.id}'>Delete</a></td>
+               <td><a href='./updateWorkersSets?id=${workersSet.id}'>Update</a></td></tr>
            </c:forEach>
    </c:if>
    </tbody>
-</table>
+</table></br>
+<form action='./saveWorkersSets'>
+    <input type="hidden" name="id" value="${requestScope.id}">
+    <button type="submit">Add a note</button>
+</form>
 <h2>Your released sets: </h2>
 <table>
       <thead>
@@ -47,8 +51,8 @@
                        <tr><td>${set.set.nameOfSet}</td>
                        <td>${set.madeSets}</td>
                        <td>${set.dateOfProduction}</td>
-                       <td><a href='./deleteSet?id=${set.id}'>Delete</a></td>
-                       <td><a href='./updateSet?id=${set.id}'>Update</a></td></tr>
+                       <td><a href='./deleteProductionWorker?id=${set.id}'>Delete</a></td>
+                       <td><a href='./updateProductionWorker?id=${set.id}'>Update</a></td></tr>
                    </c:forEach>
            </c:if>
       </tbody>
@@ -60,7 +64,7 @@
 </form>
 
 <div>
-    <c:if test="${not empty sessionScope.worker}">
+    <c:if test="${not empty sessionScope.foreman}">
         <form action="${pageContext.request.contextPath}/materialsProductionUser">
             <button type="submit">Go to release report</button>
         </form>

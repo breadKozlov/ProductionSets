@@ -9,9 +9,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +29,16 @@ public class WorkersSetsDao implements Dao<Integer, WorkersSets> {
             """;
     private static final String FIND_ALL_BY_ID_WORKER = FIND_ALL + """
             where ws.id_worker = ?
+            """;
+
+    private static final String SAVE_SQL = """
+            INSERT INTO public.workers_sets (id_set,id_worker,requirement) 
+            VALUES (?, ?, ?)
+            """;
+
+    private static final String DELETE_SQL = """
+            DELETE FROM public.workers_sets
+            WHERE id = ?
             """;
 
     @Override
@@ -95,12 +103,32 @@ public class WorkersSetsDao implements Dao<Integer, WorkersSets> {
 
     @Override
     public boolean delete(Integer id) {
-        return false;
+
+        try (var connection = ConnectionManager.get();
+             var statement = connection.prepareStatement(DELETE_SQL)) {
+            statement.setInt(1, id);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override
     public WorkersSets save(WorkersSets workersSets) {
-        return null;
+        try (var connection = ConnectionManager.get();
+             var statement = connection
+                     .prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setInt(1,workersSets.getSet().getId());
+            statement.setInt(2,workersSets.getWorker().getId());
+            statement.setInt(3,workersSets.getRequirement());
+            statement.executeUpdate();
+            var generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next())
+                workersSets.setId(generatedKeys.getInt("id"));
+            return workersSets;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     public static WorkersSetsDao getInstance() {

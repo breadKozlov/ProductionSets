@@ -1,6 +1,7 @@
 package by.kozlov.jdbc.starter.servlet;
 
 import by.kozlov.jdbc.starter.service.WorkerService;
+import by.kozlov.jdbc.starter.utils.JspHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,8 +19,11 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-
-        try (var writer = resp.getWriter()) {
+        var workers = workerService.findAll();
+        req.setAttribute("workers",workers);
+        req.getRequestDispatcher(JspHelper.getPath("admin"))
+                .forward(req, resp);
+        /*try (var writer = resp.getWriter()) {
 
             writer.write("<h1>Workers: </h1>");
             writer.write("<ul>");
@@ -35,6 +39,6 @@ public class AdminServlet extends HttpServlet {
             writer.write("<a href='./production'>Production</a></br>");
             writer.write("<a href='./requirement'>Requirement</a></br>");
             writer.write("<a href='./materialsProduction'>Materials production</a></body></html>");
-        }
+        }*/
     }
 }

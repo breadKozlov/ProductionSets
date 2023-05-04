@@ -15,6 +15,7 @@
     </style>
 </head>
 <body>
+<%@ include file="header.jsp"%>
 <h3>Name of brigade: ${requestScope.brigade.nameOfBrigade}</h3>
 <h2>Materials production: </h2>
 <table>

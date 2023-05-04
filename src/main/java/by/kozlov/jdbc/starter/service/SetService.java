@@ -2,9 +2,11 @@ package by.kozlov.jdbc.starter.service;
 
 import by.kozlov.jdbc.starter.dao.SetDao;
 import by.kozlov.jdbc.starter.dto.SetDto;
+import by.kozlov.jdbc.starter.dto.WorkersSetsDto;
 import by.kozlov.jdbc.starter.entity.Gender;
 import by.kozlov.jdbc.starter.mapper.SetMapper;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +32,32 @@ public class SetService {
         return setDao.findById(Integer.parseInt(id)).map(
                 setMapper::mapFrom
         );
+    }
+
+    public List<SetDto> findAllFreeSets(List<WorkersSetsDto> workersSetsDtoList) {
+
+        List<SetDto> allList = this.findAll();
+        List<SetDto> resultList = new ArrayList<>();
+
+        if (workersSetsDtoList.isEmpty()) {
+            resultList = allList;
+        } else {
+            for (SetDto set: allList) {
+
+            boolean flag = false;
+
+            for(WorkersSetsDto workersSet: workersSetsDtoList) {
+                if (set.getNameOfSet().equals(workersSet.getSet().getNameOfSet())) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                resultList.add(set);
+            }
+            }
+        }
+        return resultList;
     }
 
     public static SetService getInstance() {

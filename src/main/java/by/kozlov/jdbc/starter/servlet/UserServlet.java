@@ -33,8 +33,9 @@ public class UserServlet extends HttpServlet {
         var releasedSets = productionService.findAllByWorkerId(worker.getId());
 
         if (worker.getSpeciality().equals("extruder foreman")) {
-            req.getSession().setAttribute("worker",worker);
+            req.getSession().setAttribute("foreman","true");
         }
+        req.getSession().setAttribute("worker",worker);
         req.setAttribute("id",worker.getId());
         req.setAttribute("description",description);
         req.setAttribute("workersSets",workersSets);
