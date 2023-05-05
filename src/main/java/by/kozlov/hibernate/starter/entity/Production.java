@@ -1,0 +1,21 @@
+package by.kozlov.hibernate.starter.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Production {
+
+    private Integer id;
+    private Worker worker;
+    private Set set;
+    private Integer madeSets;
+    private LocalDate dateOfProduction;
+}
