@@ -4,6 +4,7 @@ import by.kozlov.hibernate.starter.dao.WorkerDao;
 import by.kozlov.hibernate.starter.dto.WorkerDto;
 import by.kozlov.hibernate.starter.mapper.WorkerMapper;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
+import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class WorkerService {
 
-    private final Configuration configuration = HibernateUtil.getConfig();
+    private final SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
 
     private static final WorkerService INSTANCE = new WorkerService();
     private final WorkerDao workerDao = WorkerDao.getInstance();
@@ -36,8 +37,7 @@ public class WorkerService {
     public List<WorkerDto> findAll() {
 
         List<WorkerDto> workers;
-        try (var sessionFactory = configuration.buildSessionFactory();
-             var session = sessionFactory.openSession()) {
+        try (var session = sessionFactory.openSession()) {
 
             session.beginTransaction();
             workers =  workerDao.findAllHibernate(session).stream()

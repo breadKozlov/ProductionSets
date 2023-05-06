@@ -19,11 +19,6 @@ public class ProductionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("text/html");
-
-        if (req.getParameter("workerId") != null) {
-            Integer workerId = Integer.valueOf(req.getParameter("workerId"));
-            req.setAttribute("sets",productionService.findAllByWorkerId(workerId));
-        }
         req.setAttribute("productions",productionService.findAll());
         req.getRequestDispatcher(JspHelper.getPath("production"))
                 .forward(req,resp);

@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/eurosets_db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="eurosets_db@localhost [2]" uuid="d2778599-1ef7-4d96-8fb5-1cf00a67cbdf">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/eurosets_db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

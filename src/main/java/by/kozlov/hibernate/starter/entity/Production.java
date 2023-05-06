@@ -5,17 +5,38 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
+@Table(name = "production",schema = "public")
 public class Production {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @ManyToOne
+    @JoinColumn(name = "id_worker")
     private Worker worker;
+    @ManyToOne
+    @JoinColumn(name = "id_set")
     private Set set;
+    @Column(name = "made_sets")
     private Integer madeSets;
+    @Column(name = "date_of_production")
     private LocalDate dateOfProduction;
+
+    public void setSet(Set set) {
+        this.set = set;
+        this.set.getProductions().add(this);
+    }
+
+    public void setWorker(Worker worker) {
+        this.worker = worker;
+        this.worker.getProductions().add(this);
+    }
 }

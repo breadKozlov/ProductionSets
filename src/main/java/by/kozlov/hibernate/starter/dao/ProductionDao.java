@@ -2,165 +2,108 @@ package by.kozlov.hibernate.starter.dao;
 
 import by.kozlov.hibernate.starter.entity.Production;
 import by.kozlov.hibernate.starter.exception.DaoException;
-import by.kozlov.hibernate.starter.utils.ConnectionManager;
+import org.hibernate.Session;
 
-import java.sql.*;
-import java.util.ArrayList;
+import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
-public class ProductionDao implements Dao<Integer, Production> {
+public class ProductionDao implements DaoHibernate<Integer,Production> {
 
     private static final ProductionDao INSTANCE = new ProductionDao();
-    private static final WorkerDao workerDao = WorkerDao.getInstance();
-    private static final SetDao setDao = SetDao.getInstance();
 
-    private static final String FIND_ALL = """
-            SELECT id,id_worker,id_set,made_sets,date_of_production
-            FROM public.production
+    private static final String FIND_ALL_HIBERNATE = """
+            FROM Production P JOIN FETCH P.set JOIN FETCH P.worker JOIN FETCH P.worker.brigade
             """;
 
-    private static final String UPDATE_SQL = """
-            UPDATE public.production SET
-            id_worker = ?,
-            id_set = ?,
-            made_sets = ?,
-            date_of_production = ?
-            WHERE id = ?
+    private static final String FIND_BY_ID_HIBERNATE = FIND_ALL_HIBERNATE + """
+             WHERE P.id = :id
             """;
 
-    private static final String FIND_BY_ID = FIND_ALL + """
-            WHERE id = ?
+    private static final String DELETE_HQL = """
+            DELETE Production P WHERE P.id = :id
             """;
 
-    private static final String FIND_BY_ID_WORKER = FIND_ALL + """
-            WHERE id_worker = ?
+    private static final String FIND_BY_ID_WORKER_HQL = FIND_ALL_HIBERNATE + """
+             WHERE P.worker.id = :id
             """;
 
-    private static final String DELETE_SQL = """
-            DELETE FROM public.production
-            WHERE id = ?
+    private static final String UPDATE_HQL = """
+            UPDATE Production P SET
+            P.worker = :worker,
+            P.set = :set,
+            P.madeSets = :madeSets,
+            P.dateOfProduction = :date
+            WHERE P.id = :id
             """;
 
-    private static final String SAVE_SQL = """
-            INSERT INTO public.production (id_worker,id_set,made_sets,date_of_production) 
-            VALUES (?, ?, ?, ?)
-            """;
-
-
-    @Override
-    public boolean update(Production production) {
-        try(var connection = ConnectionManager.get();
-            var statement = connection.prepareStatement(UPDATE_SQL)) {
-            statement.setInt(1,production.getWorker().getId());
-            statement.setInt(2,production.getSet().getId());
-            statement.setInt(3,production.getMadeSets());
-            statement.setDate(4, Date.valueOf(production.getDateOfProduction()));
-            statement.setInt(5,production.getId());
-            return statement.executeUpdate() > 0;
-        } catch (SQLException ex) {
+    public List<Production> findAllByWorkerId(Session session, Integer idWorker) {
+        try {
+            return session.createQuery(FIND_BY_ID_WORKER_HQL,Production.class)
+                    .setParameter("id",idWorker).list();
+        } catch (Exception ex) {
             throw new DaoException(ex);
         }
     }
-
-    @Override
-    public Optional<Production> findById(Integer id) {
-        try (var connection = ConnectionManager.get();
-             var statement = connection.prepareStatement(FIND_BY_ID)) {
-            Production production = null;
-            statement.setInt(1, id);
-            var result = statement.executeQuery();
-            if (result.next())
-                production = buildProduction(result);
-            return Optional.ofNullable(production);
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-    }
-
-    public List<Production> findAllByWorkerId(Integer idWorker) {
-        try(var connection = ConnectionManager.get();
-            var statement = connection.prepareStatement(FIND_BY_ID_WORKER)) {
-            List<Production> productions = new ArrayList<>();
-            statement.setInt(1, idWorker);
-            var result = statement.executeQuery();
-            while (result.next()) {
-                productions.add(buildProduction(result));
-            }
-            return productions;
-        } catch (SQLException ex) {
-            throw new DaoException(ex);
-        }
-    }
-
-    @Override
-    public List<Production> findAll() {
-        try(var connection = ConnectionManager.get();
-            var statement = connection.prepareStatement(FIND_ALL)) {
-            List<Production> productions = new ArrayList<>();
-            var result = statement.executeQuery();
-            while (result.next()) {
-                productions.add(buildProduction(result));
-            }
-            return productions;
-        } catch (SQLException ex) {
-            throw new DaoException(ex);
-        }
-    }
-
-
-
-    @Override
-    public boolean delete(Integer id) {
-        try (var connection = ConnectionManager.get();
-             var statement = connection.prepareStatement(DELETE_SQL)) {
-            statement.setInt(1, id);
-            return statement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public Production save(Production production) {
-        try (var connection = ConnectionManager.get();
-             var statement = connection
-                     .prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1,production.getWorker().getId());
-            statement.setInt(2,production.getSet().getId());
-            statement.setInt(3,production.getMadeSets());
-            statement.setDate(4, Date.valueOf(production.getDateOfProduction()));
-            statement.executeUpdate();
-            var generatedKeys = statement.getGeneratedKeys();
-            if (generatedKeys.next())
-                production.setId(generatedKeys.getInt("id"));
-            return production;
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-    }
-
-    private Production buildProduction(ResultSet result) throws SQLException {
-
-        var worker = workerDao.findById(result.getInt("id_worker")).orElseThrow();
-        var set = setDao.findById(result.getInt("id_set")).orElseThrow();
-        /*return new Production(result.getInt("id"),
-                worker,set,
-                result.getInt("made_sets"),
-                result.getTimestamp("date_of_production").toLocalDateTime()
-                );*/
-
-        return Production.builder()
-                .id(result.getObject("id",Integer.class))
-                .worker(worker).set(set)
-                .madeSets(result.getObject("made_sets",Integer.class))
-                .dateOfProduction(result.getObject("date_of_production",Date.class).toLocalDate())
-                .build();
-    }
-
     private ProductionDao() {}
 
     public static ProductionDao getInstance() {
         return INSTANCE;
+    }
+
+    @Override
+    public boolean update(Session session, Production production) {
+        try {
+            Query query = session.createQuery(UPDATE_HQL);
+            query.setParameter("worker",production.getWorker());
+            query.setParameter("set",production.getSet());
+            query.setParameter("madeSets",production.getMadeSets());
+            query.setParameter("date",production.getDateOfProduction());
+            query.setParameter("id",production.getId());
+
+            return query.executeUpdate() > 0;
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public Optional<Production> findById(Session session, Integer id) {
+        try {
+            return session.createQuery(FIND_BY_ID_HIBERNATE,Production.class).setParameter("id",id)
+                    .list().stream().findFirst();
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public List<Production> findAll(Session session) {
+        try {
+            return session.createQuery(FIND_ALL_HIBERNATE, Production.class).list();
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+
+    @Override
+    public boolean delete(Session session, Integer id) {
+        try {
+            return session.createQuery(DELETE_HQL).setParameter("id",id)
+                    .executeUpdate() > 0;
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public Production save(Session session, Production production) {
+        try {
+            session.save(production);
+            return production;
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
     }
 }

@@ -1,17 +1,18 @@
 package by.kozlov.hibernate.starter.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 @Entity
+@ToString(exclude = "productions")
+@EqualsAndHashCode(exclude = "productions")
 @Table (name = "workers", schema = "public")
 public class Worker {
 
@@ -31,4 +32,10 @@ public class Worker {
     @JoinColumn(name = "brigade_number")
     private Brigade brigade;
     private String email;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "worker")
+    private List<Production> productions = new ArrayList<>();
+
+
 }

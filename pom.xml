@@ -87,9 +87,9 @@
         <plugin>
           <artifactId>maven-war-plugin</artifactId>
           <version>3.2.2</version>
-          <!--<configuration>
+          <configuration>
             <outputDirectory>/home/pahadaha/tomcat/webapps/</outputDirectory>
-          </configuration> -->
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
