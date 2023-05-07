@@ -1,43 +1,27 @@
 package by.kozlov.hibernate.starter.entity;
 
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@ToString(exclude = "schedules")
+@EqualsAndHashCode(exclude = "schedules")
+@Table(name = "schedule_hours")
 public class ShiftHour {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "name_of_hour")
     private String nameOfShiftHour;
-
-    public ShiftHour() {
-    }
-
-    public ShiftHour(String nameOfShiftHour) {
-        this.nameOfShiftHour = nameOfShiftHour;
-    }
-
-    public ShiftHour(Integer id, String nameOfShiftHour) {
-        this.id = id;
-        this.nameOfShiftHour = nameOfShiftHour;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNameOfShiftHour() {
-        return nameOfShiftHour;
-    }
-
-    public void setNameOfShiftHour(String nameOfShiftHour) {
-        this.nameOfShiftHour = nameOfShiftHour;
-    }
-
-    @Override
-    public String toString() {
-        return "ShiftHour{" +
-                "id=" + id +
-                ", nameOfShiftHour='" + nameOfShiftHour + '\'' +
-                '}';
-    }
+    @Builder.Default
+    @OneToMany(mappedBy = "shiftHour")
+    List<Schedule> schedules = new ArrayList<>();
 }

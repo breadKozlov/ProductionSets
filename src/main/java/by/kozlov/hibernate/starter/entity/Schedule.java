@@ -1,67 +1,38 @@
 package by.kozlov.hibernate.starter.entity;
 
+import lombok.*;
+
+import javax.persistence.*;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+@Table(name = "schedule",schema = "public")
 public class Schedule {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "name_month")
     private String nameMonth;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_hour")
     private ShiftHour shiftHour;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_brigade")
     private Brigade brigade;
-
-    public Schedule() {
-    }
-
-    public Schedule(Integer id, String nameMonth, ShiftHour shiftHour, Brigade brigade) {
-        this.id = id;
-        this.nameMonth = nameMonth;
-        this.shiftHour = shiftHour;
-        this.brigade = brigade;
-    }
-
-    public Schedule(String nameMonth, ShiftHour shiftHour, Brigade brigade) {
-        this.nameMonth = nameMonth;
-        this.shiftHour = shiftHour;
-        this.brigade = brigade;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNameMonth() {
-        return nameMonth;
-    }
-
-    public void setNameMonth(String nameMonth) {
-        this.nameMonth = nameMonth;
-    }
-
-    public ShiftHour getShiftHour() {
-        return shiftHour;
-    }
 
     public void setShiftHour(ShiftHour shiftHour) {
         this.shiftHour = shiftHour;
-    }
-
-    public Brigade getBrigade() {
-        return brigade;
+        this.shiftHour.getSchedules().add(this);
     }
 
     public void setBrigade(Brigade brigade) {
         this.brigade = brigade;
+        this.brigade.getSchedules().add(this);
     }
 
-    @Override
-    public String toString() {
-        return "Schedule{" +
-                "id=" + id +
-                ", nameMonth='" + nameMonth + '\'' +
-                ", shiftHour=" + shiftHour +
-                ", brigade=" + brigade +
-                '}';
-    }
+
 }

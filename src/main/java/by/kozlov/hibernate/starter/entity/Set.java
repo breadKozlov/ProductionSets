@@ -11,8 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(exclude = "productions")
-@ToString(exclude = "productions")
+@EqualsAndHashCode(exclude = {"productions","requirements","workersSets"})
+@ToString(exclude = {"productions","requirements","workersSets"})
 @Table(name = "sets_for_cars",schema = "public")
 public class Set {
 
@@ -28,5 +28,10 @@ public class Set {
     @Builder.Default
     @OneToMany(mappedBy = "set")
     private List<Production> productions = new ArrayList<>();
-
+    @Builder.Default
+    @OneToMany(mappedBy = "set")
+    private List<Requirement> requirements = new ArrayList<>();
+    @Builder.Default
+    @OneToMany(mappedBy = "set")
+    private List<WorkersSets> workersSets = new ArrayList<>();
 }

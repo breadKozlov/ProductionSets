@@ -12,11 +12,11 @@ public class ProductionDao implements DaoHibernate<Integer,Production> {
 
     private static final ProductionDao INSTANCE = new ProductionDao();
 
-    private static final String FIND_ALL_HIBERNATE = """
+    private static final String FIND_ALL_HQL = """
             FROM Production P JOIN FETCH P.set JOIN FETCH P.worker JOIN FETCH P.worker.brigade
             """;
 
-    private static final String FIND_BY_ID_HIBERNATE = FIND_ALL_HIBERNATE + """
+    private static final String FIND_BY_ID_HQL = FIND_ALL_HQL + """
              WHERE P.id = :id
             """;
 
@@ -24,7 +24,7 @@ public class ProductionDao implements DaoHibernate<Integer,Production> {
             DELETE Production P WHERE P.id = :id
             """;
 
-    private static final String FIND_BY_ID_WORKER_HQL = FIND_ALL_HIBERNATE + """
+    private static final String FIND_BY_ID_WORKER_HQL = FIND_ALL_HQL + """
              WHERE P.worker.id = :id
             """;
 
@@ -70,7 +70,7 @@ public class ProductionDao implements DaoHibernate<Integer,Production> {
     @Override
     public Optional<Production> findById(Session session, Integer id) {
         try {
-            return session.createQuery(FIND_BY_ID_HIBERNATE,Production.class).setParameter("id",id)
+            return session.createQuery(FIND_BY_ID_HQL,Production.class).setParameter("id",id)
                     .list().stream().findFirst();
         } catch (Exception e) {
             throw new DaoException(e);
@@ -80,7 +80,7 @@ public class ProductionDao implements DaoHibernate<Integer,Production> {
     @Override
     public List<Production> findAll(Session session) {
         try {
-            return session.createQuery(FIND_ALL_HIBERNATE, Production.class).list();
+            return session.createQuery(FIND_ALL_HQL, Production.class).list();
         } catch (Exception e) {
             throw new DaoException(e);
         }

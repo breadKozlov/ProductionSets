@@ -11,8 +11,8 @@ import java.util.List;
 @Data
 @Builder
 @Entity
-@ToString(exclude = "productions")
-@EqualsAndHashCode(exclude = "productions")
+@ToString(exclude = {"productions","workersSets"})
+@EqualsAndHashCode(exclude = {"productions","workersSets"})
 @Table (name = "workers", schema = "public")
 public class Worker {
 
@@ -37,5 +37,8 @@ public class Worker {
     @OneToMany(mappedBy = "worker")
     private List<Production> productions = new ArrayList<>();
 
+    @Builder.Default
+    @OneToMany(mappedBy = "worker")
+    private List<WorkersSets> workersSets = new ArrayList<>();
 
 }

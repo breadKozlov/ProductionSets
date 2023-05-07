@@ -4,13 +4,22 @@ import by.kozlov.hibernate.starter.dto.CreateProductionDto;
 import by.kozlov.hibernate.starter.dto.UpdateProductionDto;
 import by.kozlov.hibernate.starter.entity.Worker;
 import by.kozlov.hibernate.starter.service.ProductionService;
+import by.kozlov.hibernate.starter.service.RequirementService;
+import by.kozlov.hibernate.starter.service.SetService;
 import by.kozlov.hibernate.starter.service.WorkerService;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import lombok.Cleanup;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 
 public class AppTest
 {
+
+    @Test
+    public void findAllRequirement() {
+        var req = RequirementService.getInstance();
+        System.out.println(req.findAll());
+    }
     /*
     @Test
     public void findAllWorkers() {

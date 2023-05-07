@@ -15,6 +15,13 @@
     <mapping class="by.kozlov.hibernate.starter.entity.Brigade"/>
     <mapping class="by.kozlov.hibernate.starter.entity.Set" />
     <mapping class="by.kozlov.hibernate.starter.entity.Production" />
+    <mapping class="by.kozlov.hibernate.starter.entity.Requirement" />
+    <mapping class="by.kozlov.hibernate.starter.entity.Material" />
+    <mapping class="by.kozlov.hibernate.starter.entity.MaterialsProduction" />
+    <mapping class="by.kozlov.hibernate.starter.entity.WorkersSets" />
+    <mapping class="by.kozlov.hibernate.starter.entity.Schedule" />
+    <mapping class="by.kozlov.hibernate.starter.entity.ShiftHour"/>
+    <mapping class="by.kozlov.hibernate.starter.entity.User" />
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
   </session-factory>

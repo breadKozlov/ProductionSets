@@ -2,133 +2,103 @@ package by.kozlov.hibernate.starter.dao;
 
 import by.kozlov.hibernate.starter.entity.WorkersSets;
 import by.kozlov.hibernate.starter.exception.DaoException;
-import by.kozlov.hibernate.starter.utils.ConnectionManager;
+import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
-import java.sql.*;
-import java.util.ArrayList;
+import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
 import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
-public class WorkersSetsDao implements Dao<Integer, WorkersSets> {
+public class WorkersSetsDao implements DaoHibernate<Integer,WorkersSets> {
+
+    private final SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
 
     private static final WorkersSetsDao INSTANCE = new WorkersSetsDao();
-    private static final SetDao setDao = SetDao.getInstance();
-    private static final WorkerDao workerDao = WorkerDao.getInstance();
 
-    private static final String FIND_ALL = """
-            select ws.id, ws.id_set, ws.id_worker, ws.requirement
-            from public.workers_sets as ws
-            """;
-    private static final String FIND_ALL_BY_ID_WORKER = FIND_ALL + """
-            where ws.id_worker = ?
+    private static final String FIND_ALL_HQL = """
+            FROM WorkersSets W JOIN FETCH W.set JOIN FETCH W.worker JOIN FETCH W.worker.brigade
             """;
 
-    private static final String SAVE_SQL = """
-            INSERT INTO public.workers_sets (id_set,id_worker,requirement) 
-            VALUES (?, ?, ?)
+    private static final String DELETE_HQL = """
+            DELETE WorkersSets W WHERE W.id = :id
             """;
 
-    private static final String DELETE_SQL = """
-            DELETE FROM public.workers_sets
-            WHERE id = ?
+    private static final String FIND_BY_ID_WORKER_HQL = FIND_ALL_HQL + """
+             WHERE W.worker.id = :id
             """;
 
-    @Override
-    public boolean update(WorkersSets workersSets) {
-        return false;
+    private static final String UPDATE_HQL = """
+            UPDATE WorkersSets W SET
+            W.worker = :worker,
+            W.set = :set,
+            W.requirement = :requirement
+            WHERE W.id = :id
+            """;
+
+    public static WorkersSetsDao getInstance() {
+        return INSTANCE;
+    }
+
+    public List<WorkersSets> findAllByWorkerId(Session session, Integer idWorker) {
+        try {
+            return session.createQuery(FIND_BY_ID_WORKER_HQL,WorkersSets.class)
+                    .setParameter("id",idWorker).list();
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
     }
 
     @Override
-    public Optional<WorkersSets> findById(Integer id) {
+    public boolean update(Session session, WorkersSets workersSets) {
+        try {
+            Query query = session.createQuery(UPDATE_HQL);
+            query.setParameter("worker",workersSets.getWorker());
+            query.setParameter("set",workersSets.getSet());
+            query.setParameter("requirement",workersSets.getRequirement());
+            query.setParameter("id",workersSets.getId());
+
+            return query.executeUpdate() > 0;
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public Optional<WorkersSets> findById(Session session, Integer id) {
         return Optional.empty();
     }
 
     @Override
-    public List<WorkersSets> findAll() {
-        try(var connection = ConnectionManager.get();
-            var statement = connection.prepareStatement(FIND_ALL)) {
-            List<WorkersSets> workersSets = new ArrayList<>();
-            var result = statement.executeQuery();
-            while (result.next()) {
-                workersSets.add(buildWorkersSets(result));
-            }
-            return workersSets;
-        } catch (SQLException ex) {
-            throw new DaoException(ex);
-        }
-
-
-    }
-
-    @SneakyThrows
-    public List<WorkersSets> findAllByWorkerId (Integer id) {
-
-        try(var connection = ConnectionManager.get();
-            var statement = connection.prepareStatement(FIND_ALL_BY_ID_WORKER)) {
-            List<WorkersSets> sets = new ArrayList<>();
-            statement.setInt(1, id);
-            var result = statement.executeQuery();
-            while (result.next()) {
-                sets.add(buildWorkersSets(result));
-            }
-            return sets;
-        }
-    }
-
-    private WorkersSets buildWorkersSets(ResultSet result) throws SQLException {
-
-            var worker = workerDao.findById(result.getInt("id_worker")).orElseThrow();
-            var set = setDao.findById(result.getInt("id_set")).orElseThrow();
-        /*return new Production(result.getInt("id"),
-                worker,set,
-                result.getInt("made_sets"),
-                result.getTimestamp("date_of_production").toLocalDateTime()
-                );*/
-
-            return WorkersSets.builder()
-                    .id(result.getObject("id",Integer.class))
-                    .set(set).worker(worker)
-                    .requirement(result.getObject("requirement",Integer.class))
-                    .build();
-    }
-
-
-    @Override
-    public boolean delete(Integer id) {
-
-        try (var connection = ConnectionManager.get();
-             var statement = connection.prepareStatement(DELETE_SQL)) {
-            statement.setInt(1, id);
-            return statement.executeUpdate() > 0;
-        } catch (SQLException e) {
+    public List<WorkersSets> findAll(Session session) {
+        try {
+            return session.createQuery(FIND_ALL_HQL, WorkersSets.class).list();
+        } catch (Exception e) {
             throw new DaoException(e);
         }
     }
 
     @Override
-    public WorkersSets save(WorkersSets workersSets) {
-        try (var connection = ConnectionManager.get();
-             var statement = connection
-                     .prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1,workersSets.getSet().getId());
-            statement.setInt(2,workersSets.getWorker().getId());
-            statement.setInt(3,workersSets.getRequirement());
-            statement.executeUpdate();
-            var generatedKeys = statement.getGeneratedKeys();
-            if (generatedKeys.next())
-                workersSets.setId(generatedKeys.getInt("id"));
-            return workersSets;
-        } catch (SQLException e) {
+    public boolean delete(Session session, Integer id) {
+        try {
+            return session.createQuery(DELETE_HQL).setParameter("id",id)
+                    .executeUpdate() > 0;
+        } catch (Exception e) {
             throw new DaoException(e);
         }
     }
 
-    public static WorkersSetsDao getInstance() {
-        return INSTANCE;
+    @Override
+    public WorkersSets save(Session session, WorkersSets workersSets) {
+        try {
+            session.save(workersSets);
+            return workersSets;
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
     }
 }
