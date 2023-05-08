@@ -18,6 +18,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "name_user")
     private String name;
     private LocalDate birthday;
     private String email;

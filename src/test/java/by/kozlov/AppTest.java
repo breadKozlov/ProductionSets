@@ -20,6 +20,18 @@ public class AppTest
         var req = RequirementService.getInstance();
         System.out.println(req.findAll());
     }
+
+    @Test
+    public void findSum() {
+        var req = RequirementService.getInstance();
+        var arrays = req.findSum();
+        for (Object[] array: arrays) {
+            for (Object obj: array) {
+                System.out.print(obj.toString() + " - ");
+            }
+            System.out.println();
+        }
+    }
     /*
     @Test
     public void findAllWorkers() {

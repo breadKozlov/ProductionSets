@@ -55,6 +55,16 @@ public class RequirementService {
         }
     }
 
+    public List<Object[]> findSum() {
+        try(var session = sessionFactory.openSession()) {
+            List<Object[]> sum;
+            session.beginTransaction();
+            sum = requirementDao.findSumAllReqMat(session);
+            session.getTransaction().commit();
+            return sum;
+        }
+    }
+
     public Optional<RequirementDto> findById(Integer id) {
         try (var session = sessionFactory.openSession()) {
             Optional<RequirementDto> req;

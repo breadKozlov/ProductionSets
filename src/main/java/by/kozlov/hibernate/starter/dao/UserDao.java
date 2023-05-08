@@ -32,7 +32,9 @@ public class UserDao implements DaoHibernate<Integer,User> {
     public Optional<User> findByEmailAndPassword(Session session,String email, String password) {
         try {
             return session.createQuery(FIND_BY_EMAIL_AND_PASS_HQL,User.class)
-                    .setParameter("email",email).list().stream().findFirst();
+                    .setParameter("email",email)
+                    .setParameter("password",password)
+                    .list().stream().findFirst();
         } catch (Exception ex) {
             throw new DaoException(ex);
         }

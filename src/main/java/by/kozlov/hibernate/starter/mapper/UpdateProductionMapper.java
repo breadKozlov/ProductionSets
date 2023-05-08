@@ -14,7 +14,7 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor(access = PRIVATE)
 public class UpdateProductionMapper implements Mapper<UpdateProductionDto, Production> {
 
-    private static final SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+    private final SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
     private static final UpdateProductionMapper INSTANCE = new UpdateProductionMapper();
     private final SetDao setDao = SetDao.getInstance();
     private final WorkerDao workerDao = WorkerDao.getInstance();

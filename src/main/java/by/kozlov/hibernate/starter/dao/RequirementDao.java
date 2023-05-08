@@ -37,6 +37,11 @@ public class RequirementDao implements DaoHibernate<Integer,Requirement> {
             WHERE R.id = :id
             """;
 
+    private static final String FIND_SUM_REQ_MAT = """
+            SELECT R.material.nameOfMaterial, sum(R.unitCost * R.totalSets) FROM Requirement R
+            GROUP BY R.material.nameOfMaterial
+            """;
+
     public List<Requirement> findAllBySetId(Session session, Integer id) {
         try {
             return session.createQuery(FIND_ALL_BY_ID_SET_HQL, Requirement.class)
@@ -44,7 +49,14 @@ public class RequirementDao implements DaoHibernate<Integer,Requirement> {
         } catch (Exception ex) {
             throw new DaoException(ex);
         }
+    }
 
+    public List<Object[]> findSumAllReqMat(Session session) {
+        try {
+            return session.createQuery(FIND_SUM_REQ_MAT,Object[].class).list();
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
     }
 
     private RequirementDao() {}
