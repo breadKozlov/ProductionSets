@@ -10,8 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/production")
-public class ProductionServlet extends HttpServlet {
+@WebServlet("/productionAdmin")
+public class ProductionAdminServlet extends HttpServlet {
 
     private ProductionService productionService = ProductionService.getInstance();
 
@@ -20,7 +20,7 @@ public class ProductionServlet extends HttpServlet {
 
         resp.setContentType("text/html");
         req.setAttribute("productions",productionService.findAll());
-        req.getRequestDispatcher(JspHelper.getPath("production"))
+        req.getRequestDispatcher(JspHelper.getPath("productionAdmin"))
                 .forward(req,resp);
     }
 }

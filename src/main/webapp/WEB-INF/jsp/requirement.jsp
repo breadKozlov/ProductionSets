@@ -30,17 +30,10 @@
                 <td>${requirement.material.nameOfMaterial}</td>
                 <td>${requirement.unitCost}</td>
                 <td>${requirement.totalSets}</td>
-                <td><a href='./deleteRequirement?id=${requirement.id}'>Delete</a></td>
                 <td><a href='./updateRequirement?id=${requirement.id}'>Update</a></td></tr>
         </c:forEach>
     </c:if>
     </tbody>
 </table>
-<br/>
-<div>
-    <form action="${pageContext.request.contextPath}/saveRequirement">
-        <button type="submit">Add a note</button>
-    </form>
-</div>
 </body>
 </html>

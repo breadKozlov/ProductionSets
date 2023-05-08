@@ -19,8 +19,8 @@
         </li>
     </c:forEach>
 </ul><br/>
-<a href='./production'>Production</a><br/>
+<a href='./productionAdmin'>Production</a><br/>
 <a href='./requirement'>Requirement</a><br/>
-<a href='./materialsProduction'>Materials production</a>
+<a href='./materialsProductionAdmin'>Materials production</a>
 </body>
 </html>

@@ -6,7 +6,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="./saveProduction" method="post">
+<form action="./saveProductionAdmin" method="post">
     <select name="workerId" id="worker">
         <c:forEach var="worker" items="${requestScope.workers}">
             <option label="${worker.nameOfWorker}" value="${worker.id}">${worker.nameOfWorker} ${worker.surnameOfWorker}</option><br>

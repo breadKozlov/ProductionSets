@@ -50,15 +50,15 @@
                <td>${product.set.nameOfSet}</td>
                <td>${product.madeSets}</td>
                <td>${product.dateOfProduction}</td>
-               <td><a href='./deleteProduction?id=${product.id}'>Delete</a></td>
-               <td><a href='./updateProduction?id=${product.id}'>Update</a></td></tr>
+               <td><a href='./deleteProductionAdmin?id=${product.id}'>Delete</a></td>
+               <td><a href='./updateProductionAdmin?id=${product.id}'>Update</a></td></tr>
            </c:forEach>
    </c:if>
    </tbody>
 </table>
 <br/>
 <div>
-        <form action="${pageContext.request.contextPath}/saveProduction">
+        <form action="${pageContext.request.contextPath}/saveProductionAdmin">
             <button type="submit">Add a note</button>
         </form>
 </div>

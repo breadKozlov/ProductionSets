@@ -30,15 +30,15 @@
                 <td>${material.brigade.nameOfBrigade}</td>
                 <td>${material.quantity}</td>
                 <td>${material.dateOfProduction}</td>
-                <td><a href='./deleteMaterialsProduction?id=${material.id}'>Delete</a></td>
-                <td><a href='./updateMaterialsProduction?id=${material.id}'>Update</a></td></tr>
+                <td><a href='./deleteMaterialsProductionAdmin?id=${material.id}'>Delete</a></td>
+                <td><a href='./updateMaterialsProductionAdmin?id=${material.id}'>Update</a></td></tr>
         </c:forEach>
     </c:if>
     </tbody>
 </table>
 <br/>
 <div>
-    <form action="${pageContext.request.contextPath}/saveMaterialsProduction">
+    <form action="${pageContext.request.contextPath}/saveMaterialsProductionAdmin">
         <button type="submit">Add a note</button>
     </form>
 </div>

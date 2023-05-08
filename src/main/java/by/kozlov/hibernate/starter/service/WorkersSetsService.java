@@ -1,17 +1,18 @@
 package by.kozlov.hibernate.starter.service;
 
-import by.kozlov.hibernate.starter.dto.ProductionDto;
+import by.kozlov.hibernate.starter.dto.*;
 import by.kozlov.hibernate.starter.exception.ValidationException;
 import by.kozlov.hibernate.starter.dao.WorkersSetsDao;
-import by.kozlov.hibernate.starter.dto.CreateWorkersSetsDto;
-import by.kozlov.hibernate.starter.dto.WorkersSetsDto;
 import by.kozlov.hibernate.starter.mapper.CreateWorkersSetsMapper;
+import by.kozlov.hibernate.starter.mapper.UpdateWorkersSetsMapper;
 import by.kozlov.hibernate.starter.mapper.WorkersSetsMapper;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import by.kozlov.hibernate.starter.validator.CreateWorkersSetsValidator;
+import by.kozlov.hibernate.starter.validator.UpdateWorkersSetsValidator;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class WorkersSetsService {
@@ -24,6 +25,9 @@ public class WorkersSetsService {
 
     private final CreateWorkersSetsValidator createWorkersSetsValidator = CreateWorkersSetsValidator.getInstance();
     private final CreateWorkersSetsMapper createWorkersSetsMapper = CreateWorkersSetsMapper.getInstance();
+
+    private final UpdateWorkersSetsMapper updateWorkersSetsMapper = UpdateWorkersSetsMapper.getInstance();
+    private final UpdateWorkersSetsValidator updateWorkersSetsValidator = UpdateWorkersSetsValidator.getInstance();
 
     public List<WorkersSetsDto> findAllByWorkerId(Integer id) {
 
@@ -70,6 +74,34 @@ public class WorkersSetsService {
             session.getTransaction().commit();
             return result;
         }
+    }
+
+    public Optional<WorkersSetsDto> findById(Integer id) {
+
+        try (var session = sessionFactory.openSession()) {
+            Optional<WorkersSetsDto> workersSetsDto;
+            session.beginTransaction();
+            workersSetsDto = workersSetsDao.findById(session,id)
+                    .map(workersSetsMapper::mapFrom);
+            session.getTransaction().commit();
+            return workersSetsDto;
+        }
+    }
+
+    public boolean update(UpdateWorkersSetsDto workersSetsDto) {
+        try (var session = sessionFactory.openSession()) {
+            boolean result;
+            var validationResult = updateWorkersSetsValidator.isValid(workersSetsDto);
+            if (!validationResult.isValid()) {
+                throw new ValidationException(validationResult.getErrors());
+            }
+            var productionEntity = updateWorkersSetsMapper.mapFrom(workersSetsDto);
+            session.beginTransaction();
+            result = workersSetsDao.update(session, productionEntity);
+            session.getTransaction().commit();
+            return result;
+        }
+
     }
 
     private WorkersSetsService() {

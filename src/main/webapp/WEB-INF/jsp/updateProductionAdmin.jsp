@@ -6,7 +6,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="./updateProduction" method="post">
+<form action="./updateProductionAdmin" method="post">
     <input type="hidden" name="id" value="${requestScope.id}">
     <select name="workerId" id="worker">
         <c:forEach var="worker" items="${requestScope.workers}">

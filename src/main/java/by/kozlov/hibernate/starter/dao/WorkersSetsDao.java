@@ -1,5 +1,6 @@
 package by.kozlov.hibernate.starter.dao;
 
+import by.kozlov.hibernate.starter.entity.Worker;
 import by.kozlov.hibernate.starter.entity.WorkersSets;
 import by.kozlov.hibernate.starter.exception.DaoException;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
@@ -40,6 +41,10 @@ public class WorkersSetsDao implements DaoHibernate<Integer,WorkersSets> {
             WHERE W.id = :id
             """;
 
+    private static final String FIND_BY_ID_HQL = FIND_ALL_HQL + """
+             WHERE W.id = :id
+            """;
+
     public static WorkersSetsDao getInstance() {
         return INSTANCE;
     }
@@ -70,7 +75,12 @@ public class WorkersSetsDao implements DaoHibernate<Integer,WorkersSets> {
 
     @Override
     public Optional<WorkersSets> findById(Session session, Integer id) {
-        return Optional.empty();
+        try {
+            return session.createQuery(FIND_BY_ID_HQL, WorkersSets.class).setParameter("id",id)
+                    .list().stream().findFirst();
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override

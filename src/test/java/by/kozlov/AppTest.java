@@ -2,7 +2,9 @@ package by.kozlov;
 
 import by.kozlov.hibernate.starter.dto.CreateProductionDto;
 import by.kozlov.hibernate.starter.dto.UpdateProductionDto;
+import by.kozlov.hibernate.starter.dto.UpdateRequirementDto;
 import by.kozlov.hibernate.starter.entity.Worker;
+import by.kozlov.hibernate.starter.mapper.UpdateRequirementMapper;
 import by.kozlov.hibernate.starter.service.ProductionService;
 import by.kozlov.hibernate.starter.service.RequirementService;
 import by.kozlov.hibernate.starter.service.SetService;

@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/deleteProduction")
-public class DeleteProductionServlet extends HttpServlet {
+@WebServlet("/deleteProductionAdmin")
+public class DeleteProductionAdminServlet extends HttpServlet {
 
     private final ProductionService productionService = ProductionService.getInstance();
 
@@ -18,7 +18,7 @@ public class DeleteProductionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         if (productionService.delete(Integer.parseInt(req.getParameter("id")))) {
-            resp.sendRedirect("./production");
+            resp.sendRedirect("./productionAdmin");
         } else {
             req.setAttribute("message", "Sorry incorrect id. Retry please");
             getServletContext().getRequestDispatcher("error").forward(req, resp);

@@ -29,8 +29,8 @@
             <tr><td>${material.material.nameOfMaterial}</td>
                 <td>${material.quantity}</td>
                 <td>${material.dateOfProduction}</td>
-                <td><a href='./deleteMaterialsProduction?id=${material.id}'>Delete</a></td>
-                <td><a href='./updateMaterialsProduction?id=${material.id}'>Update</a></td></tr>
+                <td><a href='./deleteMaterialsProductionUser?id=${material.id}'>Delete</a></td>
+                <td><a href='./updateMaterialsProductionUser?id=${material.id}'>Update</a></td></tr>
         </c:forEach>
     </c:if>
     </tbody>

@@ -12,7 +12,7 @@ import java.io.IOException;
 @WebServlet("/deleteProductionWorker")
 public class DeleteProductionWorkerServlet extends HttpServlet {
 
-    private ProductionService productionService = ProductionService.getInstance();
+    private final ProductionService productionService = ProductionService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

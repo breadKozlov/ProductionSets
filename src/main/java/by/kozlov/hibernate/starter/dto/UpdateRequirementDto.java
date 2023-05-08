@@ -7,6 +7,7 @@ import lombok.Value;
 @Builder
 public class UpdateRequirementDto {
 
+    private String id;
     private String set;
     private String material;
     private String unitCost;
