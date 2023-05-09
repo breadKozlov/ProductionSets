@@ -25,8 +25,6 @@ public class SaveProductionWorkerServlet extends HttpServlet {
 
         var sets = setService.findAll();
         req.setAttribute("sets",sets);
-        var id = ((WorkerDto) req.getSession().getAttribute("worker")).getId();
-        req.setAttribute("id",id);
         req.getRequestDispatcher(JspHelper.getPath("saveProductionWorker")).forward(req, resp);
     }
 

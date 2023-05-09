@@ -15,7 +15,7 @@
 <ul>
     <c:forEach var="worker" items="${requestScope.workers}">
         <li>
-            <a href="./productionEveryUser?workerId=${worker.id}">${worker.nameOfWorker} ${worker.surnameOfWorker}</a>
+            <a href="./productionEveryUser?id=${worker.id}">${worker.nameOfWorker} ${worker.surnameOfWorker}</a>
         </li>
     </c:forEach>
 </ul><br/>

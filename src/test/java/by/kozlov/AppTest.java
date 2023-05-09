@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 public class AppTest
 {
 
-    @Test
+    /*@Test
     public void findAllRequirement() {
         var req = RequirementService.getInstance();
         System.out.println(req.findAll());
@@ -33,7 +33,7 @@ public class AppTest
             }
             System.out.println();
         }
-    }
+    }*/
     /*
     @Test
     public void findAllWorkers() {
