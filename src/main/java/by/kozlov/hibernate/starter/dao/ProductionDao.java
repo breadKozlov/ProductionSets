@@ -37,6 +37,19 @@ public class ProductionDao implements DaoHibernate<Integer,Production> {
             WHERE P.id = :id
             """;
 
+    private static final String FIND_SUM_ALL_SETS = """
+            SELECT P.set.id,sum(P.madeSets) FROM Production P
+            group by P.set.id  
+            """;
+
+    public List<Object[]> findSumAllReqMat(Session session) {
+        try {
+            return session.createQuery(FIND_SUM_ALL_SETS,Object[].class).list();
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
+    }
+
     public List<Production> findAllByWorkerId(Session session, Integer idWorker) {
         try {
             return session.createQuery(FIND_BY_ID_WORKER_HQL,Production.class)

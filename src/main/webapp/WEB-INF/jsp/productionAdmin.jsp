@@ -17,25 +17,6 @@
 <body>
 <%@ include file="header.jsp"%>
 <%@ include file="return.jsp"%>
-<div>
-    <c:if test="${not empty requestScope.sets}">
-        <h2>His released sets: </h2>
-        <table>
-           <thead>
-              <tr><th>Name of set</th><th>Made sets</th><th>Date of production</th><tr>
-           </thead>
-           <tbody>
-                   <c:forEach var="set" items="${requestScope.sets}">
-                       <tr><td>${set.set.nameOfSet}</td>
-                       <td>${set.madeSets}</td>
-                       <td>${set.dateOfProduction}</td>
-                       <td><a href='./deleteSet?id=${set.id}'>Delete</a></td>
-                       <td><a href='./updateSet?id=${set.id}'>Update</a></td></tr>
-                   </c:forEach>
-           </tbody>
-        </table>
-    </c:if>
-</div>
 <h2>Production: </h2>
 <table>
    <thead>

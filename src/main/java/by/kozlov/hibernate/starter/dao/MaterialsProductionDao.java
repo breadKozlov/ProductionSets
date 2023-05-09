@@ -40,10 +40,24 @@ public class MaterialsProductionDao implements DaoHibernate<Integer,MaterialsPro
             WHERE M.id = :id
             """;
 
+    private static final String FIND_SUM_REQ_MAT = """
+            SELECT M.material.nameOfMaterial as name_1,sum(M.quantity)
+            from MaterialsProduction M
+            group by name_1
+            """;
+
     public List<MaterialsProduction> findAllByBrigadeId(Session session, Integer brigadeId) {
         try {
             return session.createQuery(FIND_BY_ID_BRIGADE_HQL, MaterialsProduction.class)
                     .setParameter("id",brigadeId).list();
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
+    }
+
+    public List<Object[]> findSumAllRelMat(Session session) {
+        try {
+            return session.createQuery(FIND_SUM_REQ_MAT,Object[].class).list();
         } catch (Exception ex) {
             throw new DaoException(ex);
         }

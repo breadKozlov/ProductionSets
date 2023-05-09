@@ -21,6 +21,7 @@
 </ul><br/>
 <a href='./productionAdmin'>Production</a><br/>
 <a href='./requirement'>Requirement</a><br/>
-<a href='./materialsProductionAdmin'>Materials production</a>
+<a href='./materialsProductionAdmin'>Materials production</a><br/>
+<a href='./planProduction'>Plan production</a>
 </body>
 </html>

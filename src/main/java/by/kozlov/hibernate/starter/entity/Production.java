@@ -39,4 +39,9 @@ public class Production {
         this.worker = worker;
         this.worker.getProductions().add(this);
     }
+
+    public String fullName() {
+        return worker.getNameOfWorker() + " " + worker.getSurnameOfWorker() + " "
+                + set.getNameOfSet() + " " + madeSets;
+    }
 }

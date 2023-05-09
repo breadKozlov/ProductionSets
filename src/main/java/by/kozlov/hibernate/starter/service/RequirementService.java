@@ -55,7 +55,7 @@ public class RequirementService {
         }
     }
 
-    public List<Object[]> findSum() {
+    public List<Object[]> findSumReqMaterials() {
         try(var session = sessionFactory.openSession()) {
             List<Object[]> sum;
             session.beginTransaction();
