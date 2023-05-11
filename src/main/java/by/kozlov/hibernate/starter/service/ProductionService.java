@@ -106,6 +106,16 @@ public class ProductionService {
         }
     }
 
+    public List<Object[]> findSumReqMaterials() {
+        try(var session = sessionFactory.openSession()) {
+            List<Object[]> sum;
+            session.beginTransaction();
+            sum = productionDao.findSumAllProdSets(session);
+            session.getTransaction().commit();
+            return sum;
+        }
+    }
+
     private ProductionService() {}
 
     public static ProductionService getInstance() {

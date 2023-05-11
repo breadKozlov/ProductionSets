@@ -18,7 +18,8 @@ public class PlanProductionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        req.setAttribute("productions",differenceMaterialsService.findAllDifferenceProductionMaterials());
+        req.setAttribute("materials",differenceMaterialsService.findAllDifferenceProductionMaterials());
+        req.setAttribute("sets",differenceMaterialsService.findAllDifferenceProductionSets());
         req.getRequestDispatcher(JspHelper.getPath("planProduction"))
                 .forward(req,resp);
     }

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import javax.persistence.Table;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -25,24 +26,24 @@ import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 class ProductionDaoTest {
 
     private final SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
-    private final ProductionDao production = ProductionDao.getInstance();
+    private final ProductionDao productionDao = ProductionDao.getInstance();
 
-   // @BeforeAll
-    //public void initDb() {
-        //TestDataImporter.importData(sessionFactory);
-    //}
+   @BeforeAll
+    public void initDb() {
+        TestDataImporter.importData(sessionFactory);
+    }
 
-    //@AfterAll
-   // public void finish() {
-       // sessionFactory.close();
-    //}
+    @AfterAll
+     public void finish() {
+        sessionFactory.close();
+    }
 
     @Test
     void findAll() {
         @Cleanup Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        List<Production> results = production.findAll(session);
+        List<Production> results = productionDao.findAll(session);
         assertThat(results).hasSize(7);
 
         List<String> fullNames = results.stream().map(Production::fullName).collect(toList());
@@ -54,14 +55,46 @@ class ProductionDaoTest {
     }
 
     @Test
-    void findDifference() {
-        @Cleanup var session = sessionFactory.openSession();
+    void findDifferenceBetweenReqAndRealProductions() {
+
+        @Cleanup Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        List<Object[]> results = productionDao.findSumAllProdSets(session);
+        assertThat(results).hasSize(4);
+
+        List<String> orgNames = results.stream().map(a -> (String) a[0]).collect(toList());
+        assertThat(orgNames).contains("4371", "54327", "5440","6501");
+
+        List<Double> orgSumReqProd = results.stream().map(a -> (Double) a[1]).collect(toList());
+        assertThat(orgSumReqProd).contains(10.0, 245.0, 123.0,364.0);
+
+        List<Long> orgSumRelProd = results.stream().map(a -> (Long) a[2]).collect(toList());
+        assertThat(orgSumRelProd).contains(74L,88L,123L,188L);
+
+        session.getTransaction().commit();
+
+        /*@Cleanup var session = sessionFactory.openSession();
         var requirementDao = RequirementDao.getInstance();
         session.beginTransaction();
 
-
-
         var list = requirementDao.findSumAllReqMat(session);
+        for(Object[] objects: list) {
+            for (Object object : objects) {
+                System.out.print(object + " ");
+            }
+            System.out.println();
+        }
+        session.getTransaction().commit();*/
+    }
+
+    @Test
+    void findDiffSet() {
+        @Cleanup var session = sessionFactory.openSession();
+        var productionDao = ProductionDao.getInstance();
+        session.beginTransaction();
+
+        var list = productionDao.findSumAllProdSets(session);
         for(Object[] objects: list) {
             for (Object object : objects) {
                 System.out.print(object + " ");

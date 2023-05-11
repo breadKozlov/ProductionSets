@@ -38,11 +38,12 @@ public class ProductionDao implements DaoHibernate<Integer,Production> {
             """;
 
     private static final String FIND_SUM_ALL_SETS = """
-            SELECT P.set.id,sum(P.madeSets) FROM Production P
-            group by P.set.id  
+            SELECT R.set.nameOfSet as name,avg(R.totalSets),(select sum(P.madeSets)
+            from Production P where P.set.nameOfSet = R.set.nameOfSet)
+            from Requirement R group by name order by name asc
             """;
 
-    public List<Object[]> findSumAllReqMat(Session session) {
+    public List<Object[]> findSumAllProdSets(Session session) {
         try {
             return session.createQuery(FIND_SUM_ALL_SETS,Object[].class).list();
         } catch (Exception ex) {

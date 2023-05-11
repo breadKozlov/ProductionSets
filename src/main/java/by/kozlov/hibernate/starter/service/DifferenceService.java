@@ -16,6 +16,7 @@ public class DifferenceService {
     private static final DifferenceService INSTANCE = new DifferenceService();
 
     private final RequirementService requirementService = RequirementService.getInstance();
+    private final ProductionService productionService = ProductionService.getInstance();
 
     public List<DifferenceDto> findAllDifferenceProductionMaterials() {
         var objects = requirementService.findSumReqMaterials();
@@ -33,7 +34,17 @@ public class DifferenceService {
         return list;
     }
 
-    //public List<DifferenceDto> findAllDifferenceProductionSets()
+    public List<DifferenceDto> findAllDifferenceProductionSets() {
+
+        return productionService.findSumReqMaterials().stream().map(array ->
+                Arrays.stream(array).map(Optional::ofNullable).collect(Collectors.toList())).toList()
+                .stream().map(product -> {
+                    var name = String.valueOf(product.get(0).orElse("No name"));
+                    var req = String.valueOf(product.get(1).orElse("0.0"));
+                    var rel = String.valueOf(product.get(2).orElse("0.0"));
+                    return new DifferenceDto(name,Double.valueOf(req),Double.valueOf(rel));
+                        }).collect(Collectors.toList());
+    }
     public static DifferenceService getInstance() {
         return INSTANCE;
     }

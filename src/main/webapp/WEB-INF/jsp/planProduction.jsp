@@ -24,12 +24,29 @@
     <th>Difference</th><tr>
   </thead>
   <tbody>
-  <c:if test="${not empty requestScope.productions}">
-    <c:forEach var="product" items="${requestScope.productions}">
-      <tr><td>${product.nameOfMaterial}</td>
-        <td>${product.requiredMaterial}</td>
-        <td>${product.releasedMaterial}</td>
-        <td>${product.difference()}</td></tr>
+  <c:if test="${not empty requestScope.materials}">
+    <c:forEach var="material" items="${requestScope.materials}">
+      <tr><td>${material.nameOfProduct}</td>
+        <td>${material.requiredQuantity}</td>
+        <td>${material.releasedQuantity}</td>
+        <td>${material.difference()}</td></tr>
+    </c:forEach>
+  </c:if>
+  </tbody>
+</table>
+<h2>Plan sets: </h2>
+<table>
+  <thead>
+  <tr><th>Name of set</th><th>Required</th><th>Released</th>
+    <th>Difference</th><tr>
+  </thead>
+  <tbody>
+  <c:if test="${not empty requestScope.sets}">
+    <c:forEach var="set" items="${requestScope.sets}">
+      <tr><td>${set.nameOfProduct}</td>
+        <td>${set.requiredQuantity}</td>
+        <td>${set.releasedQuantity}</td>
+        <td>${set.difference()}</td></tr>
     </c:forEach>
   </c:if>
   </tbody>

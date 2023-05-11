@@ -38,7 +38,7 @@ public class RequirementDao implements DaoHibernate<Integer,Requirement> {
             """;
 
     private static final String FIND_SUM_REQ_MAT = """
-            SELECT R.material.nameOfMaterial as name,sum(R.totalSets),(select sum(M.quantity)
+            SELECT R.material.nameOfMaterial as name,sum(R.totalSets * R.unitCost),(select sum(M.quantity)
             from MaterialsProduction M where M.material.nameOfMaterial = R.material.nameOfMaterial)
             from Requirement R group by name order by name asc
             """;

@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="697f81f2-90af-4957-aa0c-feab030288e8" name="Changes" comment="add useful hql on production materials" />
+    <list default="true" id="697f81f2-90af-4957-aa0c-feab030288e8" name="Changes" comment="add useful hql on production materials">
+      <change afterPath="$PROJECT_DIR$/.idea/ProductionSets.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/ProductionDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/ProductionDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/RequirementDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/RequirementDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/DifferenceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/DifferenceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/ProductionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/ProductionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/servlet/PlanProductionServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/servlet/PlanProductionServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/planProduction.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/planProduction.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/by/kozlov/dao/ProductionDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/by/kozlov/dao/ProductionDaoTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,10 +66,11 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Павел/IdeaProjects/hql-task",
+    "last_opened_file_path": "/home/pahadaha/workMaven/ProductionSets",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -78,38 +92,7 @@
       <recent name="by.kozlov.jdbc.starter.utils" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ProductionDaoTest.findDiff">
-    <configuration name="AppTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ProductionSets" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="by.kozlov.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="by.kozlov" />
-      <option name="MAIN_CLASS_NAME" value="by.kozlov.AppTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AppTest.findAllProductions" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ProductionSets" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="by.kozlov.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="by.kozlov" />
-      <option name="MAIN_CLASS_NAME" value="by.kozlov.AppTest" />
-      <option name="METHOD_NAME" value="findAllProductions" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.ProductionDaoTest.findDifferenceBetweenReqAndRealProductions">
     <configuration name="AppTest.findAllWorkersService" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ProductionSets" />
       <extension name="coverage">
@@ -142,6 +125,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ProductionDaoTest.findDiffSet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ProductionSets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="by.kozlov.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="by.kozlov.dao" />
+      <option name="MAIN_CLASS_NAME" value="by.kozlov.dao.ProductionDaoTest" />
+      <option name="METHOD_NAME" value="findDiffSet" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ProductionDaoTest.findDifference" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ProductionSets" />
       <extension name="coverage">
@@ -158,13 +157,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ProductionDaoTest.findDifferenceBetweenReqAndRealProductions" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ProductionSets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="by.kozlov.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="by.kozlov.dao" />
+      <option name="MAIN_CLASS_NAME" value="by.kozlov.dao.ProductionDaoTest" />
+      <option name="METHOD_NAME" value="findDifferenceBetweenReqAndRealProductions" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ProductionDaoTest.findDifferenceBetweenReqAndRealProductions" />
+        <item itemvalue="JUnit.ProductionDaoTest.findDiffSet" />
         <item itemvalue="JUnit.ProductionDaoTest.findDiff" />
         <item itemvalue="JUnit.ProductionDaoTest.findDifference" />
         <item itemvalue="JUnit.AppTest.findAllWorkersService" />
-        <item itemvalue="JUnit.AppTest" />
-        <item itemvalue="JUnit.AppTest.findAllProductions" />
       </list>
     </recent_temporary>
   </component>
@@ -182,6 +197,7 @@
       <workItem from="1683185701869" duration="15430000" />
       <workItem from="1683267368659" duration="17737000" />
       <workItem from="1683788483367" duration="20230000" />
+      <workItem from="1683821046774" duration="4517000" />
     </task>
     <task id="LOCAL-00001" summary="Add some functions">
       <created>1681906641090</created>
