@@ -1,0 +1,603 @@
+Index: src/main/java/by/kozlov/hibernate/starter/service/WorkerService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package by.kozlov.hibernate.starter.service;\r\n\r\nimport by.kozlov.hibernate.starter.dao.WorkerDao;\r\nimport by.kozlov.hibernate.starter.dto.WorkerDto;\r\nimport by.kozlov.hibernate.starter.mapper.WorkerMapper;\r\nimport by.kozlov.hibernate.starter.utils.HibernateUtil;\r\nimport org.hibernate.cfg.Configuration;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.Optional;\r\nimport java.util.stream.Collectors;\r\n\r\npublic class WorkerService {\r\n\r\n    private final Configuration configuration = HibernateUtil.getConfig();\r\n\r\n    private static final WorkerService INSTANCE = new WorkerService();\r\n    private final WorkerDao workerDao = WorkerDao.getInstance();\r\n    private final WorkerMapper workerMapper = WorkerMapper.getInstance();\r\n\r\n    public Optional<WorkerDto> findId(Integer id) {\r\n\r\n        return workerDao.findById(id).map(\r\n                workerMapper::mapFrom\r\n        );\r\n    }\r\n\r\n    public Optional<WorkerDto> findByEmail(String email) {\r\n\r\n        return workerDao.findByEmail(email).map(\r\n                workerMapper::mapFrom\r\n        );\r\n    }\r\n\r\n    public List<WorkerDto> findAll() {\r\n\r\n        List<WorkerDto> workers;\r\n        try (var sessionFactory = configuration.buildSessionFactory();\r\n             var session = sessionFactory.openSession()) {\r\n\r\n            session.beginTransaction();\r\n            workers =  workerDao.findAllHibernate(session).stream()\r\n                    .map(workerMapper::mapFrom).collect(Collectors.toList());\r\n            session.getTransaction().commit();\r\n        }\r\n        return workers;\r\n    }\r\n\r\n    public Optional<WorkerDto> find(String id) {\r\n        return workerDao.findById(Integer.parseInt(id)).map(\r\n                workerMapper::mapFrom\r\n        );\r\n    }\r\n\r\n\r\n    private WorkerService() {\r\n    }\r\n\r\n    public static WorkerService getInstance() {\r\n        return INSTANCE;\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/by/kozlov/hibernate/starter/service/WorkerService.java b/src/main/java/by/kozlov/hibernate/starter/service/WorkerService.java
+--- a/src/main/java/by/kozlov/hibernate/starter/service/WorkerService.java	(revision 9098958739c6338ba90fd4097b71b173a6db8feb)
++++ b/src/main/java/by/kozlov/hibernate/starter/service/WorkerService.java	(date 1683287478941)
+@@ -6,7 +6,6 @@
+ import by.kozlov.hibernate.starter.utils.HibernateUtil;
+ import org.hibernate.cfg.Configuration;
+ 
+-import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Optional;
+ import java.util.stream.Collectors;
+@@ -19,7 +18,7 @@
+     private final WorkerDao workerDao = WorkerDao.getInstance();
+     private final WorkerMapper workerMapper = WorkerMapper.getInstance();
+ 
+-    public Optional<WorkerDto> findId(Integer id) {
++    public Optional<WorkerDto> findById(Integer id) {
+ 
+         return workerDao.findById(id).map(
+                 workerMapper::mapFrom
+@@ -27,30 +26,40 @@
+     }
+ 
+     public Optional<WorkerDto> findByEmail(String email) {
+-
+-        return workerDao.findByEmail(email).map(
++        try (var sessionFactory = configuration.buildSessionFactory();
++             var session = sessionFactory.openSession()) {
++            Optional<WorkerDto> workerDto;
++            session.beginTransaction();
++             workerDto = workerDao.findByEmailHibernate(session,email).map(
+                 workerMapper::mapFrom
+-        );
++            );
++            session.getTransaction().commit();
++            return workerDto;
++        }
+     }
+ 
+     public List<WorkerDto> findAll() {
+-
+-        List<WorkerDto> workers;
+         try (var sessionFactory = configuration.buildSessionFactory();
+              var session = sessionFactory.openSession()) {
+-
++            List<WorkerDto> workers;
+             session.beginTransaction();
+             workers =  workerDao.findAllHibernate(session).stream()
+                     .map(workerMapper::mapFrom).collect(Collectors.toList());
+             session.getTransaction().commit();
+-        }
+-        return workers;
++            return workers;
++        }
+     }
+ 
+     public Optional<WorkerDto> find(String id) {
+-        return workerDao.findById(Integer.parseInt(id)).map(
+-                workerMapper::mapFrom
+-        );
++        try (var sessionFactory = configuration.buildSessionFactory();
++             var session = sessionFactory.openSession()) {
++            Optional<WorkerDto> workerDto;
++            session.beginTransaction();
++            workerDto = workerDao.findByIdHibernate(session,Integer.parseInt(id)).map(
++                    workerMapper::mapFrom
++            );
++            return workerDto;
++        }
+     }
+ 
+ 
+Index: src/main/java/by/kozlov/hibernate/starter/dao/WorkerDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package by.kozlov.hibernate.starter.dao;\r\n\r\nimport by.kozlov.hibernate.starter.entity.Brigade;\r\nimport by.kozlov.hibernate.starter.entity.Worker;\r\nimport by.kozlov.hibernate.starter.exception.DaoException;\r\nimport by.kozlov.hibernate.starter.utils.ConnectionManager;\r\nimport org.hibernate.Session;\r\n\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport java.sql.Statement;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.Optional;\r\n\r\npublic class WorkerDao implements Dao<Integer, Worker>{\r\n\r\n    private static final WorkerDao INSTANCE = new WorkerDao();\r\n\r\n    private static final String FIND_ALL = \"\"\"\r\n            SELECT w.id,w.name_worker,w.surname_worker,w.speciality,w.rank,w.experience,w.brigade_number,w.email,\r\n            b.name_of_brigade,b.phone_number_of_foreman\r\n            FROM public.workers w\r\n            LEFT JOIN public.brigades b on b.id = w.brigade_number\r\n            \"\"\";\r\n\r\n    private static final String UPDATE_SQL = \"\"\"\r\n            UPDATE public.workers SET\r\n            name_worker = ?,\r\n            surname_worker = ?,\r\n            speciality = ?,\r\n            rank = ?,\r\n            experience = ?,\r\n            brigade_number = ?,\r\n            email = ?\r\n            WHERE id = ?\r\n            \"\"\";\r\n\r\n    private static final String FIND_BY_ID = FIND_ALL + \"\"\"\r\n            WHERE w.id = ?\r\n            \"\"\";\r\n\r\n    private static final String FIND_BY_EMAIL = FIND_ALL + \"\"\"\r\n            WHERE w.email = ?\r\n            \"\"\";\r\n\r\n    private static final String DELETE_SQL = \"\"\"\r\n            DELETE FROM public.workers\r\n            WHERE id = ?\r\n            \"\"\";\r\n\r\n    private static final String SAVE_SQL = \"\"\"\r\n            INSERT INTO public.workers (name_worker,surname_worker,speciality,rank,experience,brigade_number,email) \r\n            VALUES (?, ?, ?, ?, ?, ?, ?)\r\n            \"\"\";\r\n    @Override\r\n    public boolean update(Worker worker) {\r\n        try(var connection = ConnectionManager.get();\r\n            var statement = connection.prepareStatement(UPDATE_SQL)) {\r\n            statement.setString(1,worker.getNameOfWorker());\r\n            statement.setString(2,worker.getSurnameOfWorker());\r\n            statement.setString(3,worker.getSpeciality());\r\n            statement.setInt(4,worker.getRank());\r\n            statement.setInt(5,worker.getExperience());\r\n            statement.setInt(6,worker.getBrigade().getId());\r\n            statement.setString(7,worker.getEmail());\r\n            statement.setInt(8,worker.getId());\r\n            return statement.executeUpdate() > 0;\r\n        } catch (SQLException ex) {\r\n            throw new DaoException(ex);\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public Optional<Worker> findById(Integer id) {\r\n        try (var connection = ConnectionManager.get();\r\n             var statement = connection.prepareStatement(FIND_BY_ID)) {\r\n            Worker worker = null;\r\n            statement.setInt(1, id);\r\n            var result = statement.executeQuery();\r\n            if (result.next())\r\n                worker = buildWorker(result);\r\n            return Optional.ofNullable(worker);\r\n        } catch (SQLException e) {\r\n            throw new DaoException(e);\r\n        }\r\n    }\r\n\r\n    public Optional<Worker> findByEmail(String email) {\r\n        try (var connection = ConnectionManager.get();\r\n             var statement = connection.prepareStatement(FIND_BY_EMAIL)) {\r\n            Worker worker = null;\r\n            statement.setString(1, email);\r\n            var result = statement.executeQuery();\r\n            if (result.next())\r\n                worker = buildWorker(result);\r\n            return Optional.ofNullable(worker);\r\n        } catch (SQLException e) {\r\n            throw new DaoException(e);\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public List<Worker> findAll() {\r\n        try(var connection = ConnectionManager.get();\r\n            var statement = connection.prepareStatement(FIND_ALL)) {\r\n            List<Worker> workers = new ArrayList<>();\r\n            var result = statement.executeQuery();\r\n            while (result.next()) {\r\n                workers.add(buildWorker(result));\r\n            }\r\n            return workers;\r\n        } catch (SQLException ex) {\r\n            throw new DaoException(ex);\r\n        }\r\n    }\r\n\r\n    public List<Worker> findAllHibernate(Session session) {\r\n        try {\r\n            return session.createQuery(\"FROM Worker W JOIN FETCH W.brigade\",Worker.class).list();\r\n        } catch (Exception ex) {\r\n            throw new DaoException(ex);\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public boolean delete(Integer id) {\r\n        try (var connection = ConnectionManager.get();\r\n             var statement = connection.prepareStatement(DELETE_SQL)) {\r\n            statement.setInt(1, id);\r\n            return statement.executeUpdate() > 0;\r\n        } catch (SQLException e) {\r\n            throw new DaoException(e);\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public Worker save(Worker worker) {\r\n        try (var connection = ConnectionManager.get();\r\n             var statement = connection\r\n                     .prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS)) {\r\n            statement.setString(1, worker.getNameOfWorker());\r\n            statement.setString(2, worker.getSurnameOfWorker());\r\n            statement.setString(3, worker.getSpeciality());\r\n            statement.setInt(4, worker.getRank());\r\n            statement.setInt(5, worker.getExperience());\r\n            statement.setInt(6, worker.getBrigade().getId());\r\n            statement.setString(7,worker.getEmail());\r\n            statement.executeUpdate();\r\n            var generatedKeys = statement.getGeneratedKeys();\r\n            if (generatedKeys.next())\r\n                worker.setId(generatedKeys.getInt(\"id\"));\r\n            return worker;\r\n        } catch (SQLException e) {\r\n            throw new DaoException(e);\r\n        }\r\n    }\r\n\r\n    private Worker buildWorker(ResultSet result) throws SQLException {\r\n\r\n        var brigade = Brigade.builder()\r\n                .id(result.getObject(\"brigade_number\",Integer.class))\r\n                .nameOfBrigade(result.getObject(\"name_of_brigade\",String.class))\r\n                .phoneNumberOfForeman(result.getObject(\"phone_number_of_foreman\",String.class))\r\n                .build();\r\n\r\n        return Worker.builder()\r\n                .id(result.getObject(\"id\",Integer.class))\r\n                .nameOfWorker(result.getObject(\"name_worker\",String.class))\r\n                .surnameOfWorker(result.getObject(\"surname_worker\",String.class))\r\n                .speciality(result.getObject(\"speciality\",String.class))\r\n                .rank(result.getObject(\"rank\",Integer.class))\r\n                .experience(result.getObject(\"experience\",Integer.class))\r\n                .brigade(brigade)\r\n                .email(result.getObject(\"email\",String.class))\r\n                .build();\r\n    }\r\n\r\n    private WorkerDao() {}\r\n\r\n    public static WorkerDao getInstance() {\r\n        return INSTANCE;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/by/kozlov/hibernate/starter/dao/WorkerDao.java b/src/main/java/by/kozlov/hibernate/starter/dao/WorkerDao.java
+--- a/src/main/java/by/kozlov/hibernate/starter/dao/WorkerDao.java	(revision 9098958739c6338ba90fd4097b71b173a6db8feb)
++++ b/src/main/java/by/kozlov/hibernate/starter/dao/WorkerDao.java	(date 1683289510290)
+@@ -13,68 +13,35 @@
+ import java.util.List;
+ import java.util.Optional;
+ 
+-public class WorkerDao implements Dao<Integer, Worker>{
++public class WorkerDao implements DaoHibernate<Integer,Worker,Session>{
+ 
+     private static final WorkerDao INSTANCE = new WorkerDao();
+ 
+-    private static final String FIND_ALL = """
++    private static final String FIND_ALL_D = """
+             SELECT w.id,w.name_worker,w.surname_worker,w.speciality,w.rank,w.experience,w.brigade_number,w.email,
+             b.name_of_brigade,b.phone_number_of_foreman
+             FROM public.workers w
+             LEFT JOIN public.brigades b on b.id = w.brigade_number
+             """;
+ 
+-    private static final String UPDATE_SQL = """
+-            UPDATE public.workers SET
+-            name_worker = ?,
+-            surname_worker = ?,
+-            speciality = ?,
+-            rank = ?,
+-            experience = ?,
+-            brigade_number = ?,
+-            email = ?
+-            WHERE id = ?
++    private static final String FIND_BY_ID_D = FIND_ALL_D + """
++            WHERE w.id = ?
++            """;
++    private static final String FIND_ALL = """
++            FROM Worker W JOIN FETCH W.brigade
+             """;
+ 
+     private static final String FIND_BY_ID = FIND_ALL + """
+-            WHERE w.id = ?
++             WHERE W.id = :id
+             """;
+ 
+     private static final String FIND_BY_EMAIL = FIND_ALL + """
+-            WHERE w.email = ?
++             WHERE W.email = :email
+             """;
+ 
+-    private static final String DELETE_SQL = """
+-            DELETE FROM public.workers
+-            WHERE id = ?
+-            """;
+-
+-    private static final String SAVE_SQL = """
+-            INSERT INTO public.workers (name_worker,surname_worker,speciality,rank,experience,brigade_number,email) 
+-            VALUES (?, ?, ?, ?, ?, ?, ?)
+-            """;
+-    @Override
+-    public boolean update(Worker worker) {
+-        try(var connection = ConnectionManager.get();
+-            var statement = connection.prepareStatement(UPDATE_SQL)) {
+-            statement.setString(1,worker.getNameOfWorker());
+-            statement.setString(2,worker.getSurnameOfWorker());
+-            statement.setString(3,worker.getSpeciality());
+-            statement.setInt(4,worker.getRank());
+-            statement.setInt(5,worker.getExperience());
+-            statement.setInt(6,worker.getBrigade().getId());
+-            statement.setString(7,worker.getEmail());
+-            statement.setInt(8,worker.getId());
+-            return statement.executeUpdate() > 0;
+-        } catch (SQLException ex) {
+-            throw new DaoException(ex);
+-        }
+-    }
+-
+-    @Override
+     public Optional<Worker> findById(Integer id) {
+         try (var connection = ConnectionManager.get();
+-             var statement = connection.prepareStatement(FIND_BY_ID)) {
++             var statement = connection.prepareStatement(FIND_BY_ID_D)) {
+             Worker worker = null;
+             statement.setInt(1, id);
+             var result = statement.executeQuery();
+@@ -86,76 +53,6 @@
+         }
+     }
+ 
+-    public Optional<Worker> findByEmail(String email) {
+-        try (var connection = ConnectionManager.get();
+-             var statement = connection.prepareStatement(FIND_BY_EMAIL)) {
+-            Worker worker = null;
+-            statement.setString(1, email);
+-            var result = statement.executeQuery();
+-            if (result.next())
+-                worker = buildWorker(result);
+-            return Optional.ofNullable(worker);
+-        } catch (SQLException e) {
+-            throw new DaoException(e);
+-        }
+-    }
+-
+-    @Override
+-    public List<Worker> findAll() {
+-        try(var connection = ConnectionManager.get();
+-            var statement = connection.prepareStatement(FIND_ALL)) {
+-            List<Worker> workers = new ArrayList<>();
+-            var result = statement.executeQuery();
+-            while (result.next()) {
+-                workers.add(buildWorker(result));
+-            }
+-            return workers;
+-        } catch (SQLException ex) {
+-            throw new DaoException(ex);
+-        }
+-    }
+-
+-    public List<Worker> findAllHibernate(Session session) {
+-        try {
+-            return session.createQuery("FROM Worker W JOIN FETCH W.brigade",Worker.class).list();
+-        } catch (Exception ex) {
+-            throw new DaoException(ex);
+-        }
+-    }
+-
+-    @Override
+-    public boolean delete(Integer id) {
+-        try (var connection = ConnectionManager.get();
+-             var statement = connection.prepareStatement(DELETE_SQL)) {
+-            statement.setInt(1, id);
+-            return statement.executeUpdate() > 0;
+-        } catch (SQLException e) {
+-            throw new DaoException(e);
+-        }
+-    }
+-
+-    @Override
+-    public Worker save(Worker worker) {
+-        try (var connection = ConnectionManager.get();
+-             var statement = connection
+-                     .prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS)) {
+-            statement.setString(1, worker.getNameOfWorker());
+-            statement.setString(2, worker.getSurnameOfWorker());
+-            statement.setString(3, worker.getSpeciality());
+-            statement.setInt(4, worker.getRank());
+-            statement.setInt(5, worker.getExperience());
+-            statement.setInt(6, worker.getBrigade().getId());
+-            statement.setString(7,worker.getEmail());
+-            statement.executeUpdate();
+-            var generatedKeys = statement.getGeneratedKeys();
+-            if (generatedKeys.next())
+-                worker.setId(generatedKeys.getInt("id"));
+-            return worker;
+-        } catch (SQLException e) {
+-            throw new DaoException(e);
+-        }
+-    }
+-
+     private Worker buildWorker(ResultSet result) throws SQLException {
+ 
+         var brigade = Brigade.builder()
+@@ -176,6 +73,49 @@
+                 .build();
+     }
+ 
++    @Override
++    public boolean updateHibernate(Session session, Worker worker) {
++        return false;
++    }
++
++    @Override
++    public Optional<Worker> findByIdHibernate(Session session, Integer id) {
++        try {
++            return session.createQuery(FIND_BY_ID,Worker.class)
++                    .setParameter("id",id).list().stream().findFirst();
++        } catch (Exception ex) {
++            throw new DaoException(ex);
++        }
++    }
++
++    public Optional<Worker> findByEmailHibernate(Session session, String email) {
++        try {
++            return session.createQuery(FIND_BY_EMAIL,Worker.class)
++                    .setParameter("email",email).list().stream().findFirst();
++        } catch (Exception ex) {
++            throw new DaoException(ex);
++        }
++    }
++
++    @Override
++    public List<Worker> findAllHibernate(Session session) {
++        try {
++            return session.createQuery(FIND_ALL,Worker.class).list();
++        } catch (Exception ex) {
++            throw new DaoException(ex);
++        }
++    }
++
++    @Override
++    public boolean deleteHibernate(Session session, Integer id) {
++        return false;
++    }
++
++    @Override
++    public Worker saveHibernate(Session session, Worker worker) {
++        return null;
++    }
++
+     private WorkerDao() {}
+ 
+     public static WorkerDao getInstance() {
+Index: src/test/java/by/kozlov/AppTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package by.kozlov;\r\n\r\nimport by.kozlov.hibernate.starter.entity.Worker;\r\nimport by.kozlov.hibernate.starter.service.WorkerService;\r\nimport by.kozlov.hibernate.starter.utils.HibernateUtil;\r\nimport lombok.Cleanup;\r\nimport org.junit.jupiter.api.Test;\r\n\r\npublic class AppTest\r\n{\r\n    @Test\r\n    public void findAllWorkers() {\r\n\r\n        @Cleanup var sessionFactory = HibernateUtil.getConfig().buildSessionFactory();\r\n        @Cleanup var session = sessionFactory.openSession();\r\n\r\n        session.beginTransaction();\r\n\r\n        var workers = session.createQuery(\"FROM Worker\", Worker.class)\r\n                .list();\r\n\r\n        System.out.println(workers);\r\n\r\n        session.getTransaction().commit();\r\n\r\n    }\r\n\r\n    @Test\r\n    public void findAllWorkersService() {\r\n        var workersService = WorkerService.getInstance();\r\n        System.out.println(workersService.findAll());\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/by/kozlov/AppTest.java b/src/test/java/by/kozlov/AppTest.java
+--- a/src/test/java/by/kozlov/AppTest.java	(revision 9098958739c6338ba90fd4097b71b173a6db8feb)
++++ b/src/test/java/by/kozlov/AppTest.java	(date 1683292227208)
+@@ -1,6 +1,7 @@
+ package by.kozlov;
+ 
+ import by.kozlov.hibernate.starter.entity.Worker;
++import by.kozlov.hibernate.starter.service.ProductionService;
+ import by.kozlov.hibernate.starter.service.WorkerService;
+ import by.kozlov.hibernate.starter.utils.HibernateUtil;
+ import lombok.Cleanup;
+@@ -8,7 +9,7 @@
+ 
+ public class AppTest
+ {
+-    @Test
++   /* @Test
+     public void findAllWorkers() {
+ 
+         @Cleanup var sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+@@ -30,4 +31,22 @@
+         var workersService = WorkerService.getInstance();
+         System.out.println(workersService.findAll());
+     }
++
++    @Test
++    public void findAllByEmail() {
++        var workersService = WorkerService.getInstance();
++        System.out.println(workersService.findByEmail("holera11@gmail.com"));
++    }
++
++    @Test
++    public void findByIdString() {
++        var workersService = WorkerService.getInstance();
++        System.out.println(workersService.find("1"));
++    }
++
++    @Test
++    public void findAllProductions() {
++        var productionsService = ProductionService.getInstance();
++        System.out.println(productionsService.findAll());
++    } */
+ }
+Index: src/main/java/by/kozlov/hibernate/starter/entity/Production.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package by.kozlov.hibernate.starter.entity;\r\n\r\nimport lombok.AllArgsConstructor;\r\nimport lombok.Builder;\r\nimport lombok.Data;\r\nimport lombok.NoArgsConstructor;\r\n\r\nimport java.time.LocalDate;\r\n\r\n@Data\r\n@AllArgsConstructor\r\n@NoArgsConstructor\r\n@Builder\r\npublic class Production {\r\n\r\n    private Integer id;\r\n    private Worker worker;\r\n    private Set set;\r\n    private Integer madeSets;\r\n    private LocalDate dateOfProduction;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/by/kozlov/hibernate/starter/entity/Production.java b/src/main/java/by/kozlov/hibernate/starter/entity/Production.java
+--- a/src/main/java/by/kozlov/hibernate/starter/entity/Production.java	(revision 9098958739c6338ba90fd4097b71b173a6db8feb)
++++ b/src/main/java/by/kozlov/hibernate/starter/entity/Production.java	(date 1683291168647)
+@@ -5,17 +5,37 @@
+ import lombok.Data;
+ import lombok.NoArgsConstructor;
+ 
++import javax.persistence.*;
+ import java.time.LocalDate;
+ 
+ @Data
+ @AllArgsConstructor
+ @NoArgsConstructor
+ @Builder
++@Entity
++@Table(name = "production", schema = "public")
+ public class Production {
+ 
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
+     private Integer id;
++    @ManyToOne
++    @JoinColumn(name = "id_worker")
+     private Worker worker;
++    @ManyToOne
++    @JoinColumn(name = "id_set")
+     private Set set;
++    @Column(name = "made_sets")
+     private Integer madeSets;
++    @Column(name = "date_of_production")
+     private LocalDate dateOfProduction;
++
++    public void setWorker(Worker worker) {
++        this.worker = worker;
++        this.worker.getProductions().add(this);
++    }
++    public void setSet(Set set) {
++        this.set = set;
++        this.set.getProductions().add(this);
++    }
+ }
+Index: src/main/java/by/kozlov/hibernate/starter/service/ProductionService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package by.kozlov.hibernate.starter.service;\r\n\r\nimport by.kozlov.hibernate.starter.exception.ValidationException;\r\nimport by.kozlov.hibernate.starter.validator.CreateProductionValidator;\r\nimport by.kozlov.hibernate.starter.validator.UpdateProductionValidator;\r\nimport by.kozlov.hibernate.starter.dao.ProductionDao;\r\nimport by.kozlov.hibernate.starter.dto.CreateProductionDto;\r\nimport by.kozlov.hibernate.starter.dto.ProductionDto;\r\nimport by.kozlov.hibernate.starter.dto.UpdateProductionDto;\r\nimport by.kozlov.hibernate.starter.mapper.CreateProductionMapper;\r\nimport by.kozlov.hibernate.starter.mapper.ProductionMapper;\r\nimport by.kozlov.hibernate.starter.mapper.UpdateProductionMapper;\r\n\r\nimport java.util.List;\r\nimport java.util.Optional;\r\nimport java.util.stream.Collectors;\r\n\r\npublic class ProductionService {\r\n\r\n    private static final ProductionService INSTANCE = new ProductionService();\r\n\r\n    private final ProductionDao productionDao = ProductionDao.getInstance();\r\n    private final ProductionMapper productionMapper = ProductionMapper.getInstance();\r\n    private final CreateProductionValidator createProductionValidator = CreateProductionValidator.getInstance();\r\n    private final CreateProductionMapper createProductionMapper = CreateProductionMapper.getInstance();\r\n    private final UpdateProductionMapper updateProductionMapper = UpdateProductionMapper.getInstance();\r\n    private final UpdateProductionValidator updateProductionValidator = UpdateProductionValidator.getInstance();\r\n\r\n    public List<ProductionDto> findAllByWorkerId(Integer id) {\r\n        return productionDao.findAllByWorkerId(id).stream().map(\r\n                productionMapper::mapFrom\r\n        ).collect(Collectors.toList());\r\n    }\r\n\r\n    public List<ProductionDto> findAll() {\r\n        return productionDao.findAll().stream().map(\r\n                productionMapper::mapFrom\r\n        ).collect(Collectors.toList());\r\n    }\r\n\r\n    public Optional<ProductionDto> findById(Integer id) {\r\n        return productionDao.findById(id).map(productionMapper::mapFrom);\r\n    }\r\n\r\n    public Integer create(CreateProductionDto productionDto) {\r\n        var validationResult = createProductionValidator.isValid(productionDto);\r\n        if (!validationResult.isValid()) {\r\n            throw new ValidationException(validationResult.getErrors());\r\n        }\r\n        var productionEntity = createProductionMapper.mapFrom(productionDto);\r\n        productionDao.save(productionEntity);\r\n        return productionEntity.getId();\r\n    }\r\n\r\n    public boolean delete(Integer id) {\r\n        return productionDao.delete(id);\r\n    }\r\n\r\n    public boolean update(UpdateProductionDto productionDto) {\r\n\r\n        var validationResult = updateProductionValidator.isValid(productionDto);\r\n        if (!validationResult.isValid()) {\r\n            throw new ValidationException(validationResult.getErrors());\r\n        }\r\n        var productionEntity = updateProductionMapper.mapFrom(productionDto);\r\n        return productionDao.update(productionEntity);\r\n    }\r\n\r\n    private ProductionService() {}\r\n\r\n    public static ProductionService getInstance() {\r\n        return INSTANCE;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/by/kozlov/hibernate/starter/service/ProductionService.java b/src/main/java/by/kozlov/hibernate/starter/service/ProductionService.java
+--- a/src/main/java/by/kozlov/hibernate/starter/service/ProductionService.java	(revision 9098958739c6338ba90fd4097b71b173a6db8feb)
++++ b/src/main/java/by/kozlov/hibernate/starter/service/ProductionService.java	(date 1683291480629)
+@@ -1,6 +1,8 @@
+ package by.kozlov.hibernate.starter.service;
+ 
++import by.kozlov.hibernate.starter.dto.WorkerDto;
+ import by.kozlov.hibernate.starter.exception.ValidationException;
++import by.kozlov.hibernate.starter.utils.HibernateUtil;
+ import by.kozlov.hibernate.starter.validator.CreateProductionValidator;
+ import by.kozlov.hibernate.starter.validator.UpdateProductionValidator;
+ import by.kozlov.hibernate.starter.dao.ProductionDao;
+@@ -10,6 +12,7 @@
+ import by.kozlov.hibernate.starter.mapper.CreateProductionMapper;
+ import by.kozlov.hibernate.starter.mapper.ProductionMapper;
+ import by.kozlov.hibernate.starter.mapper.UpdateProductionMapper;
++import org.hibernate.cfg.Configuration;
+ 
+ import java.util.List;
+ import java.util.Optional;
+@@ -17,6 +20,7 @@
+ 
+ public class ProductionService {
+ 
++    private final Configuration configuration = HibernateUtil.getConfig();
+     private static final ProductionService INSTANCE = new ProductionService();
+ 
+     private final ProductionDao productionDao = ProductionDao.getInstance();
+@@ -33,9 +37,15 @@
+     }
+ 
+     public List<ProductionDto> findAll() {
+-        return productionDao.findAll().stream().map(
+-                productionMapper::mapFrom
+-        ).collect(Collectors.toList());
++        try (var sessionFactory = configuration.buildSessionFactory();
++             var session = sessionFactory.openSession()) {
++            List<ProductionDto> productions;
++            session.beginTransaction();
++            productions =  productionDao.findAllHibernate(session).stream()
++                    .map(productionMapper::mapFrom).collect(Collectors.toList());
++            session.getTransaction().commit();
++            return productions;
++        }
+     }
+ 
+     public Optional<ProductionDto> findById(Integer id) {
+Index: src/main/java/by/kozlov/hibernate/starter/entity/Set.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package by.kozlov.hibernate.starter.entity;\r\n\r\nimport lombok.AllArgsConstructor;\r\nimport lombok.Builder;\r\nimport lombok.Data;\r\nimport lombok.NoArgsConstructor;\r\n\r\n@Data\r\n@NoArgsConstructor\r\n@AllArgsConstructor\r\n@Builder\r\npublic class Set {\r\n\r\n    private Integer id;\r\n    private String nameOfSet;\r\n    private Integer numberOfPartsIncluded;\r\n    private Double rateOfSet;\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/by/kozlov/hibernate/starter/entity/Set.java b/src/main/java/by/kozlov/hibernate/starter/entity/Set.java
+--- a/src/main/java/by/kozlov/hibernate/starter/entity/Set.java	(revision 9098958739c6338ba90fd4097b71b173a6db8feb)
++++ b/src/main/java/by/kozlov/hibernate/starter/entity/Set.java	(date 1683291955832)
+@@ -1,19 +1,33 @@
+ package by.kozlov.hibernate.starter.entity;
+ 
+-import lombok.AllArgsConstructor;
+-import lombok.Builder;
+-import lombok.Data;
+-import lombok.NoArgsConstructor;
++import lombok.*;
++
++import javax.persistence.*;
++import java.util.ArrayList;
++import java.util.List;
+ 
+ @Data
+ @NoArgsConstructor
+ @AllArgsConstructor
+ @Builder
++@Entity
++@ToString(exclude = "productions")
++@EqualsAndHashCode(exclude = "productions")
++@Table(name = "sets_for_cars")
+ public class Set {
+ 
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
+     private Integer id;
++    @Column(name = "name_of_set")
+     private String nameOfSet;
++    @Column(name = "num_of_parts")
+     private Integer numberOfPartsIncluded;
++    @Column(name = "rate_of_set")
+     private Double rateOfSet;
+ 
++    @Builder.Default
++    @OneToMany(mappedBy = "set")
++    private List<Production> productions = new ArrayList<>();
++
+ }
+Index: src/main/java/by/kozlov/hibernate/starter/dao/ProductionDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package by.kozlov.hibernate.starter.dao;\r\n\r\nimport by.kozlov.hibernate.starter.entity.Production;\r\nimport by.kozlov.hibernate.starter.exception.DaoException;\r\nimport by.kozlov.hibernate.starter.utils.ConnectionManager;\r\n\r\nimport java.sql.*;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.Optional;\r\n\r\npublic class ProductionDao implements Dao<Integer, Production> {\r\n\r\n    private static final ProductionDao INSTANCE = new ProductionDao();\r\n    private static final WorkerDao workerDao = WorkerDao.getInstance();\r\n    private static final SetDao setDao = SetDao.getInstance();\r\n\r\n    private static final String FIND_ALL = \"\"\"\r\n            SELECT id,id_worker,id_set,made_sets,date_of_production\r\n            FROM public.production\r\n            \"\"\";\r\n\r\n    private static final String UPDATE_SQL = \"\"\"\r\n            UPDATE public.production SET\r\n            id_worker = ?,\r\n            id_set = ?,\r\n            made_sets = ?,\r\n            date_of_production = ?\r\n            WHERE id = ?\r\n            \"\"\";\r\n\r\n    private static final String FIND_BY_ID = FIND_ALL + \"\"\"\r\n            WHERE id = ?\r\n            \"\"\";\r\n\r\n    private static final String FIND_BY_ID_WORKER = FIND_ALL + \"\"\"\r\n            WHERE id_worker = ?\r\n            \"\"\";\r\n\r\n    private static final String DELETE_SQL = \"\"\"\r\n            DELETE FROM public.production\r\n            WHERE id = ?\r\n            \"\"\";\r\n\r\n    private static final String SAVE_SQL = \"\"\"\r\n            INSERT INTO public.production (id_worker,id_set,made_sets,date_of_production) \r\n            VALUES (?, ?, ?, ?)\r\n            \"\"\";\r\n\r\n\r\n    @Override\r\n    public boolean update(Production production) {\r\n        try(var connection = ConnectionManager.get();\r\n            var statement = connection.prepareStatement(UPDATE_SQL)) {\r\n            statement.setInt(1,production.getWorker().getId());\r\n            statement.setInt(2,production.getSet().getId());\r\n            statement.setInt(3,production.getMadeSets());\r\n            statement.setDate(4, Date.valueOf(production.getDateOfProduction()));\r\n            statement.setInt(5,production.getId());\r\n            return statement.executeUpdate() > 0;\r\n        } catch (SQLException ex) {\r\n            throw new DaoException(ex);\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public Optional<Production> findById(Integer id) {\r\n        try (var connection = ConnectionManager.get();\r\n             var statement = connection.prepareStatement(FIND_BY_ID)) {\r\n            Production production = null;\r\n            statement.setInt(1, id);\r\n            var result = statement.executeQuery();\r\n            if (result.next())\r\n                production = buildProduction(result);\r\n            return Optional.ofNullable(production);\r\n        } catch (SQLException e) {\r\n            throw new DaoException(e);\r\n        }\r\n    }\r\n\r\n    public List<Production> findAllByWorkerId(Integer idWorker) {\r\n        try(var connection = ConnectionManager.get();\r\n            var statement = connection.prepareStatement(FIND_BY_ID_WORKER)) {\r\n            List<Production> productions = new ArrayList<>();\r\n            statement.setInt(1, idWorker);\r\n            var result = statement.executeQuery();\r\n            while (result.next()) {\r\n                productions.add(buildProduction(result));\r\n            }\r\n            return productions;\r\n        } catch (SQLException ex) {\r\n            throw new DaoException(ex);\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public List<Production> findAll() {\r\n        try(var connection = ConnectionManager.get();\r\n            var statement = connection.prepareStatement(FIND_ALL)) {\r\n            List<Production> productions = new ArrayList<>();\r\n            var result = statement.executeQuery();\r\n            while (result.next()) {\r\n                productions.add(buildProduction(result));\r\n            }\r\n            return productions;\r\n        } catch (SQLException ex) {\r\n            throw new DaoException(ex);\r\n        }\r\n    }\r\n\r\n\r\n\r\n    @Override\r\n    public boolean delete(Integer id) {\r\n        try (var connection = ConnectionManager.get();\r\n             var statement = connection.prepareStatement(DELETE_SQL)) {\r\n            statement.setInt(1, id);\r\n            return statement.executeUpdate() > 0;\r\n        } catch (SQLException e) {\r\n            throw new DaoException(e);\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public Production save(Production production) {\r\n        try (var connection = ConnectionManager.get();\r\n             var statement = connection\r\n                     .prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS)) {\r\n            statement.setInt(1,production.getWorker().getId());\r\n            statement.setInt(2,production.getSet().getId());\r\n            statement.setInt(3,production.getMadeSets());\r\n            statement.setDate(4, Date.valueOf(production.getDateOfProduction()));\r\n            statement.executeUpdate();\r\n            var generatedKeys = statement.getGeneratedKeys();\r\n            if (generatedKeys.next())\r\n                production.setId(generatedKeys.getInt(\"id\"));\r\n            return production;\r\n        } catch (SQLException e) {\r\n            throw new DaoException(e);\r\n        }\r\n    }\r\n\r\n    private Production buildProduction(ResultSet result) throws SQLException {\r\n\r\n        var worker = workerDao.findById(result.getInt(\"id_worker\")).orElseThrow();\r\n        var set = setDao.findById(result.getInt(\"id_set\")).orElseThrow();\r\n        /*return new Production(result.getInt(\"id\"),\r\n                worker,set,\r\n                result.getInt(\"made_sets\"),\r\n                result.getTimestamp(\"date_of_production\").toLocalDateTime()\r\n                );*/\r\n\r\n        return Production.builder()\r\n                .id(result.getObject(\"id\",Integer.class))\r\n                .worker(worker).set(set)\r\n                .madeSets(result.getObject(\"made_sets\",Integer.class))\r\n                .dateOfProduction(result.getObject(\"date_of_production\",Date.class).toLocalDate())\r\n                .build();\r\n    }\r\n\r\n    private ProductionDao() {}\r\n\r\n    public static ProductionDao getInstance() {\r\n        return INSTANCE;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/by/kozlov/hibernate/starter/dao/ProductionDao.java b/src/main/java/by/kozlov/hibernate/starter/dao/ProductionDao.java
+--- a/src/main/java/by/kozlov/hibernate/starter/dao/ProductionDao.java	(revision 9098958739c6338ba90fd4097b71b173a6db8feb)
++++ b/src/main/java/by/kozlov/hibernate/starter/dao/ProductionDao.java	(date 1683291480695)
+@@ -1,8 +1,10 @@
+ package by.kozlov.hibernate.starter.dao;
+ 
+ import by.kozlov.hibernate.starter.entity.Production;
++import by.kozlov.hibernate.starter.entity.Worker;
+ import by.kozlov.hibernate.starter.exception.DaoException;
+ import by.kozlov.hibernate.starter.utils.ConnectionManager;
++import org.hibernate.Session;
+ 
+ import java.sql.*;
+ import java.util.ArrayList;
+@@ -46,6 +48,10 @@
+             INSERT INTO public.production (id_worker,id_set,made_sets,date_of_production) 
+             VALUES (?, ?, ?, ?)
+             """;
++
++    private static final String FIND_ALL_HIBERNATE = """
++            FROM Production P JOIN FETCH P.set JOIN FETCH P.worker
++            """;
+ 
+ 
+     @Override
+@@ -107,6 +113,14 @@
+             throw new DaoException(ex);
+         }
+     }
++
++    public List<Production> findAllHibernate(Session session) {
++        try {
++            return session.createQuery(FIND_ALL_HIBERNATE, Production.class).list();
++        } catch (Exception ex) {
++            throw new DaoException(ex);
++        }
++    }
+ 
+ 
+ 
+Index: src/main/java/by/kozlov/hibernate/starter/entity/Worker.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package by.kozlov.hibernate.starter.entity;\r\n\r\nimport lombok.AllArgsConstructor;\r\nimport lombok.Builder;\r\nimport lombok.Data;\r\nimport lombok.NoArgsConstructor;\r\n\r\nimport javax.persistence.*;\r\n\r\n@AllArgsConstructor\r\n@NoArgsConstructor\r\n@Data\r\n@Builder\r\n@Entity\r\n@Table (name = \"workers\", schema = \"public\")\r\npublic class Worker {\r\n\r\n    @Id\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    private Integer id;\r\n\r\n    @Column(name = \"name_worker\")\r\n    private String nameOfWorker;\r\n    @Column(name = \"surname_worker\")\r\n    private String surnameOfWorker;\r\n    private String speciality;\r\n    private Integer rank;\r\n    private Integer experience;\r\n\r\n    @ManyToOne(fetch = FetchType.LAZY)\r\n    @JoinColumn(name = \"brigade_number\")\r\n    private Brigade brigade;\r\n    private String email;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/by/kozlov/hibernate/starter/entity/Worker.java b/src/main/java/by/kozlov/hibernate/starter/entity/Worker.java
+--- a/src/main/java/by/kozlov/hibernate/starter/entity/Worker.java	(revision 9098958739c6338ba90fd4097b71b173a6db8feb)
++++ b/src/main/java/by/kozlov/hibernate/starter/entity/Worker.java	(date 1683291695764)
+@@ -1,17 +1,18 @@
+ package by.kozlov.hibernate.starter.entity;
+ 
+-import lombok.AllArgsConstructor;
+-import lombok.Builder;
+-import lombok.Data;
+-import lombok.NoArgsConstructor;
++import lombok.*;
+ 
+ import javax.persistence.*;
++import java.util.ArrayList;
++import java.util.List;
+ 
+ @AllArgsConstructor
+ @NoArgsConstructor
+ @Data
+ @Builder
+ @Entity
++@ToString(exclude = {"productions","brigade"})
++@EqualsAndHashCode(exclude = {"productions","brigade"})
+ @Table (name = "workers", schema = "public")
+ public class Worker {
+ 
+@@ -31,4 +32,8 @@
+     @JoinColumn(name = "brigade_number")
+     private Brigade brigade;
+     private String email;
++
++    @Builder.Default
++    @OneToMany(mappedBy = "worker")
++    private List<Production> productions = new ArrayList<>();
+ }
+Index: src/main/resources/hibernate.cfg.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version='1.0' encoding='utf-8'?>\r\n<!DOCTYPE hibernate-configuration PUBLIC\r\n    \"-//Hibernate/Hibernate Configuration DTD//EN\"\r\n    \"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd\">\r\n<hibernate-configuration>\r\n  <session-factory>\r\n    <property name=\"connection.url\">jdbc:postgresql://localhost:5432/eurosets_db</property>\r\n    <property name=\"connection.driver_class\">org.postgresql.Driver</property>\r\n    <property name=\"connection.username\">postgres</property>\r\n    <property name=\"connection.password\">password</property>\r\n    <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL10Dialect</property>\r\n    <property name=\"show_sql\">true</property>\r\n    <property name=\"format_sql\">true</property>\r\n    <mapping class=\"by.kozlov.hibernate.starter.entity.Worker\"/>\r\n    <mapping class=\"by.kozlov.hibernate.starter.entity.Brigade\"/>\r\n    <!-- DB schema will be updated if needed -->\r\n    <!-- <property name=\"hibernate.hbm2ddl.auto\">update</property> -->\r\n  </session-factory>\r\n</hibernate-configuration>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/hibernate.cfg.xml b/src/main/resources/hibernate.cfg.xml
+--- a/src/main/resources/hibernate.cfg.xml	(revision 9098958739c6338ba90fd4097b71b173a6db8feb)
++++ b/src/main/resources/hibernate.cfg.xml	(date 1683291168601)
+@@ -13,6 +13,8 @@
+     <property name="format_sql">true</property>
+     <mapping class="by.kozlov.hibernate.starter.entity.Worker"/>
+     <mapping class="by.kozlov.hibernate.starter.entity.Brigade"/>
++    <mapping class="by.kozlov.hibernate.starter.entity.Set" />
++    <mapping class="by.kozlov.hibernate.starter.entity.Production" />
+     <!-- DB schema will be updated if needed -->
+     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+   </session-factory>
