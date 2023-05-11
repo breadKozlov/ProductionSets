@@ -9,7 +9,7 @@ create table public.schedule_hours (
 
 create table public.brigades (
    id serial primary key,
-   name_of_brigade varchar(120),
+   name_of_brigade varchar(120) not null,
    phone_number_of_foreman varchar(50)
 );
 
@@ -18,7 +18,7 @@ create table public.schedule (
    name_month varchar(50) not null,
    id_hour int references public.schedule_hours(id),
    id_brigade int references public.brigades(id)
-)
+);
 
 create table public.workers (
    id serial primary key,
@@ -87,7 +87,7 @@ create table public.workers_sets(
   id_worker int references public.workers(id),
   requirement int not null,
   unique (id_set,id_worker)
-)
+);
 
 /*drop table public.plan_worker_set;
 drop table production;
@@ -100,14 +100,14 @@ insert into public.brigades (name_of_brigade,phone_number_of_foreman)
 values
 ('Brigade 1','+375291112233'),
 ('Brigade 2','+375293334455'),
-('Brigade 3','+375295556677')
+('Brigade 3','+375295556677');
 
 insert into public.schedule_hours (name_of_hour)
 values
 ('8.00 - 20.00'),
 ('20.00 - 8.00'),
 ('8.00 - 17.00'),
-('does not work')
+('does not work');
 
 insert into public.schedule (name_month, id_hour,id_brigade)
 values
@@ -146,7 +146,7 @@ values
 ('November',3,3),
 ('December',2,1),
 ('December',1,2),
-('December',4,3)
+('December',4,3);
 
 insert into public.workers (name_worker,surname_worker,speciality,rank,experience,brigade_number,email)
 values
@@ -158,7 +158,7 @@ values
 ('Eduard','Shuneiko','extruder operator',5,8,2,'killer@tut.by'),
 ('Victor','Sandulenko','extruder operator',2,3,3,'keramin2011@mail.ru'),
 ('Sergey','Alekseenko','extruder operator',4,12,3,'rupor@tut.by'),
-('Igor','Kuznetsov','extruder foreman',6,12,3,'kik@yandex.ru')
+('Igor','Kuznetsov','extruder foreman',6,12,3,'kik@yandex.ru');
 
 insert into public.sets_for_cars (name_of_set,num_of_parts,rate_of_set)
 values
@@ -184,7 +184,7 @@ values
 ('Overlay 6430-6102096',1,0.06),
 ('Overlay 6430-6102097',1,0.06),
 ('Overlay 64221-6102095',1,0.06),
-('Overlay 64221-6102097',1,0.08)
+('Overlay 64221-6102097',1,0.08);
 
 insert into public.set_materials (name_of_material,description)
 values
@@ -193,7 +193,7 @@ values
 ('K10 mm','Material - polyethylene foam; thickness - 10 mm; adhesive - on one side'),
 ('2K10 mm','Material - polyethylene foam; thickness - 10 mm; adhesive - on both sides'),
 ('10 mm','Material - polyethylene foam; thickness - 10 mm; no adhesive'),
-('K20 mm','Material - polyethylene foam; thickness - 20 mm; adhesive - on one side')
+('K20 mm','Material - polyethylene foam; thickness - 20 mm; adhesive - on one side');
 
 insert into "public".requirement (id_set,id_set_material,unit_cost,total_sets)
 values
@@ -223,7 +223,7 @@ values
 (20,1,0.03,500),
 (21,1,0.03,550),
 (22,2,0.04,250),
-(23,2,0.07,350)
+(23,2,0.07,350);
 
 insert into public.production (id_worker,id_set,made_sets,date_of_production)
 values
@@ -252,7 +252,7 @@ values
 (4,7,13,'2023-12-09'),
 (3,14,20,'2023-11-11'),
 (1,17,100,'2023-09-13'),
-(2,23,140,'2023-04-24')
+(2,23,140,'2023-04-24');
 
 insert into public.production_materials(id_set_material,id_brigade,quantity_of_raw_materials,date_of_production)
 values
@@ -268,7 +268,7 @@ values
 (6,3,650,'2023-10-22'),
 (5,3,650,'2023-09-21'),
 (4,3,650,'2023-03-07'),
-(4,1,650,'2023-01-05')
+(4,1,650,'2023-01-05');
 
 insert into public.workers_sets (id_set,id_worker,requirement)
 values (1,2,300),
@@ -286,7 +286,7 @@ values (1,2,300),
 (7,7,25),
 (14,2,45),
 (10,4,55),
-(12,2,145)
+(12,2,145);
 
 
 /* required materials for sets*/

@@ -31,6 +31,7 @@ public class Worker {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brigade_number")
     private Brigade brigade;
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Builder.Default

@@ -1,6 +1,6 @@
 package by.kozlov.hibernate.starter.servlet;
 
-import by.kozlov.hibernate.starter.service.DifferenceMaterialsService;
+import by.kozlov.hibernate.starter.service.DifferenceService;
 import by.kozlov.hibernate.starter.utils.JspHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,12 +13,12 @@ import java.io.IOException;
 @WebServlet("/planProduction")
 public class PlanProductionServlet extends HttpServlet {
 
-    private final DifferenceMaterialsService differenceMaterialsService = DifferenceMaterialsService.getInstance();
+    private final DifferenceService differenceMaterialsService = DifferenceService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        req.setAttribute("productions",differenceMaterialsService.findAllDifferenceMaterials());
+        req.setAttribute("productions",differenceMaterialsService.findAllDifferenceProductionMaterials());
         req.getRequestDispatcher(JspHelper.getPath("planProduction"))
                 .forward(req,resp);
     }

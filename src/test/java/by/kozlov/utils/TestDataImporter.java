@@ -44,16 +44,16 @@ public class TestDataImporter {
 
         saveRequirement(session,set1,material1,7.8,123);
         saveRequirement(session,set1,material2,6.8,123);
-        saveRequirement(session,set2,material1,5.8,400);
+        saveRequirement(session,set2,material2,5.8,400);
         saveRequirement(session,set3,material3,3.8,10);
         saveRequirement(session,set4,material3,4.8,245);
-        saveRequirement(session,set2,material2,2.8,400);
+        saveRequirement(session,set2,material2,2.8,328);
 
-        saveMaterialsProduction(session,material1,brigade7,124.2,LocalDate.of(2023,Month.MAY,14));
+        saveMaterialsProduction(session,material2,brigade7,124.2,LocalDate.of(2023,Month.MAY,14));
         saveMaterialsProduction(session,material2,brigade7,600.0,LocalDate.of(2023,Month.APRIL,24));
-        saveMaterialsProduction(session,material1,brigade8,150.5,LocalDate.of(2023,Month.SEPTEMBER,23));
+        saveMaterialsProduction(session,material3,brigade8,150.5,LocalDate.of(2023,Month.SEPTEMBER,23));
         saveMaterialsProduction(session,material3,brigade8,230.0,LocalDate.of(2023,Month.JANUARY,11));
-        saveMaterialsProduction(session,material1,brigade9,11.3,LocalDate.of(2023,Month.JULY,4));
+        saveMaterialsProduction(session,material2,brigade9,11.3,LocalDate.of(2023,Month.JULY,4));
         saveMaterialsProduction(session,material2,brigade9,12.0,LocalDate.of(2023,Month.MARCH,8));
         saveMaterialsProduction(session,material3,brigade9,560.4,LocalDate.of(2023,Month.MAY,9));
 

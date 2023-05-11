@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class DifferenceMaterialsDto {
+public class DifferenceDto {
 
-    private String nameOfMaterial;
-    private Double requiredMaterial = 0.0;
-    private Double releasedMaterial = 0.0;
+    private String nameOfProduct;
+    private Double requiredQuantity;
+    private Double releasedQuantity;
 
     public Double difference() {
-        return requiredMaterial - releasedMaterial;
+        return requiredQuantity - releasedQuantity;
     }
 }

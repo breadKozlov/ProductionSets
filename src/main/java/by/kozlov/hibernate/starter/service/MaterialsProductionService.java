@@ -49,16 +49,6 @@ public class MaterialsProductionService {
         }
     }
 
-    public List<Object[]> findSumRelMaterials() {
-        try(var session = sessionFactory.openSession()) {
-            List<Object[]> sum;
-            session.beginTransaction();
-            sum = materialsProductionDao.findSumAllRelMat(session);
-            session.getTransaction().commit();
-            return sum;
-        }
-    }
-
     public Integer create(CreateMaterialsProductionDto materialsProductionDto) {
         try (var session = sessionFactory.openSession()) {
             var validationResult = createMaterialsProductionValidator.isValid(materialsProductionDto);

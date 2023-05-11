@@ -26,7 +26,7 @@ public class Requirement {
     private Material material;
     @Column(name = "unit_cost")
     private Double unitCost;
-    @Column(name = "total_sets")
+    @Column(name = "total_sets", nullable = false)
     private Integer totalSets;
 
     public void setMaterial(Material material) {

@@ -1,10 +1,13 @@
 package by.kozlov.dao;
 
 import by.kozlov.hibernate.starter.dao.ProductionDao;
+import by.kozlov.hibernate.starter.dao.RequirementDao;
 import by.kozlov.hibernate.starter.entity.Production;
+import by.kozlov.hibernate.starter.service.DifferenceService;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import by.kozlov.utils.TestDataImporter;
 import lombok.Cleanup;
+import org.checkerframework.checker.units.qual.C;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -24,15 +27,15 @@ class ProductionDaoTest {
     private final SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
     private final ProductionDao production = ProductionDao.getInstance();
 
-    @BeforeAll
-    public void initDb() {
-        TestDataImporter.importData(sessionFactory);
-    }
+   // @BeforeAll
+    //public void initDb() {
+        //TestDataImporter.importData(sessionFactory);
+    //}
 
-    @AfterAll
-    public void finish() {
-        sessionFactory.close();
-    }
+    //@AfterAll
+   // public void finish() {
+       // sessionFactory.close();
+    //}
 
     @Test
     void findAll() {
@@ -53,10 +56,25 @@ class ProductionDaoTest {
     @Test
     void findDifference() {
         @Cleanup var session = sessionFactory.openSession();
+        var requirementDao = RequirementDao.getInstance();
         session.beginTransaction();
 
-        System.out.println(production.findSumAllReqMat(session));
+
+
+        var list = requirementDao.findSumAllReqMat(session);
+        for(Object[] objects: list) {
+            for (Object object : objects) {
+                System.out.print(object + " ");
+            }
+            System.out.println();
+        }
         session.getTransaction().commit();
+    }
+
+    @Test
+    void findDiff() {
+        var service = DifferenceService.getInstance();
+        System.out.println(service.findAllDifferenceProductionMaterials());
     }
 
     /*@Test
