@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="697f81f2-90af-4957-aa0c-feab030288e8" name="Changes" comment="add useful hql on production materials">
-      <change afterPath="$PROJECT_DIR$/.idea/ProductionSets.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="697f81f2-90af-4957-aa0c-feab030288e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d2778599-1ef7-4d96-8fb5-1cf00a67cbdf.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e9797a60-5586-4a90-92ec-9d098934ba52.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e9797a60-5586-4a90-92ec-9d098934ba52.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/ProductionDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/ProductionDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/RequirementDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/RequirementDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/DifferenceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/DifferenceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/ProductionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/ProductionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/servlet/PlanProductionServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/servlet/PlanProductionServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/planProduction.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/planProduction.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Requirement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Requirement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/by/kozlov/dao/ProductionDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/by/kozlov/dao/ProductionDaoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,6 +32,11 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
       <filtered-out-file-type name="LOCAL_BRANCH" />
@@ -46,6 +44,14 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="e10fd70c-a502-4e97-a701-9f4d641958d8" />
+        <option name="url" value="https://github.com/breadKozlov/ProductionSets.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -64,26 +70,26 @@
     <option name="showLibraryContents" value="true" />
     <option name="sortByType" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/pahadaha/workMaven/ProductionSets",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "database.query.execution",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/pahadaha/workMaven/ProductionSets&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;database.query.execution&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Павел\IdeaProjects\ProductionSets\src\main\resources" />
@@ -92,24 +98,8 @@
       <recent name="by.kozlov.jdbc.starter.utils" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ProductionDaoTest.findDifferenceBetweenReqAndRealProductions">
-    <configuration name="AppTest.findAllWorkersService" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ProductionSets" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="by.kozlov.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="by.kozlov" />
-      <option name="MAIN_CLASS_NAME" value="by.kozlov.AppTest" />
-      <option name="METHOD_NAME" value="findAllWorkersService" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProductionDaoTest.findDiff" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.WorkerDaoTest.findByEmail">
+    <configuration name="ProductionDaoTest.findAllByWorkerId" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ProductionSets" />
       <extension name="coverage">
         <pattern>
@@ -119,13 +109,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="by.kozlov.dao" />
       <option name="MAIN_CLASS_NAME" value="by.kozlov.dao.ProductionDaoTest" />
-      <option name="METHOD_NAME" value="findDiff" />
+      <option name="METHOD_NAME" value="findAllByWorkerId" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductionDaoTest.findDiffSet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RequirementDaoTest.findAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ProductionSets" />
       <extension name="coverage">
         <pattern>
@@ -134,14 +124,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="by.kozlov.dao" />
-      <option name="MAIN_CLASS_NAME" value="by.kozlov.dao.ProductionDaoTest" />
-      <option name="METHOD_NAME" value="findDiffSet" />
+      <option name="MAIN_CLASS_NAME" value="by.kozlov.dao.RequirementDaoTest" />
+      <option name="METHOD_NAME" value="findAll" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductionDaoTest.findDifference" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RequirementDaoTest.findAllBySetId" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ProductionSets" />
       <extension name="coverage">
         <pattern>
@@ -150,14 +140,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="by.kozlov.dao" />
-      <option name="MAIN_CLASS_NAME" value="by.kozlov.dao.ProductionDaoTest" />
-      <option name="METHOD_NAME" value="findDifference" />
+      <option name="MAIN_CLASS_NAME" value="by.kozlov.dao.RequirementDaoTest" />
+      <option name="METHOD_NAME" value="findAllBySetId" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductionDaoTest.findDifferenceBetweenReqAndRealProductions" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RequirementDaoTest.findDifferenceBetweenReqAndRelMaterialsProduction" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ProductionSets" />
       <extension name="coverage">
         <pattern>
@@ -166,8 +156,24 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="by.kozlov.dao" />
-      <option name="MAIN_CLASS_NAME" value="by.kozlov.dao.ProductionDaoTest" />
-      <option name="METHOD_NAME" value="findDifferenceBetweenReqAndRealProductions" />
+      <option name="MAIN_CLASS_NAME" value="by.kozlov.dao.RequirementDaoTest" />
+      <option name="METHOD_NAME" value="findDifferenceBetweenReqAndRelMaterialsProduction" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WorkerDaoTest.findByEmail" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ProductionSets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="by.kozlov.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="by.kozlov.dao" />
+      <option name="MAIN_CLASS_NAME" value="by.kozlov.dao.WorkerDaoTest" />
+      <option name="METHOD_NAME" value="findByEmail" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -175,11 +181,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ProductionDaoTest.findDifferenceBetweenReqAndRealProductions" />
-        <item itemvalue="JUnit.ProductionDaoTest.findDiffSet" />
-        <item itemvalue="JUnit.ProductionDaoTest.findDiff" />
-        <item itemvalue="JUnit.ProductionDaoTest.findDifference" />
-        <item itemvalue="JUnit.AppTest.findAllWorkersService" />
+        <item itemvalue="JUnit.WorkerDaoTest.findByEmail" />
+        <item itemvalue="JUnit.RequirementDaoTest.findAllBySetId" />
+        <item itemvalue="JUnit.RequirementDaoTest.findDifferenceBetweenReqAndRelMaterialsProduction" />
+        <item itemvalue="JUnit.RequirementDaoTest.findAll" />
+        <item itemvalue="JUnit.ProductionDaoTest.findAllByWorkerId" />
       </list>
     </recent_temporary>
   </component>
@@ -197,7 +203,8 @@
       <workItem from="1683185701869" duration="15430000" />
       <workItem from="1683267368659" duration="17737000" />
       <workItem from="1683788483367" duration="20230000" />
-      <workItem from="1683821046774" duration="4517000" />
+      <workItem from="1683821046774" duration="4575000" />
+      <workItem from="1683875355902" duration="4288000" />
     </task>
     <task id="LOCAL-00001" summary="Add some functions">
       <created>1681906641090</created>
@@ -304,7 +311,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683810669407</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="add ProductionTest">
+      <created>1683825688078</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1683825688078</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -332,6 +346,7 @@
     <MESSAGE value="Add functional for foreman" />
     <MESSAGE value="Add functional for foreman again" />
     <MESSAGE value="add useful hql on production materials" />
-    <option name="LAST_COMMIT_MESSAGE" value="add useful hql on production materials" />
+    <MESSAGE value="add ProductionTest" />
+    <option name="LAST_COMMIT_MESSAGE" value="add ProductionTest" />
   </component>
 </project>

@@ -74,43 +74,24 @@ class ProductionDaoTest {
 
         session.getTransaction().commit();
 
-        /*@Cleanup var session = sessionFactory.openSession();
-        var requirementDao = RequirementDao.getInstance();
-        session.beginTransaction();
-
-        var list = requirementDao.findSumAllReqMat(session);
-        for(Object[] objects: list) {
-            for (Object object : objects) {
-                System.out.print(object + " ");
-            }
-            System.out.println();
-        }
-        session.getTransaction().commit();*/
     }
 
     @Test
-    void findDiffSet() {
-        @Cleanup var session = sessionFactory.openSession();
-        var productionDao = ProductionDao.getInstance();
-        session.beginTransaction();
+    void findAllByWorkerId() {
+       @Cleanup var session = sessionFactory.openSession();
+       session.beginTransaction();
+       List<Production> results = productionDao.findAllByWorkerId(session,1);
 
-        var list = productionDao.findSumAllProdSets(session);
-        for(Object[] objects: list) {
-            for (Object object : objects) {
-                System.out.print(object + " ");
-            }
-            System.out.println();
-        }
-        session.getTransaction().commit();
+       assertThat(results).hasSize(2);
+       List<String> fullNames = results.stream().map(Production::fullName).collect(toList());
+       assertThat(fullNames).containsExactlyInAnyOrder("Pavel Ivanov 5440 112",
+                "Pavel Ivanov 54327 88");
+       System.out.println(results);
+       session.getTransaction().commit();
+
     }
 
-    @Test
-    void findDiff() {
-        var service = DifferenceService.getInstance();
-        System.out.println(service.findAllDifferenceProductionMaterials());
-    }
-
-    /*@Test
+    /* Пример тестов @Test
     void findAllByFirstName() {
         @Cleanup Session session = sessionFactory.openSession();
         session.beginTransaction();

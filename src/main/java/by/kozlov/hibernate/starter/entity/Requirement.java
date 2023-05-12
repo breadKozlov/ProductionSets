@@ -38,4 +38,9 @@ public class Requirement {
         this.set = set;
         this.set.getRequirements().add(this);
     }
+
+    public String fullName() {
+        return set.getNameOfSet() + " " + material.getNameOfMaterial() + " "
+                + unitCost + " " + totalSets;
+    }
 }
