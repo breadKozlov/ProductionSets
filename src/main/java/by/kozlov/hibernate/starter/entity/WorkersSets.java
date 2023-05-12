@@ -25,4 +25,5 @@ public class WorkersSets {
     @JoinColumn(name = "id_worker")
     private Worker worker;
     private Integer requirement;
+
 }

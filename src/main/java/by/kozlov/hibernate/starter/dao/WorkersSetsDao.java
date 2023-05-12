@@ -45,6 +45,20 @@ public class WorkersSetsDao implements DaoHibernate<Integer,WorkersSets> {
              WHERE W.id = :id
             """;
 
+    private static final String FIND_ALL_RELEASED_SETS = """
+            SELECT W.set.nameOfSet as name,W.requirement,(SELECT sum(P.madeSets)
+             FROM Production P WHERE P.set.nameOfSet = W.set.nameOfSet AND P.worker.id = W.worker.id) FROM WorkersSets W
+             where W.worker.id = :id
+             ORDER BY name asc
+            """;
+    public List<Object[]> findAllProdSetsById(Session session,Integer id) {
+        try {
+            return session.createQuery(FIND_ALL_RELEASED_SETS,Object[].class).setParameter("id",id).list();
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
+    }
+
     public static WorkersSetsDao getInstance() {
         return INSTANCE;
     }
@@ -57,6 +71,8 @@ public class WorkersSetsDao implements DaoHibernate<Integer,WorkersSets> {
             throw new DaoException(ex);
         }
     }
+
+
 
     @Override
     public boolean update(Session session, WorkersSets workersSets) {
