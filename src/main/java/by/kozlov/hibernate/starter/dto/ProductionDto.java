@@ -12,8 +12,8 @@ import java.time.LocalDate;
 public class ProductionDto {
 
         private Integer id;
-        private Worker worker;
-        private Set set;
+        private WorkerDto worker;
+        private SetDto set;
         private Integer madeSets;
         private LocalDate dateOfProduction;
 }

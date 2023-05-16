@@ -10,7 +10,7 @@ import lombok.Value;
 public class WorkersSetsDto {
 
     private Integer id;
-    private Set set;
-    private Worker worker;
+    private SetDto set;
+    private WorkerDto worker;
     private Integer requirement;
 }

@@ -5,11 +5,7 @@ import by.kozlov.hibernate.starter.entity.User;
 import lombok.NoArgsConstructor;
 
 import static lombok.AccessLevel.PRIVATE;
-
-@NoArgsConstructor(access = PRIVATE)
 public class UserMapper implements Mapper<User, UserDto> {
-
-    private static final UserMapper INSTANCE = new UserMapper();
 
     @Override
     public UserDto mapFrom(User object) {
@@ -21,9 +17,5 @@ public class UserMapper implements Mapper<User, UserDto> {
                 .role(object.getRole())
                 .gender(object.getGender())
                 .build();
-    }
-
-    public static UserMapper getInstance() {
-        return INSTANCE;
     }
 }
