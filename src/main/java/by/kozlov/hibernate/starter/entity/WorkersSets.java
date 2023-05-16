@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "workers_sets")
-public class WorkersSets {
+public class WorkersSets implements BaseEntity<Integer> {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)

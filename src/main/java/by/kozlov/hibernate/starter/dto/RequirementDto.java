@@ -9,8 +9,8 @@ import lombok.Value;
 @Builder
 public class RequirementDto {
     private Integer id;
-    private Set set;
-    private Material material;
+    private SetDto set;
+    private MaterialDto material;
     private Double unitCost;
     private Integer totalSets;
 }

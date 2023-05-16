@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "schedule",schema = "public")
-public class Schedule {
+public class Schedule implements BaseEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

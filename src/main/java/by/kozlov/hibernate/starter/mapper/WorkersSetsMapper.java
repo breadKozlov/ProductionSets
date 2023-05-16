@@ -3,25 +3,23 @@ package by.kozlov.hibernate.starter.mapper;
 import by.kozlov.hibernate.starter.dto.WorkersSetsDto;
 import by.kozlov.hibernate.starter.entity.WorkersSets;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import static lombok.AccessLevel.PRIVATE;
 
-@NoArgsConstructor(access = PRIVATE)
+@RequiredArgsConstructor
 public class WorkersSetsMapper implements Mapper<WorkersSets, WorkersSetsDto>{
 
-    private static final WorkersSetsMapper INSTANCE = new WorkersSetsMapper();
-
+    private final SetMapper setMapper;
+    private final WorkerMapper workerMapper;
     @Override
     public WorkersSetsDto mapFrom(WorkersSets object) {
         return WorkersSetsDto.builder()
                 .id(object.getId())
-                .set(object.getSet())
-                .worker(object.getWorker())
+                .set(setMapper.mapFrom(object.getSet()))
+                .worker(workerMapper.mapFrom(object.getWorker()))
                 .requirement(object.getRequirement())
                 .build();
     }
 
-    public static WorkersSetsMapper getInstance() {
-        return INSTANCE;
-    }
 }

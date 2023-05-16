@@ -13,6 +13,6 @@ public class WorkerDto {
     private String speciality;
     private Integer rank;
     private Integer experience;
-    private Brigade brigade;
+    private BrigadeDto brigade;
     private String email;
 }

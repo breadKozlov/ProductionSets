@@ -12,8 +12,8 @@ import java.time.LocalDate;
 public class MaterialsProductionDto {
 
     private Integer id;
-    private Material material;
-    private Brigade brigade;
+    private MaterialDto material;
+    private BrigadeDto brigade;
     private Double quantity;
     private LocalDate dateOfProduction;
 }

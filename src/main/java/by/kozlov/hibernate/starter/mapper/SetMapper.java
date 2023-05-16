@@ -6,10 +6,8 @@ import lombok.NoArgsConstructor;
 
 import static lombok.AccessLevel.PRIVATE;
 
-@NoArgsConstructor(access = PRIVATE)
 public class SetMapper implements Mapper<Set, SetDto>{
 
-    private static final SetMapper INSTANCE = new SetMapper();
     @Override
     public SetDto mapFrom(Set object) {
         return SetDto.builder()
@@ -18,9 +16,5 @@ public class SetMapper implements Mapper<Set, SetDto>{
                 .numberOfPartsIncluded(object.getNumberOfPartsIncluded())
                 .rateOfSet(object.getRateOfSet())
                 .build();
-    }
-
-    public static SetMapper getInstance() {
-        return INSTANCE;
     }
 }

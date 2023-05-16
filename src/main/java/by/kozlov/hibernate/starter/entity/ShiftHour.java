@@ -14,7 +14,7 @@ import java.util.List;
 @ToString(exclude = "schedules")
 @EqualsAndHashCode(exclude = "schedules")
 @Table(name = "schedule_hours")
-public class ShiftHour {
+public class ShiftHour implements BaseEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

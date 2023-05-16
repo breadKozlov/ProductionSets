@@ -15,6 +15,7 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.26/lombok-1.18.26.jar" />
         </processorPath>
+<<<<<<< HEAD
       </profile>
     </annotationProcessing>
   </component>
@@ -23,4 +24,10 @@
       <module name="ProductionSets" options="" />
     </option>
   </component>
+=======
+        <module name="ProductionSets" />
+      </profile>
+    </annotationProcessing>
+  </component>
+>>>>>>> origin/HIbernate
 </project>
