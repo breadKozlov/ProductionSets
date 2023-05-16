@@ -24,7 +24,7 @@ public class DifferenceService {
         var materials = objects.stream().map(array ->
                 Arrays.stream(array).map(Optional::ofNullable).collect(Collectors.toList())).toList();
 
-        for(var material: materials) {
+        for(var material: materials ) {
             var name = String.valueOf(material.get(0).orElse("No name"));
             var req = String.valueOf(material.get(1).orElse("0.0"));
             var rel = String.valueOf(material.get(2).orElse("0.0"));

@@ -1,55 +1,62 @@
 package by.kozlov.hibernate.starter.service;
 
-import by.kozlov.hibernate.starter.dao.BrigadeDao;
+import by.kozlov.hibernate.starter.dao.BrigadeRepository;
 import by.kozlov.hibernate.starter.dto.BrigadeDto;
-import by.kozlov.hibernate.starter.dto.MaterialDto;
 import by.kozlov.hibernate.starter.mapper.BrigadeMapper;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BrigadeService {
 
-    private final SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+    private final SessionFactory sessionFactory;
     private static final BrigadeService INSTANCE = new BrigadeService();
-    private final BrigadeDao brigadeDao = BrigadeDao.getInstance();
-    private final BrigadeMapper brigadeMapper = BrigadeMapper.getInstance();
+    private final BrigadeRepository brigadeRepository;
+    private final Session session;
+    private final BrigadeMapper brigadeMapper = new BrigadeMapper();
+
+    private BrigadeService() {
+        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
+                new Class[]{Session.class},
+                (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        brigadeRepository = new BrigadeRepository(session);
+    }
 
     public Optional<BrigadeDto> find(String id) {
-        try (var session = sessionFactory.openSession()) {
-            Optional<BrigadeDto> materials;
+        try (session) {
+            Optional<BrigadeDto> brigades;
             session.beginTransaction();
-            materials = brigadeDao.findById(session,Integer.parseInt(id))
+            brigades = brigadeRepository.findById(Integer.parseInt(id))
                     .map(brigadeMapper::mapFrom);
             session.getTransaction().commit();
-            return materials;
+            return brigades;
         }
     }
     public List<BrigadeDto> findAll() {
-        try (var session = sessionFactory.openSession()) {
-            List<BrigadeDto> materials;
+        try (session) {
+            List<BrigadeDto> brigades;
             session.beginTransaction();
-            materials = brigadeDao.findAll(session).stream()
+            brigades = brigadeRepository.findAll().stream()
                     .map(brigadeMapper::mapFrom).collect(Collectors.toList());
             session.getTransaction().commit();
-            return materials;
+            return brigades;
         }
     }
 
     public Optional<BrigadeDto> findById(Integer id) {
-        try (var session = sessionFactory.openSession()) {
-            Optional<BrigadeDto> materials;
+        try (session) {
+            Optional<BrigadeDto> brigades;
             session.beginTransaction();
-            materials = brigadeDao.findById(session,id)
+            brigades = brigadeRepository.findById(id)
                     .map(brigadeMapper::mapFrom);
             session.getTransaction().commit();
-            return materials;
+            return brigades;
         }
     }
 

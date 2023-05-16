@@ -1,27 +1,48 @@
 package by.kozlov.hibernate.starter.service;
 
-import by.kozlov.hibernate.starter.dao.WorkerDao;
-import by.kozlov.hibernate.starter.dto.ProductionDto;
+import by.kozlov.hibernate.starter.dao.WorkerRepository;
 import by.kozlov.hibernate.starter.dto.WorkerDto;
-import by.kozlov.hibernate.starter.entity.Worker;
+import by.kozlov.hibernate.starter.mapper.BrigadeMapper;
 import by.kozlov.hibernate.starter.mapper.WorkerMapper;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
-import java.util.ArrayList;
+import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class WorkerService {
 
-    private final SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+    private final Session session;
     private static final WorkerService INSTANCE = new WorkerService();
-    private final WorkerDao workerDao = WorkerDao.getInstance();
-    private final WorkerMapper workerMapper = WorkerMapper.getInstance();
+    private final WorkerMapper workerMapper;
+    private final WorkerRepository workerRepository;
+    private final SessionFactory sessionFactory;
+
+    private WorkerService() {
+        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
+                    new Class[]{Session.class},
+                    (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        workerRepository = new WorkerRepository(session);
+        BrigadeMapper brigadeMapper = new BrigadeMapper();
+        workerMapper = new WorkerMapper(brigadeMapper);
+    }
 
     public Optional<WorkerDto> findById(Integer id) {
+
+        try(session) {
+            Optional<WorkerDto> worker;
+            session.beginTransaction();
+            worker = workerRepository.findById(id).map(workerMapper::mapFrom);
+            session.getTransaction().commit();
+            return worker;
+        }
+    }
+
+    /*public Optional<WorkerDto> findById(Integer id) {
 
         try (var session = sessionFactory.openSession()) {
             Optional<WorkerDto> production;
@@ -31,26 +52,25 @@ public class WorkerService {
             session.getTransaction().commit();
             return production;
         }
-    }
+    }*/
 
     public Optional<WorkerDto> findByEmail(String email) {
 
-        try (var session = sessionFactory.openSession()) {
+        try(session) {
             Optional<WorkerDto> worker;
             session.beginTransaction();
-            worker = workerDao.findByEmail(session,email)
-                    .map(workerMapper::mapFrom);
+            worker = workerRepository.findByEmail(email).map(workerMapper::mapFrom);
             session.getTransaction().commit();
             return worker;
         }
     }
 
     public List<WorkerDto> findAll() {
-        try (var session = sessionFactory.openSession()) {
 
+        try(session) {
             List<WorkerDto> workers;
             session.beginTransaction();
-            workers =  workerDao.findAll(session).stream()
+            workers =  workerRepository.findAll().stream()
                     .map(workerMapper::mapFrom).collect(Collectors.toList());
             session.getTransaction().commit();
             return workers;
@@ -58,23 +78,19 @@ public class WorkerService {
     }
 
     public Optional<WorkerDto> find(String id) {
-        try (var session = sessionFactory.openSession()) {
-            Optional<WorkerDto> production;
-            session.beginTransaction();
-            production = workerDao.findById(session,Integer.parseInt(id))
+
+        try(session) {
+                Optional<WorkerDto> worker;
+                session.beginTransaction();
+                worker = workerRepository.findById(Integer.parseInt(id))
                     .map(workerMapper::mapFrom);
-            session.getTransaction().commit();
-            return production;
-        }
+                session.getTransaction().commit();
+                return worker;
+            }
     }
 
-
-    private WorkerService() {
-    }
 
     public static WorkerService getInstance() {
         return INSTANCE;
     }
-
-
 }

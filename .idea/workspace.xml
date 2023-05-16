@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c04e28bc-6a8e-4684-9b19-37a9b77eb17d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/MaterialProductionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/MaterialProductionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/ProductionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/ProductionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/WorkerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/WorkerDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Brigade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Brigade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Material.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/MaterialsProduction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/MaterialsProduction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Production.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Production.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Requirement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Requirement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Schedule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Set.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Set.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/ShiftHour.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/ShiftHour.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Worker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Worker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/WorkersSets.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/WorkersSets.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/BrigadeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/BrigadeMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/CreateMaterialsProductionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/CreateMaterialsProductionMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/WorkerMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/WorkerMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/BrigadeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/BrigadeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/DifferenceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/DifferenceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/WorkerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/WorkerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "last_opened_file_path": "C:/Users/Павел/IdeaProjects/hql-task",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="by.kozlov.hibernate.starter.dao" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Runner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="by.kozlov.hibernate.starter.Runner" />
+      <module name="ProductionSets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="by.kozlov.hibernate.starter.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Runner" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+</project>

@@ -16,7 +16,7 @@ import java.util.Set;
 @ToString(exclude = {"schedules","workers","materialsProduction"})
 @EqualsAndHashCode(exclude = {"schedules","workers","materialsProduction"})
 @Table(name="brigades",schema = "public")
-public class Brigade {
+public class Brigade implements BaseEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
