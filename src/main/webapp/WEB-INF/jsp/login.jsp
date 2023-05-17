@@ -16,7 +16,7 @@
         <button type="submit">Login</button>
         <a href="${pageContext.request.contextPath}/registration">
             <button type="button">Register</button>
-        </a>
+        </a><br/>
         <c:if test="${param.error != null}">
             <div style="color: red">
                 <span>Email or password is not correct</span>

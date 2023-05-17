@@ -1,14 +1,16 @@
 package by.kozlov.hibernate.starter.service;
 
-import by.kozlov.hibernate.starter.dao.SetDao;
+import by.kozlov.hibernate.starter.dao.*;
 import by.kozlov.hibernate.starter.dto.ProductionDto;
 import by.kozlov.hibernate.starter.dto.SetDto;
 import by.kozlov.hibernate.starter.dto.WorkerDto;
 import by.kozlov.hibernate.starter.dto.WorkersSetsDto;
-import by.kozlov.hibernate.starter.mapper.SetMapper;
+import by.kozlov.hibernate.starter.mapper.*;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,17 +19,27 @@ import java.util.stream.Collectors;
 
 public class SetService {
 
-    private final SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+    private final SessionFactory sessionFactory;
 
     private static final SetService INSTANCE = new SetService();
-    private final SetMapper setMapper = SetMapper.getInstance();
-    private final SetDao setDao = SetDao.getInstance();
+    private final SetMapper setMapper = new SetMapper();
+    private final SetRepository setRepository;
+
+    private final Session session;
+
+    private SetService() {
+        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
+                new Class[]{Session.class},
+                (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        setRepository = new SetRepository(session);
+    }
 
     public List<SetDto> findAll() {
-        try (var session = sessionFactory.openSession()) {
+        try (session) {
             List<SetDto> sets;
             session.beginTransaction();
-            sets = setDao.findAll(session).stream()
+            sets = setRepository.findAll().stream()
                     .map(setMapper::mapFrom).collect(Collectors.toList());
             session.getTransaction().commit();
             return sets;
@@ -35,10 +47,10 @@ public class SetService {
     }
 
     public Optional<SetDto> findById(Integer id) {
-        try (var session = sessionFactory.openSession()) {
+        try (session) {
             Optional<SetDto> set;
             session.beginTransaction();
-            set = setDao.findById(session,id)
+            set = setRepository.findById(id)
                     .map(setMapper::mapFrom);
             session.getTransaction().commit();
             return set;
@@ -46,10 +58,10 @@ public class SetService {
     }
 
     public Optional<SetDto> find(String id) {
-        try (var session = sessionFactory.openSession()) {
+        try (session) {
             Optional<SetDto> production;
             session.beginTransaction();
-            production = setDao.findById(session,Integer.parseInt(id))
+            production = setRepository.findById(Integer.parseInt(id))
                     .map(setMapper::mapFrom);
             session.getTransaction().commit();
             return production;

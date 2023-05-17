@@ -1,37 +1,62 @@
 package by.kozlov.hibernate.starter.service;
 
+import by.kozlov.hibernate.starter.dao.BrigadeRepository;
+import by.kozlov.hibernate.starter.dao.MaterialProductionRepository;
+import by.kozlov.hibernate.starter.dao.MaterialRepository;
 import by.kozlov.hibernate.starter.dto.*;
+import by.kozlov.hibernate.starter.entity.MaterialsProduction;
 import by.kozlov.hibernate.starter.exception.ValidationException;
 import by.kozlov.hibernate.starter.dao.MaterialsProductionDao;
-import by.kozlov.hibernate.starter.mapper.CreateMaterialsProductionMapper;
-import by.kozlov.hibernate.starter.mapper.MaterialsProductionMapper;
-import by.kozlov.hibernate.starter.mapper.UpdateMaterialsProductionMapper;
+import by.kozlov.hibernate.starter.mapper.*;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import by.kozlov.hibernate.starter.validator.CreateMaterialsProductionValidator;
 import by.kozlov.hibernate.starter.validator.UpdateMaterialsProductionValidator;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.lang.reflect.Proxy;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MaterialsProductionService {
 
-    private final SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+    private final SessionFactory sessionFactory;
 
     private static final MaterialsProductionService INSTANCE = new MaterialsProductionService();
-    private final MaterialsProductionDao materialsProductionDao = MaterialsProductionDao.getInstance();
-    private final MaterialsProductionMapper materialsProductionMapper = MaterialsProductionMapper.getInstance();
 
-    private final CreateMaterialsProductionMapper createMaterialsProductionMapper = CreateMaterialsProductionMapper.getInstance();
+    private final MaterialProductionRepository materialProductionRepository;
+
+    private final MaterialsProductionMapper materialsProductionMapper;
+
+    private final CreateMaterialsProductionMapper createMaterialsProductionMapper;
 
     private final UpdateMaterialsProductionValidator updateMaterialsProductionValidator = UpdateMaterialsProductionValidator.getInstance();
-    private final UpdateMaterialsProductionMapper updateMaterialsProductionMapper = UpdateMaterialsProductionMapper.getInstance();
+    private final UpdateMaterialsProductionMapper updateMaterialsProductionMapper;
     private final CreateMaterialsProductionValidator createMaterialsProductionValidator = CreateMaterialsProductionValidator.getInstance();
+
+    private final Session session;
+
+    private MaterialsProductionService() {
+        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
+                new Class[]{Session.class},
+                (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        materialProductionRepository = new MaterialProductionRepository(session);
+        var brigadeMapper = new BrigadeMapper();
+        var materialMapper = new MaterialMapper();
+        var materialRepository = new MaterialRepository(session);
+        var brigadeRepository = new BrigadeRepository(session);
+        materialsProductionMapper = new MaterialsProductionMapper(materialMapper,brigadeMapper);
+        createMaterialsProductionMapper = new CreateMaterialsProductionMapper(materialRepository,brigadeRepository);
+        updateMaterialsProductionMapper = new UpdateMaterialsProductionMapper(materialRepository,brigadeRepository);
+    }
+
     public List<MaterialsProductionDto> findAll() {
-        try (var session = sessionFactory.openSession()) {
+        try (session) {
             List<MaterialsProductionDto> productions;
             session.beginTransaction();
-            productions = materialsProductionDao.findAll(session).stream()
+            productions = materialProductionRepository.findAll().stream()
                     .map(materialsProductionMapper::mapFrom).collect(Collectors.toList());
             session.getTransaction().commit();
             return productions;
@@ -39,10 +64,10 @@ public class MaterialsProductionService {
     }
 
     public List<MaterialsProductionDto> findAllByBrigadeId(Integer id) {
-        try (var session = sessionFactory.openSession()) {
+        try (session) {
             List<MaterialsProductionDto> productions;
             session.beginTransaction();
-            productions = materialsProductionDao.findAllByBrigadeId(session,id).stream()
+            productions = materialProductionRepository.findAllByBrigadeId(id).stream()
                     .map(materialsProductionMapper::mapFrom).collect(Collectors.toList());
             session.getTransaction().commit();
             return productions;
@@ -50,47 +75,43 @@ public class MaterialsProductionService {
     }
 
     public Integer create(CreateMaterialsProductionDto materialsProductionDto) {
-        try (var session = sessionFactory.openSession()) {
+        try (session) {
             var validationResult = createMaterialsProductionValidator.isValid(materialsProductionDto);
             if (!validationResult.isValid()) {
                 throw new ValidationException(validationResult.getErrors());
             }
-            var productionEntity = createMaterialsProductionMapper.mapFrom(materialsProductionDto);
             session.beginTransaction();
-            productionEntity = materialsProductionDao.save(session,productionEntity);
+            var productionEntity = createMaterialsProductionMapper.mapFrom(materialsProductionDto);
+            productionEntity = materialProductionRepository.save(productionEntity);
             session.getTransaction().commit();
             return productionEntity.getId();
         }
     }
 
     public boolean delete(Integer id) {
-        try (var session = sessionFactory.openSession()) {
-            boolean result;
+        try (session) {
+            Optional<MaterialsProduction> maybe;
             session.beginTransaction();
-            result = materialsProductionDao.delete(session,id);
+            maybe = materialProductionRepository.findById(id);
+            maybe.ifPresent(it -> materialProductionRepository.delete(id));
             session.getTransaction().commit();
-            return result;
+            return maybe.isPresent();
         }
     }
 
-    public boolean update(UpdateMaterialsProductionDto productionDto) {
+    public void update(UpdateMaterialsProductionDto productionDto) {
 
-        try (var session = sessionFactory.openSession()) {
-            boolean result;
+        try (session) {
             var validationResult = updateMaterialsProductionValidator.isValid(productionDto);
             if (!validationResult.isValid()) {
                 throw new ValidationException(validationResult.getErrors());
             }
-            var productionEntity = updateMaterialsProductionMapper.mapFrom(productionDto);
             session.beginTransaction();
-            result = materialsProductionDao.update(session, productionEntity);
+            var productionEntity = updateMaterialsProductionMapper.mapFrom(productionDto);
+            materialProductionRepository.update(productionEntity);
             session.getTransaction().commit();
-            return result;
         }
     }
-
-    private MaterialsProductionService() {}
-
     public static MaterialsProductionService getInstance() {
         return INSTANCE;
     }
