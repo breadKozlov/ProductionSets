@@ -1,42 +1,64 @@
 package by.kozlov.hibernate.starter.service;
 
+import by.kozlov.hibernate.starter.dao.*;
 import by.kozlov.hibernate.starter.dto.WorkerDto;
+import by.kozlov.hibernate.starter.entity.Production;
 import by.kozlov.hibernate.starter.exception.ValidationException;
+import by.kozlov.hibernate.starter.mapper.*;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import by.kozlov.hibernate.starter.validator.CreateProductionValidator;
 import by.kozlov.hibernate.starter.validator.UpdateProductionValidator;
-import by.kozlov.hibernate.starter.dao.ProductionDao;
 import by.kozlov.hibernate.starter.dto.CreateProductionDto;
 import by.kozlov.hibernate.starter.dto.ProductionDto;
 import by.kozlov.hibernate.starter.dto.UpdateProductionDto;
-import by.kozlov.hibernate.starter.mapper.CreateProductionMapper;
-import by.kozlov.hibernate.starter.mapper.ProductionMapper;
-import by.kozlov.hibernate.starter.mapper.UpdateProductionMapper;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ProductionService {
 
-    private final SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+    private final SessionFactory sessionFactory;
 
     private static final ProductionService INSTANCE = new ProductionService();
 
-    private final ProductionDao productionDao = ProductionDao.getInstance();
-    private final ProductionMapper productionMapper = ProductionMapper.getInstance();
+    private final ProductionRepository productionRepository;
+    private final ProductionMapper productionMapper;
     private final CreateProductionValidator createProductionValidator = CreateProductionValidator.getInstance();
-    private final CreateProductionMapper createProductionMapper = CreateProductionMapper.getInstance();
-    private final UpdateProductionMapper updateProductionMapper = UpdateProductionMapper.getInstance();
+    private final CreateProductionMapper createProductionMapper;
+    private final UpdateProductionMapper updateProductionMapper;
     private final UpdateProductionValidator updateProductionValidator = UpdateProductionValidator.getInstance();
 
+    //private final SetRepository setRepository;
+    //private final WorkerRepository workerRepository;
+    private final Session session;
+
+
+    private ProductionService() {
+
+        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
+                new Class[]{Session.class},
+                (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        productionRepository = new ProductionRepository(session);
+        var brigadeMapper = new BrigadeMapper();
+        var workerMapper = new WorkerMapper(brigadeMapper);
+        var setMapper = new SetMapper();
+        var setRepository = new SetRepository(session);
+        var workerRepository = new WorkerRepository(session);
+        productionMapper = new ProductionMapper(workerMapper,setMapper);
+        createProductionMapper = new CreateProductionMapper(setRepository,workerRepository);
+        updateProductionMapper = new UpdateProductionMapper(setRepository,workerRepository);
+    }
     public List<ProductionDto> findAllByWorkerId(Integer id) {
-        try (var session = sessionFactory.openSession()) {
+        try (session) {
             List<ProductionDto> productions;
             session.beginTransaction();
-            productions = productionDao.findAllByWorkerId(session,id).stream()
+            productions = productionRepository.findAllByWorkerId(id).stream()
                     .map(productionMapper::mapFrom).collect(Collectors.toList());
             session.getTransaction().commit();
             return productions;
@@ -44,10 +66,10 @@ public class ProductionService {
     }
 
     public List<ProductionDto> findAll() {
-        try (var session = sessionFactory.openSession()) {
+        try (session) {
             List<ProductionDto> productions;
             session.beginTransaction();
-            productions = productionDao.findAll(session).stream()
+            productions = productionRepository.findAll().stream()
                     .map(productionMapper::mapFrom).collect(Collectors.toList());
             session.getTransaction().commit();
             return productions;
@@ -55,10 +77,10 @@ public class ProductionService {
     }
 
     public Optional<ProductionDto> findById(Integer id) {
-        try (var session = sessionFactory.openSession()) {
+        try (session) {
             Optional<ProductionDto> production;
             session.beginTransaction();
-            production = productionDao.findById(session,id)
+            production = productionRepository.findById(id)
                     .map(productionMapper::mapFrom);
             session.getTransaction().commit();
             return production;
@@ -67,56 +89,54 @@ public class ProductionService {
 
     public Integer create(CreateProductionDto productionDto) {
 
-        try (var session = sessionFactory.openSession()) {
+        try (session) {
             var validationResult = createProductionValidator.isValid(productionDto);
             if (!validationResult.isValid()) {
                 throw new ValidationException(validationResult.getErrors());
             }
-            var productionEntity = createProductionMapper.mapFrom(productionDto);
             session.beginTransaction();
-            productionEntity = productionDao.save(session,productionEntity);
+            var productionEntity = createProductionMapper.mapFrom(productionDto);
+
+            productionEntity = productionRepository.save(productionEntity);
             session.getTransaction().commit();
             return productionEntity.getId();
         }
     }
 
     public boolean delete(Integer id) {
-        try (var session = sessionFactory.openSession()) {
-            boolean result;
+        try (session) {
+            Optional<Production> maybe;
             session.beginTransaction();
-            result = productionDao.delete(session,id);
+            maybe = productionRepository.findById(id);
+            maybe.ifPresent(it -> productionRepository.delete(id));
             session.getTransaction().commit();
-            return result;
+            return maybe.isPresent();
         }
     }
 
-    public boolean update(UpdateProductionDto productionDto) {
+    public void update(UpdateProductionDto productionDto) {
 
-        try (var session = sessionFactory.openSession()) {
-            boolean result;
+        try (session) {
             var validationResult = updateProductionValidator.isValid(productionDto);
             if (!validationResult.isValid()) {
                 throw new ValidationException(validationResult.getErrors());
             }
-            var productionEntity = updateProductionMapper.mapFrom(productionDto);
             session.beginTransaction();
-            result = productionDao.update(session, productionEntity);
+            var productionEntity = updateProductionMapper.mapFrom(productionDto);
+            productionRepository.update(productionEntity);
             session.getTransaction().commit();
-            return result;
         }
     }
 
     public List<Object[]> findSumReqMaterials() {
-        try(var session = sessionFactory.openSession()) {
+        try(session) {
             List<Object[]> sum;
             session.beginTransaction();
-            sum = productionDao.findSumAllProdSets(session);
+            sum = productionRepository.findSumAllProdSets();
             session.getTransaction().commit();
             return sum;
         }
     }
-
-    private ProductionService() {}
 
     public static ProductionService getInstance() {
         return INSTANCE;

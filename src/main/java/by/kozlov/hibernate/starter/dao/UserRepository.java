@@ -5,6 +5,7 @@ import by.kozlov.hibernate.starter.exception.DaoException;
 import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.Optional;
 
 public class UserRepository extends BaseRepository<Integer, User>{
@@ -22,9 +23,13 @@ public class UserRepository extends BaseRepository<Integer, User>{
 
     public Optional<User> findByEmailAndPassword(String email, String password) {
 
+        try {
             return Optional.ofNullable(getEntityManager().createQuery(FIND_BY_EMAIL_AND_PASS_HQL, User.class)
                     .setParameter("email", email)
                     .setParameter("password", password)
                     .getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
     }
 }

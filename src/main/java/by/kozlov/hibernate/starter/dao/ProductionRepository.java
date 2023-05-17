@@ -36,7 +36,7 @@ public class ProductionRepository extends BaseRepository<Integer, Production> {
             return getEntityManager().createQuery(FIND_SUM_ALL_SETS,Object[].class).getResultList();
     }
 
-    public List<Production> findAllByWorkerId(Session session, Integer idWorker) {
+    public List<Production> findAllByWorkerId(Integer idWorker) {
 
             return getEntityManager().createQuery(FIND_BY_ID_WORKER_HQL,Production.class)
                     .setParameter("id",idWorker).getResultList();

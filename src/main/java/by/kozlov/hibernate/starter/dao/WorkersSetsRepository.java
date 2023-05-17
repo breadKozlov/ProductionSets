@@ -1,15 +1,13 @@
 package by.kozlov.hibernate.starter.dao;
 
 import by.kozlov.hibernate.starter.entity.WorkersSets;
-import by.kozlov.hibernate.starter.exception.DaoException;
-import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
-public class WorkerSetRepository extends BaseRepository<Integer, WorkersSets> {
-    public WorkerSetRepository(EntityManager entityManager) {
+public class WorkersSetsRepository extends BaseRepository<Integer, WorkersSets> {
+    public WorkersSetsRepository(EntityManager entityManager) {
         super(WorkersSets.class, entityManager);
     }
 

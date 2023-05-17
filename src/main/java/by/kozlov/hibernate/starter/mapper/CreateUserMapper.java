@@ -9,11 +9,8 @@ import lombok.NoArgsConstructor;
 
 import static lombok.AccessLevel.PRIVATE;
 
-@NoArgsConstructor(access = PRIVATE)
+
 public class CreateUserMapper implements Mapper<CreateUserDto, User> {
-
-    private static final CreateUserMapper INSTANCE = new CreateUserMapper();
-
     @Override
     public User mapFrom(CreateUserDto object) {
         return User.builder()
@@ -24,9 +21,5 @@ public class CreateUserMapper implements Mapper<CreateUserDto, User> {
                 .gender(Gender.valueOf(object.getGender()))
                 .role(Role.valueOf(object.getRole()))
                 .build();
-    }
-
-    public static CreateUserMapper getInstance() {
-        return INSTANCE;
     }
 }

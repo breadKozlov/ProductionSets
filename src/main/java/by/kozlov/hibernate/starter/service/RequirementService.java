@@ -1,43 +1,63 @@
 package by.kozlov.hibernate.starter.service;
 
+import by.kozlov.hibernate.starter.dao.*;
 import by.kozlov.hibernate.starter.dto.CreateRequirementDto;
 import by.kozlov.hibernate.starter.dto.ProductionDto;
 import by.kozlov.hibernate.starter.dto.RequirementDto;
 import by.kozlov.hibernate.starter.dto.UpdateRequirementDto;
+import by.kozlov.hibernate.starter.entity.Requirement;
 import by.kozlov.hibernate.starter.exception.ValidationException;
-import by.kozlov.hibernate.starter.mapper.CreateRequirementMapper;
-import by.kozlov.hibernate.starter.mapper.RequirementMapper;
-import by.kozlov.hibernate.starter.mapper.UpdateRequirementMapper;
+import by.kozlov.hibernate.starter.mapper.*;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import by.kozlov.hibernate.starter.validator.CreateRequirementValidator;
 import by.kozlov.hibernate.starter.validator.UpdateRequirementValidator;
-import by.kozlov.hibernate.starter.dao.RequirementDao;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 
+import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class RequirementService {
 
-    private final SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+    private final SessionFactory sessionFactory;
 
     private static final RequirementService INSTANCE = new RequirementService();
-    private final RequirementDao requirementDao = RequirementDao.getInstance();
+    private final RequirementRepository requirementRepository;
 
-    private final CreateRequirementMapper createRequirementMapper = CreateRequirementMapper.getInstance();
+    private final CreateRequirementMapper createRequirementMapper;
     private final CreateRequirementValidator createRequirementValidator = CreateRequirementValidator.getInstance();
 
     private final UpdateRequirementValidator updateRequirementValidator = UpdateRequirementValidator.getInstance();
-    private final UpdateRequirementMapper updateRequirementMapper = UpdateRequirementMapper.getInstance();
-    private final RequirementMapper requirementMapper = RequirementMapper.getInstance();
+    private final UpdateRequirementMapper updateRequirementMapper;
+    private final RequirementMapper requirementMapper;
+
+    private final Session session;
+
+
+    private RequirementService() {
+
+        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
+                new Class[]{Session.class},
+                (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        requirementRepository = new RequirementRepository(session);
+        var setMapper = new SetMapper();
+        var materialMapper = new MaterialMapper();
+        var materialRepository = new MaterialRepository(session);
+        var setRepository = new SetRepository(session);
+        requirementMapper = new RequirementMapper(setMapper,materialMapper);
+        createRequirementMapper = new CreateRequirementMapper(setRepository,materialRepository);
+        updateRequirementMapper = new UpdateRequirementMapper(setRepository,materialRepository);
+    }
     public List<RequirementDto> findAllBySetId(Integer id) {
 
-        try (var session = sessionFactory.openSession()) {
+        try (session) {
             List<RequirementDto> req;
             session.beginTransaction();
-            req = requirementDao.findAllBySetId(session,id).stream()
+            req = requirementRepository.findAllBySetId(id).stream()
                     .map(requirementMapper::mapFrom).collect(Collectors.toList());
             session.getTransaction().commit();
             return req;
@@ -45,10 +65,10 @@ public class RequirementService {
     }
 
     public List<RequirementDto> findAll() {
-        try (var session = sessionFactory.openSession()) {
+        try (session) {
             List<RequirementDto> req;
             session.beginTransaction();
-            req = requirementDao.findAll(session).stream()
+            req = requirementRepository.findAll().stream()
                     .map(requirementMapper::mapFrom).collect(Collectors.toList());
             session.getTransaction().commit();
             return req;
@@ -56,20 +76,20 @@ public class RequirementService {
     }
 
     public List<Object[]> findSumReqMaterials() {
-        try(var session = sessionFactory.openSession()) {
+        try(session) {
             List<Object[]> sum;
             session.beginTransaction();
-            sum = requirementDao.findSumAllReqMat(session);
+            sum = requirementRepository.findSumAllReqMat();
             session.getTransaction().commit();
             return sum;
         }
     }
 
     public Optional<RequirementDto> findById(Integer id) {
-        try (var session = sessionFactory.openSession()) {
+        try (session) {
             Optional<RequirementDto> req;
             session.beginTransaction();
-            req = requirementDao.findById(session,id)
+            req = requirementRepository.findById(id)
                     .map(requirementMapper::mapFrom);
             session.getTransaction().commit();
             return req;
@@ -77,46 +97,45 @@ public class RequirementService {
     }
 
     public Integer create(CreateRequirementDto requirementDto) {
-        try (var session = sessionFactory.openSession()) {
+        try (session) {
             var validationResult = createRequirementValidator.isValid(requirementDto);
             if (!validationResult.isValid()) {
                 throw new ValidationException(validationResult.getErrors());
             }
-            var productionEntity = createRequirementMapper.mapFrom(requirementDto);
             session.beginTransaction();
-            productionEntity = requirementDao.save(session,productionEntity);
+            var productionEntity = createRequirementMapper.mapFrom(requirementDto);
+            productionEntity = requirementRepository.save(productionEntity);
             session.getTransaction().commit();
             return productionEntity.getId();
         }
     }
 
     public boolean delete(Integer id) {
-        try (var session = sessionFactory.openSession()) {
-            boolean result;
+        try (session) {
+            Optional< Requirement> maybe;
             session.beginTransaction();
-            result = requirementDao.delete(session,id);
+            maybe = requirementRepository.findById(id);
+            maybe.ifPresent(it -> requirementRepository.delete(id));
             session.getTransaction().commit();
-            return result;
+            return maybe.isPresent();
         }
     }
 
-    public boolean update(UpdateRequirementDto requirementDto) {
+    public void update(UpdateRequirementDto requirementDto) {
 
-        try (var session = sessionFactory.openSession()) {
-            boolean result;
+        try (session) {
             var validationResult = updateRequirementValidator.isValid(requirementDto);
             if (!validationResult.isValid()) {
                 throw new ValidationException(validationResult.getErrors());
             }
-            var productionEntity = updateRequirementMapper.mapFrom(requirementDto);
             session.beginTransaction();
-            result = requirementDao.update(session, productionEntity);
+            var productionEntity = updateRequirementMapper.mapFrom(requirementDto);
+
+            requirementRepository.update(productionEntity);
             session.getTransaction().commit();
-            return result;
         }
     }
 
-    private RequirementService() {}
     public static RequirementService getInstance() {
         return INSTANCE;
     }
