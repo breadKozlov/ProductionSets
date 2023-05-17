@@ -61,10 +61,10 @@ public class WorkersSetsService {
     }
 
     public List<Object[]> findAllProdSetsById(Integer id) {
-        try(var session = sessionFactory.openSession()) {
+        try(session) {
             List<Object[]> sum;
             session.beginTransaction();
-            sum = workersSetsDao.findAllProdSetsById(session,id);
+            sum = workersSetsRepository.findAllProdSetsById(id);
             session.getTransaction().commit();
             return sum;
         }
