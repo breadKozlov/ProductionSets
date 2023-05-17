@@ -5,26 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c04e28bc-6a8e-4684-9b19-37a9b77eb17d" name="Changes" comment="Add repository">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/dd7b3468-27d2-4b5c-91aa-82790dd724ca.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/ProductionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/ProductionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/WorkerSetRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dao/WorkersSetsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/CreateProductionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/CreateProductionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/CreateRequirementMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/CreateRequirementMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/CreateUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/CreateUserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/CreateWorkersSetsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/CreateWorkersSetsMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/UpdateMaterialsProductionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/UpdateMaterialsProductionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/UpdateProductionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/UpdateProductionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/UpdateRequirementMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/UpdateRequirementMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/UpdateWorkersSetsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/mapper/UpdateWorkersSetsMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/MaterialService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/MaterialService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/MaterialsProductionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/MaterialsProductionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/ProductionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/ProductionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/RequirementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/RequirementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/SetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/SetService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/CreateUserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/CreateUserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/UserDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/WorkersSetsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/WorkersSetsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/login.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/servlet/RegistrationServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/servlet/RegistrationServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/registration.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/registration.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +29,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="HIbernateEnd" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
@@ -96,6 +90,7 @@
       <list>
         <item itemvalue="Application.Runner" />
         <item itemvalue="Application.Runner" />
+        <item itemvalue="Application.Runner" />
       </list>
     </recent_temporary>
   </component>
@@ -122,8 +117,16 @@
       <option name="presentableId" value="Default" />
       <updated>1684304118186</updated>
       <workItem from="1684304120636" duration="13228000" />
+      <workItem from="1684319544805" duration="6865000" />
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add repository">
+      <created>1684319286605</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1684319286605</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
