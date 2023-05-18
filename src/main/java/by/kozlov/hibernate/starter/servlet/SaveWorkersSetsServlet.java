@@ -2,7 +2,6 @@ package by.kozlov.hibernate.starter.servlet;
 
 import by.kozlov.hibernate.starter.dto.CreateWorkersSetsDto;
 import by.kozlov.hibernate.starter.dto.WorkerDto;
-import by.kozlov.hibernate.starter.exception.ValidationException;
 import by.kozlov.hibernate.starter.service.SetService;
 import by.kozlov.hibernate.starter.service.WorkersSetsService;
 import by.kozlov.hibernate.starter.utils.JspHelper;
@@ -12,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 
 @WebServlet("/saveWorkersSets")
@@ -45,8 +45,8 @@ public class SaveWorkersSetsServlet extends HttpServlet {
         try {
             workersSetsService.create(workersSetsDto);
             resp.sendRedirect("./user");
-        } catch (ValidationException exception) {
-            req.setAttribute("errors", exception.getErrors());
+        } catch (ConstraintViolationException exception) {
+            req.setAttribute("errors", exception.getConstraintViolations());
             doGet(req, resp);
         }
     }

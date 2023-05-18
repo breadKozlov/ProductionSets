@@ -1,6 +1,5 @@
 package by.kozlov.hibernate.starter.servlet;
 
-import by.kozlov.hibernate.starter.exception.ValidationException;
 import by.kozlov.hibernate.starter.dto.CreateUserDto;
 import by.kozlov.hibernate.starter.entity.Gender;
 import by.kozlov.hibernate.starter.entity.Role;

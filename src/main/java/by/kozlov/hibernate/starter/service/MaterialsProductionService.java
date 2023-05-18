@@ -3,20 +3,17 @@ package by.kozlov.hibernate.starter.service;
 import by.kozlov.hibernate.starter.dao.BrigadeRepository;
 import by.kozlov.hibernate.starter.dao.MaterialProductionRepository;
 import by.kozlov.hibernate.starter.dao.MaterialRepository;
-import by.kozlov.hibernate.starter.dto.*;
+import by.kozlov.hibernate.starter.dto.CreateMaterialsProductionDto;
+import by.kozlov.hibernate.starter.dto.MaterialsProductionDto;
+import by.kozlov.hibernate.starter.dto.UpdateMaterialsProductionDto;
 import by.kozlov.hibernate.starter.entity.MaterialsProduction;
-import by.kozlov.hibernate.starter.exception.ValidationException;
-import by.kozlov.hibernate.starter.dao.MaterialsProductionDao;
 import by.kozlov.hibernate.starter.mapper.*;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
-import by.kozlov.hibernate.starter.validator.CreateMaterialsProductionValidator;
-import by.kozlov.hibernate.starter.validator.UpdateMaterialsProductionValidator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validation;
-import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,9 +28,7 @@ public class MaterialsProductionService {
 
     private final CreateMaterialsProductionMapper createMaterialsProductionMapper;
 
-    private final UpdateMaterialsProductionValidator updateMaterialsProductionValidator = UpdateMaterialsProductionValidator.getInstance();
     private final UpdateMaterialsProductionMapper updateMaterialsProductionMapper;
-    private final CreateMaterialsProductionValidator createMaterialsProductionValidator = CreateMaterialsProductionValidator.getInstance();
 
     private final Session session;
 

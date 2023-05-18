@@ -1,10 +1,6 @@
 package by.kozlov.dao;
 
-import by.kozlov.hibernate.starter.dao.ProductionDao;
-import by.kozlov.hibernate.starter.dao.ProductionRepository;
-import by.kozlov.hibernate.starter.dao.RequirementDao;
 import by.kozlov.hibernate.starter.dao.RequirementRepository;
-import by.kozlov.hibernate.starter.entity.Production;
 import by.kozlov.hibernate.starter.entity.Requirement;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import by.kozlov.utils.TestDataImporter;

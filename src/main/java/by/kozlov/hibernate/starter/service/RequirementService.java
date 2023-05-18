@@ -1,23 +1,19 @@
 package by.kozlov.hibernate.starter.service;
 
-import by.kozlov.hibernate.starter.dao.*;
+import by.kozlov.hibernate.starter.dao.MaterialRepository;
+import by.kozlov.hibernate.starter.dao.RequirementRepository;
+import by.kozlov.hibernate.starter.dao.SetRepository;
 import by.kozlov.hibernate.starter.dto.CreateRequirementDto;
-import by.kozlov.hibernate.starter.dto.ProductionDto;
 import by.kozlov.hibernate.starter.dto.RequirementDto;
 import by.kozlov.hibernate.starter.dto.UpdateRequirementDto;
 import by.kozlov.hibernate.starter.entity.Requirement;
-import by.kozlov.hibernate.starter.exception.ValidationException;
 import by.kozlov.hibernate.starter.mapper.*;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
-import by.kozlov.hibernate.starter.validator.CreateRequirementValidator;
-import by.kozlov.hibernate.starter.validator.UpdateRequirementValidator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validation;
-import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,9 +24,6 @@ public class RequirementService {
     private final RequirementRepository requirementRepository;
 
     private final CreateRequirementMapper createRequirementMapper;
-    private final CreateRequirementValidator createRequirementValidator = CreateRequirementValidator.getInstance();
-
-    private final UpdateRequirementValidator updateRequirementValidator = UpdateRequirementValidator.getInstance();
     private final UpdateRequirementMapper updateRequirementMapper;
     private final RequirementMapper requirementMapper;
 

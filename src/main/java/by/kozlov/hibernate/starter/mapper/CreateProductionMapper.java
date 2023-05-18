@@ -1,18 +1,11 @@
 package by.kozlov.hibernate.starter.mapper;
 
-import by.kozlov.hibernate.starter.dao.SetDao;
 import by.kozlov.hibernate.starter.dao.SetRepository;
-import by.kozlov.hibernate.starter.dao.WorkerDao;
 import by.kozlov.hibernate.starter.dao.WorkerRepository;
 import by.kozlov.hibernate.starter.dto.CreateProductionDto;
 import by.kozlov.hibernate.starter.entity.Production;
-import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import by.kozlov.hibernate.starter.utils.LocalDateFormatter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.SessionFactory;
-
-import static lombok.AccessLevel.PRIVATE;
 
 @RequiredArgsConstructor
 public class CreateProductionMapper implements Mapper<CreateProductionDto, Production> {

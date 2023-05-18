@@ -1,6 +1,5 @@
 package by.kozlov.hibernate.starter.servlet;
 
-import by.kozlov.hibernate.starter.exception.ValidationException;
 import by.kozlov.hibernate.starter.dto.CreateProductionDto;
 import by.kozlov.hibernate.starter.dto.WorkerDto;
 import by.kozlov.hibernate.starter.service.ProductionService;
@@ -12,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 
 @WebServlet("/saveProductionWorker")
@@ -42,8 +42,8 @@ public class SaveProductionWorkerServlet extends HttpServlet {
         try {
             productionService.create(productDto);
             resp.sendRedirect("./user");
-        } catch (ValidationException exception) {
-            req.setAttribute("errors", exception.getErrors());
+        } catch (ConstraintViolationException exception) {
+            req.setAttribute("errors", exception.getConstraintViolations());
             doGet(req, resp);
         }
 

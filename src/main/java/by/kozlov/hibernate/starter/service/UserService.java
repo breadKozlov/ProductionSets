@@ -1,31 +1,21 @@
 package by.kozlov.hibernate.starter.service;
 
-import by.kozlov.hibernate.starter.dao.*;
-import by.kozlov.hibernate.starter.dto.WorkerDto;
-import by.kozlov.hibernate.starter.exception.ValidationException;
-import by.kozlov.hibernate.starter.mapper.*;
-import by.kozlov.hibernate.starter.utils.HibernateUtil;
-import by.kozlov.hibernate.starter.validator.CreateUserValidator;
+import by.kozlov.hibernate.starter.dao.UserRepository;
 import by.kozlov.hibernate.starter.dto.CreateUserDto;
 import by.kozlov.hibernate.starter.dto.UserDto;
-import lombok.NoArgsConstructor;
+import by.kozlov.hibernate.starter.mapper.CreateUserMapper;
+import by.kozlov.hibernate.starter.mapper.UserMapper;
+import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validation;
-import java.lang.reflect.Proxy;
 import java.util.Optional;
-
-import static lombok.AccessLevel.PRIVATE;
 
 public class UserService {
 
-    private final SessionFactory sessionFactory;
-
     private static final UserService INSTANCE = new UserService();
-
-    private final CreateUserValidator createUserValidator = CreateUserValidator.getInstance();
     private final UserRepository userRepository;
     private final CreateUserMapper createUserMapper = new CreateUserMapper();
     private final UserMapper userMapper = new UserMapper();
@@ -33,7 +23,7 @@ public class UserService {
     private final Session session;
 
     private UserService() {
-        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
         session = HibernateUtil.getProxySession(sessionFactory);
         userRepository = new UserRepository(session);
     }

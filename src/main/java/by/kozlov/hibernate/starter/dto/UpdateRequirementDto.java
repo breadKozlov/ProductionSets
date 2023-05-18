@@ -10,13 +10,13 @@ import javax.validation.constraints.NotEmpty;
 public class UpdateRequirementDto {
 
     @NotEmpty
-    private String id;
+    String id;
     @NotEmpty
-    private String set;
+    String set;
     @NotEmpty
-    private String material;
+    String material;
     @NotEmpty
-    private String unitCost;
+    String unitCost;
     @NotEmpty
-    private String totalSets;
+    String totalSets;
 }

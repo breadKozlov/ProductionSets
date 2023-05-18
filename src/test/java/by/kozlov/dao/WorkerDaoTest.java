@@ -1,11 +1,9 @@
 package by.kozlov.dao;
 
-import by.kozlov.hibernate.starter.dao.WorkerDao;
 import by.kozlov.hibernate.starter.dao.WorkerRepository;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import by.kozlov.utils.TestDataImporter;
 import lombok.Cleanup;
-import org.checkerframework.checker.units.qual.C;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;

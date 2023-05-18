@@ -1,8 +1,6 @@
 package by.kozlov.hibernate.starter.servlet;
 
 import by.kozlov.hibernate.starter.dto.CreateMaterialsProductionDto;
-import by.kozlov.hibernate.starter.dto.WorkerDto;
-import by.kozlov.hibernate.starter.exception.ValidationException;
 import by.kozlov.hibernate.starter.service.BrigadeService;
 import by.kozlov.hibernate.starter.service.MaterialService;
 import by.kozlov.hibernate.starter.service.MaterialsProductionService;
@@ -13,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 
 @WebServlet("/saveMaterialsProductionAdmin")
@@ -45,8 +44,8 @@ public class SaveMaterialsProductionAdminServlet extends HttpServlet {
         try {
             materialsProductionService.create(materialsProduction);
             resp.sendRedirect("./materialsProductionAdmin");
-        } catch (ValidationException exception) {
-            req.setAttribute("errors",exception.getErrors());
+        } catch (ConstraintViolationException exception) {
+            req.setAttribute("errors", exception.getConstraintViolations());
             doGet(req,resp);
         }
     }

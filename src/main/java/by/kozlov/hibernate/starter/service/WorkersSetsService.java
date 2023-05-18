@@ -1,19 +1,19 @@
 package by.kozlov.hibernate.starter.service;
 
-import by.kozlov.hibernate.starter.dao.*;
-import by.kozlov.hibernate.starter.dto.*;
+import by.kozlov.hibernate.starter.dao.SetRepository;
+import by.kozlov.hibernate.starter.dao.WorkerRepository;
+import by.kozlov.hibernate.starter.dao.WorkersSetsRepository;
+import by.kozlov.hibernate.starter.dto.CreateWorkersSetsDto;
+import by.kozlov.hibernate.starter.dto.UpdateWorkersSetsDto;
+import by.kozlov.hibernate.starter.dto.WorkersSetsDto;
 import by.kozlov.hibernate.starter.entity.WorkersSets;
-import by.kozlov.hibernate.starter.exception.ValidationException;
 import by.kozlov.hibernate.starter.mapper.*;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
-import by.kozlov.hibernate.starter.validator.CreateWorkersSetsValidator;
-import by.kozlov.hibernate.starter.validator.UpdateWorkersSetsValidator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validation;
-import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,12 +23,8 @@ public class WorkersSetsService {
     private static final WorkersSetsService INSTANCE = new WorkersSetsService();
     private final WorkersSetsRepository workersSetsRepository;
     private final WorkersSetsMapper workersSetsMapper;
-
-    private final CreateWorkersSetsValidator createWorkersSetsValidator = CreateWorkersSetsValidator.getInstance();
     private final CreateWorkersSetsMapper createWorkersSetsMapper;
-
     private final UpdateWorkersSetsMapper updateWorkersSetsMapper;
-    private final UpdateWorkersSetsValidator updateWorkersSetsValidator = UpdateWorkersSetsValidator.getInstance();
 
     private final Session session;
 

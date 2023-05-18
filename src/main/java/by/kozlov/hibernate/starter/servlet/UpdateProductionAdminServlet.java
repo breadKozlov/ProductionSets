@@ -1,6 +1,5 @@
 package by.kozlov.hibernate.starter.servlet;
 
-import by.kozlov.hibernate.starter.exception.ValidationException;
 import by.kozlov.hibernate.starter.dto.UpdateProductionDto;
 import by.kozlov.hibernate.starter.service.ProductionService;
 import by.kozlov.hibernate.starter.service.SetService;
@@ -12,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 
 @WebServlet("/updateProductionAdmin")
@@ -48,8 +48,8 @@ public class UpdateProductionAdminServlet extends HttpServlet {
         try {
             productionService.update(productDto);
             resp.sendRedirect("./productionAdmin");
-        } catch (ValidationException exception) {
-            req.setAttribute("errors", exception.getErrors());
+        } catch (ConstraintViolationException exception) {
+            req.setAttribute("errors", exception.getConstraintViolations());
             req.setAttribute("id",req.getParameter("id"));
             doGet(req, resp);
         }

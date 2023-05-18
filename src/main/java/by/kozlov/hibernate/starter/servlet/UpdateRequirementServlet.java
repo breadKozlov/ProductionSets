@@ -1,8 +1,6 @@
 package by.kozlov.hibernate.starter.servlet;
 
-import by.kozlov.hibernate.starter.dto.UpdateProductionDto;
 import by.kozlov.hibernate.starter.dto.UpdateRequirementDto;
-import by.kozlov.hibernate.starter.exception.ValidationException;
 import by.kozlov.hibernate.starter.service.RequirementService;
 import by.kozlov.hibernate.starter.utils.JspHelper;
 import jakarta.servlet.ServletException;
@@ -11,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 
 @WebServlet("/updateRequirement")
@@ -37,8 +36,8 @@ public class UpdateRequirementServlet extends HttpServlet {
         try {
             requirementService.update(requirementDto);
             resp.sendRedirect("./requirement");
-        } catch (ValidationException exception) {
-            req.setAttribute("errors", exception.getErrors());
+        } catch (ConstraintViolationException exception) {
+            req.setAttribute("errors", exception.getConstraintViolations());
             req.setAttribute("id",req.getParameter("id"));
             doGet(req, resp);
         }

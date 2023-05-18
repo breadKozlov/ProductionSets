@@ -1,17 +1,11 @@
 package by.kozlov.hibernate.starter.mapper;
 
-import by.kozlov.hibernate.starter.dao.BrigadeDao;
 import by.kozlov.hibernate.starter.dao.BrigadeRepository;
-import by.kozlov.hibernate.starter.dao.MaterialDao;
 import by.kozlov.hibernate.starter.dao.MaterialRepository;
 import by.kozlov.hibernate.starter.dto.UpdateMaterialsProductionDto;
 import by.kozlov.hibernate.starter.entity.MaterialsProduction;
-import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import by.kozlov.hibernate.starter.utils.LocalDateFormatter;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.SessionFactory;
 
 @RequiredArgsConstructor
 public class UpdateMaterialsProductionMapper implements Mapper<UpdateMaterialsProductionDto, MaterialsProduction> {

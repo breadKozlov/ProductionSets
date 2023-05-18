@@ -1,16 +1,10 @@
 package by.kozlov.hibernate.starter.mapper;
 
-import by.kozlov.hibernate.starter.dao.MaterialDao;
 import by.kozlov.hibernate.starter.dao.MaterialRepository;
-import by.kozlov.hibernate.starter.dao.SetDao;
 import by.kozlov.hibernate.starter.dao.SetRepository;
 import by.kozlov.hibernate.starter.dto.CreateRequirementDto;
-import by.kozlov.hibernate.starter.entity.Production;
 import by.kozlov.hibernate.starter.entity.Requirement;
-import by.kozlov.hibernate.starter.utils.HibernateUtil;
-import by.kozlov.hibernate.starter.utils.LocalDateFormatter;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.SessionFactory;
 
 @RequiredArgsConstructor
 public class CreateRequirementMapper implements Mapper<CreateRequirementDto, Requirement> {

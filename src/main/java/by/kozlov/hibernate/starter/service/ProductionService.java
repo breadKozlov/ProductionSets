@@ -1,23 +1,19 @@
 package by.kozlov.hibernate.starter.service;
 
-import by.kozlov.hibernate.starter.dao.*;
-import by.kozlov.hibernate.starter.dto.WorkerDto;
-import by.kozlov.hibernate.starter.entity.Production;
-import by.kozlov.hibernate.starter.exception.ValidationException;
-import by.kozlov.hibernate.starter.mapper.*;
-import by.kozlov.hibernate.starter.utils.HibernateUtil;
-import by.kozlov.hibernate.starter.validator.CreateProductionValidator;
-import by.kozlov.hibernate.starter.validator.UpdateProductionValidator;
+import by.kozlov.hibernate.starter.dao.ProductionRepository;
+import by.kozlov.hibernate.starter.dao.SetRepository;
+import by.kozlov.hibernate.starter.dao.WorkerRepository;
 import by.kozlov.hibernate.starter.dto.CreateProductionDto;
 import by.kozlov.hibernate.starter.dto.ProductionDto;
 import by.kozlov.hibernate.starter.dto.UpdateProductionDto;
+import by.kozlov.hibernate.starter.entity.Production;
+import by.kozlov.hibernate.starter.mapper.*;
+import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validation;
-import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,10 +24,8 @@ public class ProductionService {
 
     private final ProductionRepository productionRepository;
     private final ProductionMapper productionMapper;
-    private final CreateProductionValidator createProductionValidator = CreateProductionValidator.getInstance();
     private final CreateProductionMapper createProductionMapper;
     private final UpdateProductionMapper updateProductionMapper;
-    private final UpdateProductionValidator updateProductionValidator = UpdateProductionValidator.getInstance();
 
     private final Session session;
 

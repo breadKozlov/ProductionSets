@@ -1,14 +1,10 @@
 package by.kozlov.dao;
 
-import by.kozlov.hibernate.starter.dao.ProductionDao;
 import by.kozlov.hibernate.starter.dao.ProductionRepository;
-import by.kozlov.hibernate.starter.dao.RequirementDao;
 import by.kozlov.hibernate.starter.entity.Production;
-import by.kozlov.hibernate.starter.service.DifferenceService;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import by.kozlov.utils.TestDataImporter;
 import lombok.Cleanup;
-import org.checkerframework.checker.units.qual.C;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -16,7 +12,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import javax.persistence.Table;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;

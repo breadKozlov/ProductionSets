@@ -1,20 +1,16 @@
 package by.kozlov.hibernate.starter.service;
 
-import by.kozlov.hibernate.starter.dao.*;
-import by.kozlov.hibernate.starter.dto.ProductionDto;
+import by.kozlov.hibernate.starter.dao.SetRepository;
 import by.kozlov.hibernate.starter.dto.SetDto;
-import by.kozlov.hibernate.starter.dto.WorkerDto;
 import by.kozlov.hibernate.starter.dto.WorkersSetsDto;
-import by.kozlov.hibernate.starter.mapper.*;
+import by.kozlov.hibernate.starter.mapper.SetMapper;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class SetService {
