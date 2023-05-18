@@ -1,6 +1,7 @@
 package by.kozlov.dao;
 
 import by.kozlov.hibernate.starter.dao.ProductionDao;
+import by.kozlov.hibernate.starter.dao.ProductionRepository;
 import by.kozlov.hibernate.starter.dao.RequirementDao;
 import by.kozlov.hibernate.starter.entity.Production;
 import by.kozlov.hibernate.starter.service.DifferenceService;
@@ -26,7 +27,6 @@ import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 class ProductionDaoTest {
 
     private final SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
-    private final ProductionDao productionDao = ProductionDao.getInstance();
 
    @BeforeAll
     public void initDb() {
@@ -40,10 +40,14 @@ class ProductionDaoTest {
 
     @Test
     void findAll() {
-        @Cleanup Session session = sessionFactory.openSession();
+
+       @Cleanup Session session = sessionFactory.openSession();
+
+        var productionRepository = new ProductionRepository(session);
+
         session.beginTransaction();
 
-        List<Production> results = productionDao.findAll(session);
+        List<Production> results = productionRepository.findAll();
         assertThat(results).hasSize(7);
 
         List<String> fullNames = results.stream().map(Production::fullName).collect(toList());
@@ -58,9 +62,10 @@ class ProductionDaoTest {
     void findDifferenceBetweenReqAndRealProductions() {
 
         @Cleanup Session session = sessionFactory.openSession();
+        var productionRepository = new ProductionRepository(session);
         session.beginTransaction();
 
-        List<Object[]> results = productionDao.findSumAllProdSets(session);
+        List<Object[]> results = productionRepository.findSumAllProdSets();
         assertThat(results).hasSize(4);
 
         List<String> orgNames = results.stream().map(a -> (String) a[0]).collect(toList());
@@ -79,8 +84,9 @@ class ProductionDaoTest {
     @Test
     void findAllByWorkerId() {
        @Cleanup var session = sessionFactory.openSession();
+        var productionRepository = new ProductionRepository(session);
        session.beginTransaction();
-       List<Production> results = productionDao.findAllByWorkerId(session,1);
+       List<Production> results = productionRepository.findAllByWorkerId(1);
 
        assertThat(results).hasSize(2);
        List<String> fullNames = results.stream().map(Production::fullName).collect(toList());

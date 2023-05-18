@@ -4,52 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c04e28bc-6a8e-4684-9b19-37a9b77eb17d" name="Changes" comment="Add repository">
-      <change afterPath="$PROJECT_DIR$/.idea/ProductionSets.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_05_2023__19_39__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_05_2023__19_39__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_05_2023__18_17__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_05_2023__18_17__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_05_2023__18_17__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_05_2023__18_17__Changes_1.xml" afterDir="false" />
+    <list default="true" id="c04e28bc-6a8e-4684-9b19-37a9b77eb17d" name="Changes" comment="Create the second level cache">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/Runner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/Runner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/CreateMaterialsProductionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/CreateMaterialsProductionDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/CreateProductionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/CreateProductionDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/CreateRequirementDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/CreateRequirementDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/CreateUserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/CreateUserDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/CreateWorkersSetsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/CreateWorkersSetsDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/UpdateMaterialsProductionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/UpdateMaterialsProductionDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/UpdateProductionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/UpdateProductionDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/UpdateRequirementDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/UpdateRequirementDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/UpdateWorkersSetsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/dto/UpdateWorkersSetsDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Brigade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Brigade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Material.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Set.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/Set.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/ShiftHour.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/entity/ShiftHour.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/BrigadeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/BrigadeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/MaterialService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/MaterialService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/MaterialsProductionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/MaterialsProductionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/ProductionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/ProductionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/RequirementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/RequirementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/SetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/SetService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/WorkerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/WorkerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/WorkersSetsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/service/WorkersSetsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/utils/HibernateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/hibernate/starter/utils/HibernateUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/saveMaterialsProductionAdmin.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/saveMaterialsProductionAdmin.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/saveMaterialsProductionUser.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/saveMaterialsProductionUser.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/saveProductionAdmin.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/saveProductionAdmin.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/saveProductionWorker.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/saveProductionWorker.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/saveUserProductionAdmin.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/saveUserProductionAdmin.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/saveWorkersSets.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/saveWorkersSets.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/updateMaterialsProductionAdmin.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/updateMaterialsProductionAdmin.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/updateMaterialsProductionUser.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/updateMaterialsProductionUser.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/updateProductionAdmin.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/updateProductionAdmin.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/updateProductionWorker.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/updateProductionWorker.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/updateRequirement.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/updateRequirement.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/updateUserProductionAdmin.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/updateUserProductionAdmin.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/updateWorkersSets.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/updateWorkersSets.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/by/kozlov/dao/ProductionDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/by/kozlov/dao/ProductionDaoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/by/kozlov/dao/RequirementDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/by/kozlov/dao/RequirementDaoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/by/kozlov/dao/WorkerDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/by/kozlov/dao/WorkerDaoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +71,7 @@
       <recent name="by.kozlov.hibernate.starter.dao" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.WorkerDaoTest.findByEmail">
     <configuration name="Runner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="by.kozlov.hibernate.starter.Runner" />
       <module name="ProductionSets" />
@@ -126,10 +85,74 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ProductionDaoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ProductionSets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="by.kozlov.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="by.kozlov.dao" />
+      <option name="MAIN_CLASS_NAME" value="by.kozlov.dao.ProductionDaoTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductionDaoTest.findAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ProductionSets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="by.kozlov.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="by.kozlov.dao" />
+      <option name="MAIN_CLASS_NAME" value="by.kozlov.dao.ProductionDaoTest" />
+      <option name="METHOD_NAME" value="findAll" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RequirementDaoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ProductionSets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="by.kozlov.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="by.kozlov.dao" />
+      <option name="MAIN_CLASS_NAME" value="by.kozlov.dao.RequirementDaoTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WorkerDaoTest.findByEmail" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ProductionSets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="by.kozlov.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="by.kozlov.dao" />
+      <option name="MAIN_CLASS_NAME" value="by.kozlov.dao.WorkerDaoTest" />
+      <option name="METHOD_NAME" value="findByEmail" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Runner" />
-        <item itemvalue="Application.Runner" />
+        <item itemvalue="JUnit.WorkerDaoTest.findByEmail" />
+        <item itemvalue="JUnit.RequirementDaoTest" />
+        <item itemvalue="JUnit.ProductionDaoTest" />
+        <item itemvalue="JUnit.ProductionDaoTest.findAll" />
         <item itemvalue="Application.Runner" />
       </list>
     </recent_temporary>
@@ -166,7 +189,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684319286605</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Create the second level cache">
+      <created>1684402139090</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1684402139091</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,7 +204,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add repository" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add repository" />
+    <MESSAGE value="Create the second level cache" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create the second level cache" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
