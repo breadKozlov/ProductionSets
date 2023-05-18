@@ -14,14 +14,14 @@ import by.kozlov.hibernate.starter.validator.UpdateMaterialsProductionValidator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validation;
 import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MaterialsProductionService {
-
-    private final SessionFactory sessionFactory;
 
     private static final MaterialsProductionService INSTANCE = new MaterialsProductionService();
 
@@ -38,10 +38,8 @@ public class MaterialsProductionService {
     private final Session session;
 
     private MaterialsProductionService() {
-        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
-        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
-                new Class[]{Session.class},
-                (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        session = HibernateUtil.getProxySession(sessionFactory);
         materialProductionRepository = new MaterialProductionRepository(session);
         var brigadeMapper = new BrigadeMapper();
         var materialMapper = new MaterialMapper();
@@ -75,10 +73,13 @@ public class MaterialsProductionService {
     }
 
     public Integer create(CreateMaterialsProductionDto materialsProductionDto) {
-        try (session) {
-            var validationResult = createMaterialsProductionValidator.isValid(materialsProductionDto);
-            if (!validationResult.isValid()) {
-                throw new ValidationException(validationResult.getErrors());
+        try (session;
+             var validationFactory = Validation.buildDefaultValidatorFactory()) {
+
+            var validator = validationFactory.getValidator();
+            var validationResult = validator.validate(materialsProductionDto);
+            if (!validationResult.isEmpty()) {
+                throw new ConstraintViolationException(validationResult);
             }
             session.beginTransaction();
             var productionEntity = createMaterialsProductionMapper.mapFrom(materialsProductionDto);
@@ -101,10 +102,13 @@ public class MaterialsProductionService {
 
     public void update(UpdateMaterialsProductionDto productionDto) {
 
-        try (session) {
-            var validationResult = updateMaterialsProductionValidator.isValid(productionDto);
-            if (!validationResult.isValid()) {
-                throw new ValidationException(validationResult.getErrors());
+        try (session;
+             var validationFactory = Validation.buildDefaultValidatorFactory()) {
+
+            var validator = validationFactory.getValidator();
+            var validationResult = validator.validate(productionDto);
+            if (!validationResult.isEmpty()) {
+                throw new ConstraintViolationException(validationResult);
             }
             session.beginTransaction();
             var productionEntity = updateMaterialsProductionMapper.mapFrom(productionDto);

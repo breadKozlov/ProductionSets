@@ -1,6 +1,7 @@
 package by.kozlov.hibernate.starter.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 @ToString(exclude = "schedules")
 @EqualsAndHashCode(exclude = "schedules")
 @Table(name = "schedule_hours")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ShiftHours")
 public class ShiftHour implements BaseEntity<Integer> {
 
     @Id

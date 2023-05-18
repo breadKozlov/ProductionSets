@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 public class MaterialService {
 
-    private final SessionFactory sessionFactory;
     private final Session session;
 
     private static final MaterialService INSTANCE = new MaterialService();
@@ -25,10 +24,8 @@ public class MaterialService {
     private final MaterialMapper materialMapper = new MaterialMapper();
 
     private MaterialService() {
-        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
-        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
-                new Class[]{Session.class},
-                (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        session = HibernateUtil.getProxySession(sessionFactory);
         materialRepository = new MaterialRepository(session);
     }
 

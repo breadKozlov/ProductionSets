@@ -15,14 +15,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validation;
 import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class RequirementService {
-
-    private final SessionFactory sessionFactory;
 
     private static final RequirementService INSTANCE = new RequirementService();
     private final RequirementRepository requirementRepository;
@@ -39,10 +39,8 @@ public class RequirementService {
 
     private RequirementService() {
 
-        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
-        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
-                new Class[]{Session.class},
-                (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        session = HibernateUtil.getProxySession(sessionFactory);
         requirementRepository = new RequirementRepository(session);
         var setMapper = new SetMapper();
         var materialMapper = new MaterialMapper();
@@ -97,10 +95,13 @@ public class RequirementService {
     }
 
     public Integer create(CreateRequirementDto requirementDto) {
-        try (session) {
-            var validationResult = createRequirementValidator.isValid(requirementDto);
-            if (!validationResult.isValid()) {
-                throw new ValidationException(validationResult.getErrors());
+        try (session;
+             var validationFactory = Validation.buildDefaultValidatorFactory()) {
+
+            var validator = validationFactory.getValidator();
+            var validationResult = validator.validate(requirementDto);
+            if (!validationResult.isEmpty()) {
+                throw new ConstraintViolationException(validationResult);
             }
             session.beginTransaction();
             var productionEntity = createRequirementMapper.mapFrom(requirementDto);
@@ -123,14 +124,16 @@ public class RequirementService {
 
     public void update(UpdateRequirementDto requirementDto) {
 
-        try (session) {
-            var validationResult = updateRequirementValidator.isValid(requirementDto);
-            if (!validationResult.isValid()) {
-                throw new ValidationException(validationResult.getErrors());
+        try (session;
+             var validationFactory = Validation.buildDefaultValidatorFactory()) {
+
+            var validator = validationFactory.getValidator();
+            var validationResult = validator.validate(requirementDto);
+            if (!validationResult.isEmpty()) {
+                throw new ConstraintViolationException(validationResult);
             }
             session.beginTransaction();
             var productionEntity = updateRequirementMapper.mapFrom(requirementDto);
-
             requirementRepository.update(productionEntity);
             session.getTransaction().commit();
         }

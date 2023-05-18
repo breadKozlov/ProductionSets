@@ -11,14 +11,14 @@ import by.kozlov.hibernate.starter.validator.UpdateWorkersSetsValidator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validation;
 import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class WorkersSetsService {
-
-    private final SessionFactory sessionFactory;
 
     private static final WorkersSetsService INSTANCE = new WorkersSetsService();
     private final WorkersSetsRepository workersSetsRepository;
@@ -34,10 +34,8 @@ public class WorkersSetsService {
 
     private WorkersSetsService() {
 
-        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
-        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
-                new Class[]{Session.class},
-                (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        session = HibernateUtil.getProxySession(sessionFactory);
         workersSetsRepository = new WorkersSetsRepository(session);
         var setMapper = new SetMapper();
         var brigadeMapper = new BrigadeMapper();
@@ -82,10 +80,13 @@ public class WorkersSetsService {
     }
 
     public Integer create(CreateWorkersSetsDto workersSetsDto) {
-        try (session) {
-            var validationResult = createWorkersSetsValidator.isValid(workersSetsDto);
-            if (!validationResult.isValid()) {
-                throw new ValidationException(validationResult.getErrors());
+        try (session;
+             var validationFactory = Validation.buildDefaultValidatorFactory()) {
+
+            var validator = validationFactory.getValidator();
+            var validationResult = validator.validate(workersSetsDto);
+            if (!validationResult.isEmpty()) {
+                throw new ConstraintViolationException(validationResult);
             }
             session.beginTransaction();
             var productionEntity = createWorkersSetsMapper.mapFrom(workersSetsDto);
@@ -120,10 +121,13 @@ public class WorkersSetsService {
     }
 
     public void update(UpdateWorkersSetsDto workersSetsDto) {
-        try (session) {
-            var validationResult = updateWorkersSetsValidator.isValid(workersSetsDto);
-            if (!validationResult.isValid()) {
-                throw new ValidationException(validationResult.getErrors());
+        try (session;
+             var validationFactory = Validation.buildDefaultValidatorFactory()) {
+
+            var validator = validationFactory.getValidator();
+            var validationResult = validator.validate(workersSetsDto);
+            if (!validationResult.isEmpty()) {
+                throw new ConstraintViolationException(validationResult);
             }
             session.beginTransaction();
             var productionEntity = updateWorkersSetsMapper.mapFrom(workersSetsDto);

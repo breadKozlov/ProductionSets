@@ -15,14 +15,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validation;
 import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ProductionService {
-
-    private final SessionFactory sessionFactory;
 
     private static final ProductionService INSTANCE = new ProductionService();
 
@@ -33,17 +33,13 @@ public class ProductionService {
     private final UpdateProductionMapper updateProductionMapper;
     private final UpdateProductionValidator updateProductionValidator = UpdateProductionValidator.getInstance();
 
-    //private final SetRepository setRepository;
-    //private final WorkerRepository workerRepository;
     private final Session session;
 
 
     private ProductionService() {
 
-        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
-        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
-                new Class[]{Session.class},
-                (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        session = HibernateUtil.getProxySession(sessionFactory);
         productionRepository = new ProductionRepository(session);
         var brigadeMapper = new BrigadeMapper();
         var workerMapper = new WorkerMapper(brigadeMapper);
@@ -89,14 +85,16 @@ public class ProductionService {
 
     public Integer create(CreateProductionDto productionDto) {
 
-        try (session) {
-            var validationResult = createProductionValidator.isValid(productionDto);
-            if (!validationResult.isValid()) {
-                throw new ValidationException(validationResult.getErrors());
+        try (session;
+             var validationFactory = Validation.buildDefaultValidatorFactory()) {
+
+            var validator = validationFactory.getValidator();
+            var validationResult = validator.validate(productionDto);
+            if (!validationResult.isEmpty()) {
+                throw new ConstraintViolationException(validationResult);
             }
             session.beginTransaction();
             var productionEntity = createProductionMapper.mapFrom(productionDto);
-
             productionEntity = productionRepository.save(productionEntity);
             session.getTransaction().commit();
             return productionEntity.getId();
@@ -116,10 +114,13 @@ public class ProductionService {
 
     public void update(UpdateProductionDto productionDto) {
 
-        try (session) {
-            var validationResult = updateProductionValidator.isValid(productionDto);
-            if (!validationResult.isValid()) {
-                throw new ValidationException(validationResult.getErrors());
+        try (session;
+             var validationFactory = Validation.buildDefaultValidatorFactory()) {
+
+            var validator = validationFactory.getValidator();
+            var validationResult = validator.validate(productionDto);
+            if (!validationResult.isEmpty()) {
+                throw new ConstraintViolationException(validationResult);
             }
             session.beginTransaction();
             var productionEntity = updateProductionMapper.mapFrom(productionDto);

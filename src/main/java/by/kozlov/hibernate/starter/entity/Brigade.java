@@ -1,6 +1,7 @@
 package by.kozlov.hibernate.starter.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.Set;
 @ToString(exclude = {"schedules","workers","materialsProduction"})
 @EqualsAndHashCode(exclude = {"schedules","workers","materialsProduction"})
 @Table(name="brigades",schema = "public")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "Brigades")
 public class Brigade implements BaseEntity<Integer> {
 
     @Id
