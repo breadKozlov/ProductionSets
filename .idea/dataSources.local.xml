@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="dataSourceStorageLocal" created-in="IU-231.8109.175">
-    <data-source name="eurosets_db@localhost" uuid="dd7b3468-27d2-4b5c-91aa-82790dd724ca">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" exact-version="0" />
-      <schema-mapping />
-    </data-source>
-  </component>
-</project>

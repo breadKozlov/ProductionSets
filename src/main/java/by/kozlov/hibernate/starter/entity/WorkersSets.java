@@ -25,4 +25,5 @@ public class WorkersSets implements BaseEntity<Integer> {
     @JoinColumn(name = "id_worker")
     private Worker worker;
     private Integer requirement;
+
 }

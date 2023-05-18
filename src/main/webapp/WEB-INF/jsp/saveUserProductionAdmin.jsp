@@ -23,7 +23,7 @@
 <c:if test="${not empty requestScope.errors}">
     <div style="color: red">
         <c:forEach var="error" items="${requestScope.errors}">
-            <span>${error.message}</span>
+            <span>${error.getPropertyPath().toString()} ${error.getMessage()}</span>
             <br>
         </c:forEach>
     </div>

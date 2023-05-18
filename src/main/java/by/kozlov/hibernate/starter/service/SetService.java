@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 
 public class SetService {
 
-    private final SessionFactory sessionFactory;
-
     private static final SetService INSTANCE = new SetService();
     private final SetMapper setMapper = new SetMapper();
     private final SetRepository setRepository;
@@ -28,10 +26,8 @@ public class SetService {
     private final Session session;
 
     private SetService() {
-        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
-        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
-                new Class[]{Session.class},
-                (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        session = HibernateUtil.getProxySession(sessionFactory);
         setRepository = new SetRepository(session);
     }
 

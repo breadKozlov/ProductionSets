@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 
 import static by.kozlov.hibernate.starter.utils.UrlPath.REGISTRATION;
@@ -42,8 +43,8 @@ public class RegistrationServlet extends HttpServlet {
         try {
             userService.create(userDto);
             resp.sendRedirect("./login");
-        } catch (ValidationException exception) {
-            req.setAttribute("errors", exception.getErrors());
+        } catch (ConstraintViolationException exception) {
+            req.setAttribute("errors", exception.getConstraintViolations());
             doGet(req, resp);
         }
     }

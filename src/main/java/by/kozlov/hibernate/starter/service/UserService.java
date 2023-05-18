@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validation;
 import java.lang.reflect.Proxy;
 import java.util.Optional;
 
@@ -32,9 +34,7 @@ public class UserService {
 
     private UserService() {
         sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
-        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
-                new Class[]{Session.class},
-                (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        session = HibernateUtil.getProxySession(sessionFactory);
         userRepository = new UserRepository(session);
     }
 
@@ -50,10 +50,13 @@ public class UserService {
     }
 
     public Integer create(CreateUserDto userDto) {
-        try (session) {
-            var validationResult = createUserValidator.isValid(userDto);
-            if (!validationResult.isValid()) {
-                throw new ValidationException(validationResult.getErrors());
+        try (session;
+             var validationFactory = Validation.buildDefaultValidatorFactory()) {
+
+            var validator = validationFactory.getValidator();
+            var validationResult = validator.validate(userDto);
+            if (!validationResult.isEmpty()) {
+                throw new ConstraintViolationException(validationResult);
             }
             session.beginTransaction();
             var productionEntity = createUserMapper.mapFrom(userDto);

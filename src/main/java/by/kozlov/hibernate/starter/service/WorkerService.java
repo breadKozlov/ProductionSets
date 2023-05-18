@@ -19,13 +19,10 @@ public class WorkerService {
     private static final WorkerService INSTANCE = new WorkerService();
     private final WorkerMapper workerMapper;
     private final WorkerRepository workerRepository;
-    private final SessionFactory sessionFactory;
 
     private WorkerService() {
-        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
-        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
-                    new Class[]{Session.class},
-                    (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        session = HibernateUtil.getProxySession(sessionFactory);
         workerRepository = new WorkerRepository(session);
         BrigadeMapper brigadeMapper = new BrigadeMapper();
         workerMapper = new WorkerMapper(brigadeMapper);

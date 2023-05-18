@@ -14,17 +14,14 @@ import java.util.stream.Collectors;
 
 public class BrigadeService {
 
-    private final SessionFactory sessionFactory;
     private static final BrigadeService INSTANCE = new BrigadeService();
     private final BrigadeRepository brigadeRepository;
     private final Session session;
     private final BrigadeMapper brigadeMapper = new BrigadeMapper();
 
     private BrigadeService() {
-        sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
-        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(),
-                new Class[]{Session.class},
-                (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
+        SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
+        session = HibernateUtil.getProxySession(sessionFactory);
         brigadeRepository = new BrigadeRepository(session);
     }
 

@@ -1,10 +1,7 @@
 package by.kozlov.hibernate.starter.servlet;
 
 import by.kozlov.hibernate.starter.dto.UserDto;
-import by.kozlov.hibernate.starter.service.MaterialsProductionService;
-import by.kozlov.hibernate.starter.service.ProductionService;
-import by.kozlov.hibernate.starter.service.WorkerService;
-import by.kozlov.hibernate.starter.service.WorkersSetsService;
+import by.kozlov.hibernate.starter.service.*;
 import by.kozlov.hibernate.starter.utils.JspHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,6 +17,8 @@ public class UserServlet extends HttpServlet {
     private final WorkerService workerService = WorkerService.getInstance();
     private final WorkersSetsService workersSetsService = WorkersSetsService.getInstance();
     private final ProductionService productionService = ProductionService.getInstance();
+
+    private final DifferenceService differenceService = DifferenceService.getInstance();
     private final MaterialsProductionService materialsProductionService = MaterialsProductionService.getInstance();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -40,6 +39,7 @@ public class UserServlet extends HttpServlet {
         req.setAttribute("description",description);
         req.setAttribute("workersSets",workersSets);
         req.setAttribute("releasedSets",releasedSets);
+        req.setAttribute("sets",differenceService.findAllDifferenceWorkerSets(worker.getId()));
         req.getRequestDispatcher(JspHelper.getPath("user"))
                 .forward(req, resp);
     }

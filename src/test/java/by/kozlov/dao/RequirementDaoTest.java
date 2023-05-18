@@ -1,7 +1,9 @@
 package by.kozlov.dao;
 
 import by.kozlov.hibernate.starter.dao.ProductionDao;
+import by.kozlov.hibernate.starter.dao.ProductionRepository;
 import by.kozlov.hibernate.starter.dao.RequirementDao;
+import by.kozlov.hibernate.starter.dao.RequirementRepository;
 import by.kozlov.hibernate.starter.entity.Production;
 import by.kozlov.hibernate.starter.entity.Requirement;
 import by.kozlov.hibernate.starter.utils.HibernateUtil;
@@ -24,7 +26,6 @@ import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 public class RequirementDaoTest {
 
     private final SessionFactory sessionFactory = HibernateUtil.getConfig().buildSessionFactory();
-    private final RequirementDao requirementDao = RequirementDao.getInstance();
 
     @BeforeAll
     public void initDb() {
@@ -39,9 +40,10 @@ public class RequirementDaoTest {
     @Test
     void findAll() {
         @Cleanup Session session = sessionFactory.openSession();
+        var requirementRepository = new RequirementRepository(session);
         session.beginTransaction();
 
-        List<Requirement> results = requirementDao.findAll(session);
+        List<Requirement> results = requirementRepository.findAll();
         assertThat(results).hasSize(6);
 
         List<String> fullNames = results.stream().map(Requirement::fullName).collect(toList());
@@ -54,9 +56,10 @@ public class RequirementDaoTest {
     @Test
     void findDifferenceBetweenReqAndRelMaterialsProduction() {
         @Cleanup Session session = sessionFactory.openSession();
+        var requirementRepository = new RequirementRepository(session);
         session.beginTransaction();
 
-        List<Object[]> results = requirementDao.findSumAllReqMat(session);
+        List<Object[]> results = requirementRepository.findSumAllReqMat();
         assertThat(results).hasSize(3);
 
         List<String> orgNames = results.stream().map(a -> (String) a[0]).collect(toList());
@@ -74,8 +77,9 @@ public class RequirementDaoTest {
     @Test
     void findAllBySetId() {
         @Cleanup var session = sessionFactory.openSession();
+        var requirementRepository = new RequirementRepository(session);
         session.beginTransaction();
-        List<Requirement> results = requirementDao.findAllBySetId(session,1);
+        List<Requirement> results = requirementRepository.findAllBySetId(1);
 
         assertThat(results).hasSize(2);
         List<String> fullNames = results.stream().map(Requirement::fullName).collect(toList());
