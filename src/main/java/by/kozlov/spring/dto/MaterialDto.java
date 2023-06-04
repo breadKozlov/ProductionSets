@@ -5,9 +5,9 @@ import lombok.Value;
 
 @Value
 @Builder
-public class BrigadeDto {
+public class MaterialDto {
 
     Integer id;
-    String nameOfBrigade;
-    String phoneNumberOfForeman;
+    String nameOfMaterial;
+    String description;
 }

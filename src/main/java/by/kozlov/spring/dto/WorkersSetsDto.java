@@ -5,9 +5,10 @@ import lombok.Value;
 
 @Value
 @Builder
-public class BrigadeDto {
+public class WorkersSetsDto {
 
     Integer id;
-    String nameOfBrigade;
-    String phoneNumberOfForeman;
+    SetDto set;
+    WorkerDto worker;
+    Integer requirement;
 }
