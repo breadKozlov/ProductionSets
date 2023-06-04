@@ -1,6 +1,6 @@
 package by.kozlov.utils;
 
-import by.kozlov.hibernate.starter.entity.*;
+import by.kozlov.spring.entity.*;
 import lombok.Cleanup;
 import lombok.experimental.UtilityClass;
 import org.hibernate.Session;

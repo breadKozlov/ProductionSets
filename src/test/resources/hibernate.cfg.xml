@@ -13,17 +13,17 @@
     <property name="format_sql">true</property>
     <property name="hibernate.hbm2ddl.auto">create</property>
 
-    <mapping class="by.kozlov.hibernate.starter.entity.Worker"/>
-    <mapping class="by.kozlov.hibernate.starter.entity.Brigade"/>
-    <mapping class="by.kozlov.hibernate.starter.entity.Set" />
-    <mapping class="by.kozlov.hibernate.starter.entity.Production" />
-    <mapping class="by.kozlov.hibernate.starter.entity.Requirement" />
-    <mapping class="by.kozlov.hibernate.starter.entity.Material" />
-    <mapping class="by.kozlov.hibernate.starter.entity.MaterialsProduction" />
-    <mapping class="by.kozlov.hibernate.starter.entity.WorkersSets" />
-    <mapping class="by.kozlov.hibernate.starter.entity.Schedule" />
-    <mapping class="by.kozlov.hibernate.starter.entity.ShiftHour"/>
-    <mapping class="by.kozlov.hibernate.starter.entity.User" />
+    <mapping class="by.kozlov.spring.entity.Worker"/>
+    <mapping class="by.kozlov.spring.entity.Brigade"/>
+    <mapping class="by.kozlov.spring.entity.Set" />
+    <mapping class="by.kozlov.spring.entity.Production" />
+    <mapping class="by.kozlov.spring.entity.Requirement" />
+    <mapping class="by.kozlov.spring.entity.Material" />
+    <mapping class="by.kozlov.spring.entity.MaterialsProduction" />
+    <mapping class="by.kozlov.spring.entity.WorkersSets" />
+    <mapping class="by.kozlov.spring.entity.Schedule" />
+    <mapping class="by.kozlov.spring.entity.ShiftHour"/>
+    <mapping class="by.kozlov.spring.entity.User" />
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
     <!-- DB schema will be updated if needed -->
