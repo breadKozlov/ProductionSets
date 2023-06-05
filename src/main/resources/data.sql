@@ -2,7 +2,7 @@
    create schema public;
  */
 
-create table public.schedule_hours (
+/*create table public.schedule_hours (
    id serial primary key,
    name_of_hour varchar(120) not null
 );
