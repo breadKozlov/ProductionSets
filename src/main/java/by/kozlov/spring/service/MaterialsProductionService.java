@@ -10,6 +10,7 @@ import by.kozlov.spring.repository.MaterialsProductionRepository;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import by.kozlov.spring.dto.UpdateMaterialsProductionDto;
 
@@ -39,8 +40,8 @@ public class MaterialsProductionService {
         this.updateMaterialsProductionMapper = updateMaterialsProductionMapper;
     }
 
-    public List<MaterialsProductionDto> findAll() {
-        return materialProductionRepository.findAll().stream()
+    public List<MaterialsProductionDto> findAll(Pageable page) {
+        return materialProductionRepository.findAll(page).stream()
                 .map(materialsProductionMapper::mapFrom).collect(Collectors.toList());
     }
 
@@ -50,8 +51,8 @@ public class MaterialsProductionService {
                 .map(materialsProductionMapper::mapFrom);
     }
 
-    public List<MaterialsProductionDto> findAllByBrigadeId(Integer id) {
-        return materialProductionRepository.findAllByBrigadeId(id).stream()
+    public List<MaterialsProductionDto> findAllByBrigadeId(Integer id, Pageable page) {
+        return materialProductionRepository.findAllByBrigadeId(id,page).stream()
                 .map(materialsProductionMapper::mapFrom).collect(Collectors.toList());
     }
 

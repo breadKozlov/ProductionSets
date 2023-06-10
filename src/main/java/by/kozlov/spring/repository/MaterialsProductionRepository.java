@@ -2,10 +2,13 @@ package by.kozlov.spring.repository;
 
 import by.kozlov.spring.entity.MaterialsProduction;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 import java.util.Optional;
 import java.util.List;
 
@@ -20,12 +23,7 @@ public interface MaterialsProductionRepository extends JpaRepository<MaterialsPr
              WHERE M.id = :id
             """;
 
-    String FIND_BY_ID_BRIGADE_HQL = FIND_ALL_HQL + """
-             WHERE M.brigade.id = :id
-            """;
-
-    @Query(FIND_BY_ID_BRIGADE_HQL)
-    List<MaterialsProduction> findAllByBrigadeId(@Param("id") Integer brigadeId);
+    List<MaterialsProduction> findAllByBrigadeId(Integer brigadeId, Pageable page);
 
     @Override
     @Query(FIND_BY_ID_HQL)
@@ -35,5 +33,5 @@ public interface MaterialsProductionRepository extends JpaRepository<MaterialsPr
     @Override
     @Query(FIND_ALL_HQL)
     @NotNull
-    List<MaterialsProduction> findAll();
+    Page<MaterialsProduction> findAll(@NotNull Pageable pageable);
 }

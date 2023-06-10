@@ -2,6 +2,9 @@ package by.kozlov.spring.repository;
 
 import by.kozlov.spring.entity.Production;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,10 +24,6 @@ public interface ProductionRepository extends JpaRepository<Production,Integer> 
              WHERE P.id = :id
             """;
 
-    String FIND_BY_ID_WORKER_HQL = FIND_ALL_HQL + """
-             WHERE P.worker.id = :id
-            """;
-
     String FIND_SUM_ALL_SETS = """
             SELECT R.set.nameOfSet as name,avg(R.totalSets),(select sum(P.madeSets)
             from Production P where P.set.nameOfSet = R.set.nameOfSet)
@@ -34,8 +33,7 @@ public interface ProductionRepository extends JpaRepository<Production,Integer> 
     @Query(FIND_SUM_ALL_SETS)
     List<Object[]> findSumAllProdSets();
 
-    @Query(FIND_BY_ID_WORKER_HQL)
-    List<Production> findAllByWorkerId(@Param("id") @NotNull Integer idWorker);
+    List<Production> findAllByWorkerId(Integer idWorker, Sort sort);
 
     @Override
     @Query(FIND_BY_ID_HQL)
@@ -45,5 +43,5 @@ public interface ProductionRepository extends JpaRepository<Production,Integer> 
     @Override
     @Query(FIND_ALL_HQL)
     @NotNull
-    List<Production> findAll();
+    Page<Production> findAll(@NotNull Pageable page);
 }

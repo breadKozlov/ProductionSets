@@ -11,6 +11,8 @@ import by.kozlov.spring.repository.ProductionRepository;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import by.kozlov.spring.dto.ProductionDto;
 
@@ -36,13 +38,13 @@ public class ProductionService {
         this.updateProductionMapper = updateProductionMapper;
     }
 
-    public List<ProductionDto> findAllByWorkerId(Integer id) {
-        return productionRepository.findAllByWorkerId(id).stream()
+    public List<ProductionDto> findAllByWorkerId(Integer id, Sort sort) {
+        return productionRepository.findAllByWorkerId(id,sort).stream()
                     .map(productionMapper::mapFrom).collect(Collectors.toList());
     }
 
-    public List<ProductionDto> findAll() {
-        return productionRepository.findAll().stream()
+    public List<ProductionDto> findAll(Pageable page) {
+        return productionRepository.findAll(page).stream()
                     .map(productionMapper::mapFrom).collect(Collectors.toList());
     }
 

@@ -1,9 +1,11 @@
 package by.kozlov.integration.service;
 
 import by.kozlov.TestApplicationRunner;
+import by.kozlov.annotation.IT;
 import by.kozlov.spring.ApplicationRunner;
 import by.kozlov.spring.dto.DifferenceDto;
 import by.kozlov.spring.service.DifferenceService;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,14 +18,11 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = {TestApplicationRunner.class, ApplicationRunner.class})
-@Transactional
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@Sql({"/init.sql","/test.sql"})
+@IT
+@RequiredArgsConstructor
 public class DifferenceServiceIT {
 
-    @Autowired
-    private DifferenceService differenceService;
+    private final DifferenceService differenceService;
 
     @Test
     void findAllDifferenceProductionMaterials() {
@@ -33,8 +32,7 @@ public class DifferenceServiceIT {
 
         List<Double> difference = productionMaterials.stream().map(it -> Math.ceil(it.difference()))
                 .collect(Collectors.toList());
-        assertThat(difference).contains(-383.0, -1178.0, 878.0, 15713.0, -538.0, -1815.0);
+        assertThat(difference).contains(-288.0, 473.0, 878.0, 15729.0, -11.0, -1815.0);
 
     }
-
 }

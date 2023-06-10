@@ -1,9 +1,11 @@
 package by.kozlov.integration.database;
 
 import by.kozlov.TestApplicationRunner;
+import by.kozlov.annotation.IT;
 import by.kozlov.spring.ApplicationRunner;
 import by.kozlov.spring.entity.Production;
 import by.kozlov.spring.repository.ProductionRepository;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,17 +19,13 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@SpringBootTest(classes = {TestApplicationRunner.class, ApplicationRunner.class})
-@Transactional
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@Sql({"/init.sql","/test.sql"})
+@IT
+@RequiredArgsConstructor
 public class ProductionRepositoryTest {
 
-    @Autowired
-    private ProductionRepository productionRepository;
+    private final ProductionRepository productionRepository;
 
     @Test
-
     void findAll() {
 
         List<Production> results = productionRepository.findAll();

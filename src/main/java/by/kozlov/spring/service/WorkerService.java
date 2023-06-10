@@ -23,12 +23,10 @@ public class WorkerService {
     }
 
     public Optional<WorkerDto> findById(Integer id) {
-
         return workerRepository.findById(id).map(workerMapper::mapFrom);
     }
 
     public Optional<WorkerDto> findByEmail(String email) {
-
         return workerRepository.findByEmail(email).map(workerMapper::mapFrom);
     }
 
