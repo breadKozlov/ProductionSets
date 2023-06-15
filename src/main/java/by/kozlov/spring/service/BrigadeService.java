@@ -1,6 +1,6 @@
 package by.kozlov.spring.service;
 
-import by.kozlov.spring.repository.BrigadeRepository;
+import by.kozlov.spring.database.repository.BrigadeRepository;
 import by.kozlov.spring.dto.BrigadeDto;
 import by.kozlov.spring.mapper.BrigadeMapper;
 import org.springframework.beans.factory.annotation.Autowired;

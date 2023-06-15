@@ -1,7 +1,7 @@
 package by.kozlov.spring.mapper;
 
 import by.kozlov.spring.dto.UserDto;
-import by.kozlov.spring.entity.User;
+import by.kozlov.spring.database.entity.User;
 import org.springframework.stereotype.Component;
 
 @Component

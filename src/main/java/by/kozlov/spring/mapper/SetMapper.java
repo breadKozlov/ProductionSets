@@ -1,7 +1,7 @@
 package by.kozlov.spring.mapper;
 
 import by.kozlov.spring.dto.SetDto;
-import by.kozlov.spring.entity.Set;
+import by.kozlov.spring.database.entity.Set;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,9 +1,9 @@
 package by.kozlov.spring.mapper;
 
 import by.kozlov.spring.dto.UpdateWorkersSetsDto;
-import by.kozlov.spring.entity.WorkersSets;
-import by.kozlov.spring.repository.SetRepository;
-import by.kozlov.spring.repository.WorkerRepository;
+import by.kozlov.spring.database.entity.WorkersSets;
+import by.kozlov.spring.database.repository.SetRepository;
+import by.kozlov.spring.database.repository.WorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

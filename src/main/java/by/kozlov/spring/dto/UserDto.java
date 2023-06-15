@@ -1,7 +1,7 @@
 package by.kozlov.spring.dto;
 
-import by.kozlov.spring.entity.Gender;
-import by.kozlov.spring.entity.Role;
+import by.kozlov.spring.database.entity.Gender;
+import by.kozlov.spring.database.entity.Role;
 import lombok.Builder;
 import lombok.Value;
 

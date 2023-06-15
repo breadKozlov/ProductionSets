@@ -1,10 +1,11 @@
 package by.kozlov.spring.service;
 
 import by.kozlov.spring.dto.CreateUserDto;
+import by.kozlov.spring.dto.LoginDto;
 import by.kozlov.spring.dto.UserDto;
 import by.kozlov.spring.mapper.CreateUserMapper;
 import by.kozlov.spring.mapper.UserMapper;
-import by.kozlov.spring.repository.UserRepository;
+import by.kozlov.spring.database.repository.UserRepository;
 import jakarta.persistence.NoResultException;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
@@ -29,10 +30,10 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public Optional<UserDto> login(String email, String password) {
+    public Optional<UserDto> login(LoginDto loginDto) {
         try {
             Optional<UserDto> user;
-            user = userRepository.findByEmailAndPassword(email,password)
+            user = userRepository.findByEmailAndPassword(loginDto.email(),loginDto.password())
                     .map(userMapper::mapFrom);
             return user;
         } catch (NoResultException ex) {

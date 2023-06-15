@@ -1,9 +1,9 @@
 package by.kozlov.spring.mapper;
 
 import by.kozlov.spring.dto.UpdateRequirementDto;
-import by.kozlov.spring.entity.Requirement;
-import by.kozlov.spring.repository.MaterialRepository;
-import by.kozlov.spring.repository.SetRepository;
+import by.kozlov.spring.database.entity.Requirement;
+import by.kozlov.spring.database.repository.MaterialRepository;
+import by.kozlov.spring.database.repository.SetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

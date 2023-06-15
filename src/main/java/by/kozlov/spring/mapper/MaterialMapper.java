@@ -1,7 +1,7 @@
 package by.kozlov.spring.mapper;
 
 import by.kozlov.spring.dto.MaterialDto;
-import by.kozlov.spring.entity.Material;
+import by.kozlov.spring.database.entity.Material;
 import org.springframework.stereotype.Component;
 
 @Component

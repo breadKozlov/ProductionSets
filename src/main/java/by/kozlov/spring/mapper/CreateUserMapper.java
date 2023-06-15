@@ -2,9 +2,9 @@ package by.kozlov.spring.mapper;
 
 
 import by.kozlov.spring.dto.CreateUserDto;
-import by.kozlov.spring.entity.Gender;
-import by.kozlov.spring.entity.Role;
-import by.kozlov.spring.entity.User;
+import by.kozlov.spring.database.entity.Gender;
+import by.kozlov.spring.database.entity.Role;
+import by.kozlov.spring.database.entity.User;
 import by.kozlov.spring.utils.LocalDateFormatter;
 import org.springframework.stereotype.Component;
 

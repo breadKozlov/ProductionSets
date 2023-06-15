@@ -3,6 +3,7 @@ package by.kozlov.annotation;
 import by.kozlov.TestApplicationRunner;
 import by.kozlov.spring.ApplicationRunner;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @SpringBootTest(classes = {TestApplicationRunner.class, ApplicationRunner.class})
 @Transactional
+@ActiveProfiles("test")
 @Sql({"/sql/init.sql","/sql/test.sql"})
 public @interface IT {
 }

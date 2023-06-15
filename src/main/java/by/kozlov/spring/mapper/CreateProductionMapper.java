@@ -1,8 +1,8 @@
 package by.kozlov.spring.mapper;
 
-import by.kozlov.spring.entity.Production;
-import by.kozlov.spring.repository.SetRepository;
-import by.kozlov.spring.repository.WorkerRepository;
+import by.kozlov.spring.database.entity.Production;
+import by.kozlov.spring.database.repository.SetRepository;
+import by.kozlov.spring.database.repository.WorkerRepository;
 import by.kozlov.spring.utils.LocalDateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

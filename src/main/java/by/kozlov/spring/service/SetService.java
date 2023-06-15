@@ -3,7 +3,7 @@ package by.kozlov.spring.service;
 import by.kozlov.spring.dto.SetDto;
 import by.kozlov.spring.dto.WorkersSetsDto;
 import by.kozlov.spring.mapper.SetMapper;
-import by.kozlov.spring.repository.SetRepository;
+import by.kozlov.spring.database.repository.SetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

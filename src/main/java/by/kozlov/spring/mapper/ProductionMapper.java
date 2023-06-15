@@ -1,7 +1,7 @@
 package by.kozlov.spring.mapper;
 
 import by.kozlov.spring.dto.ProductionDto;
-import by.kozlov.spring.entity.Production;
+import by.kozlov.spring.database.entity.Production;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

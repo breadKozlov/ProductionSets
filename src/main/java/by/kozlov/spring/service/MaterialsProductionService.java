@@ -2,11 +2,11 @@ package by.kozlov.spring.service;
 
 import by.kozlov.spring.dto.CreateMaterialsProductionDto;
 import by.kozlov.spring.dto.MaterialsProductionDto;
-import by.kozlov.spring.entity.MaterialsProduction;
+import by.kozlov.spring.database.entity.MaterialsProduction;
 import by.kozlov.spring.mapper.CreateMaterialsProductionMapper;
 import by.kozlov.spring.mapper.MaterialsProductionMapper;
 import by.kozlov.spring.mapper.UpdateMaterialsProductionMapper;
-import by.kozlov.spring.repository.MaterialsProductionRepository;
+import by.kozlov.spring.database.repository.MaterialsProductionRepository;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;

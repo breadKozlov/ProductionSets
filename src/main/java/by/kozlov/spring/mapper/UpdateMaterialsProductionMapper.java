@@ -1,10 +1,10 @@
 package by.kozlov.spring.mapper;
 
-import by.kozlov.spring.repository.BrigadeRepository;
-import by.kozlov.spring.repository.MaterialRepository;
+import by.kozlov.spring.database.repository.BrigadeRepository;
+import by.kozlov.spring.database.repository.MaterialRepository;
 import by.kozlov.spring.utils.LocalDateFormatter;
 import by.kozlov.spring.dto.UpdateMaterialsProductionDto;
-import by.kozlov.spring.entity.MaterialsProduction;
+import by.kozlov.spring.database.entity.MaterialsProduction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

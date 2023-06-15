@@ -1,11 +1,11 @@
 package by.kozlov.spring.service;
 
 import by.kozlov.spring.dto.RequirementDto;
-import by.kozlov.spring.entity.Requirement;
+import by.kozlov.spring.database.entity.Requirement;
 import by.kozlov.spring.mapper.CreateRequirementMapper;
 import by.kozlov.spring.mapper.RequirementMapper;
 import by.kozlov.spring.mapper.UpdateRequirementMapper;
-import by.kozlov.spring.repository.RequirementRepository;
+import by.kozlov.spring.database.repository.RequirementRepository;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;

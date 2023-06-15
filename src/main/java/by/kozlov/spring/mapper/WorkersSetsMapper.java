@@ -1,7 +1,7 @@
 package by.kozlov.spring.mapper;
 
 import by.kozlov.spring.dto.WorkersSetsDto;
-import by.kozlov.spring.entity.WorkersSets;
+import by.kozlov.spring.database.entity.WorkersSets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

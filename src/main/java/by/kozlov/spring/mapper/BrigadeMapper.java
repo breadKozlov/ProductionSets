@@ -1,7 +1,7 @@
 package by.kozlov.spring.mapper;
 
 import by.kozlov.spring.dto.BrigadeDto;
-import by.kozlov.spring.entity.Brigade;
+import by.kozlov.spring.database.entity.Brigade;
 import org.springframework.stereotype.Component;
 
 @Component

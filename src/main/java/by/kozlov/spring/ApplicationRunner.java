@@ -1,13 +1,9 @@
 package by.kozlov.spring;
 
-import by.kozlov.spring.dto.CreateMaterialsProductionDto;
-import by.kozlov.spring.dto.UpdateMaterialsProductionDto;
-import by.kozlov.spring.entity.MaterialsProduction;
 import by.kozlov.spring.service.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 

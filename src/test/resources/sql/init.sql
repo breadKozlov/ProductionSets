@@ -32,7 +32,7 @@ create table IF NOT EXISTS sets_for_cars (
                                       id serial primary key,
                                       name_of_set varchar(45) not null,
                                       num_of_parts int not null,
-                                      rate_of_set decimal not null
+                                      rate_of_set float not null
 );
 
 create table IF NOT EXISTS set_materials (
@@ -45,7 +45,7 @@ create table IF NOT EXISTS requirement (
                                     id serial primary key,
                                     id_set int,
                                     id_set_material int,
-                                    unit_cost decimal not null,
+                                    unit_cost float not null,
                                     total_sets int not null,
                                     foreign key (id_set) references sets_for_cars(id),
                                     foreign key (id_set_material) references set_materials(id),
@@ -57,15 +57,15 @@ create table IF NOT EXISTS production (
                                    id_worker int references workers(id),
                                    id_set int references sets_for_cars(id),
                                    made_sets int not null,
-                                   date_of_production timestamp not null
+                                   date_of_production date not null
 );
 
 create table IF NOT EXISTS production_materials (
                                              id serial primary key,
                                              id_set_material int references set_materials(id),
                                              id_brigade int references brigades(id),
-                                             quantity_of_raw_materials decimal not null,
-                                             date_of_production timestamp not null
+                                             quantity_of_raw_materials float not null,
+                                             date_of_production date not null
 );
 
 create table IF NOT EXISTS users (

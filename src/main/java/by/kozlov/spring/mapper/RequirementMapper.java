@@ -1,8 +1,7 @@
 package by.kozlov.spring.mapper;
 
 import by.kozlov.spring.dto.RequirementDto;
-import by.kozlov.spring.entity.Requirement;
-import jakarta.persistence.Access;
+import by.kozlov.spring.database.entity.Requirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

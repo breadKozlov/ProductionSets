@@ -33,6 +33,5 @@ public class DifferenceServiceIT {
         List<Double> difference = productionMaterials.stream().map(it -> Math.ceil(it.difference()))
                 .collect(Collectors.toList());
         assertThat(difference).contains(-288.0, 473.0, 878.0, 15729.0, -11.0, -1815.0);
-
     }
 }
