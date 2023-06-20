@@ -15,5 +15,6 @@ public class ApplicationRunner {
         var materialsProductionService = context.getBean(MaterialsProductionService.class);
         var page = PageRequest.of(0,3, Sort.by("dateOfProduction"));
         System.out.println(materialsProductionService.findAll(page));
+        System.out.println();
     }
 }

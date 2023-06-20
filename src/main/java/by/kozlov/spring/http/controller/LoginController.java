@@ -3,13 +3,10 @@ package by.kozlov.spring.http.controller;
 import by.kozlov.spring.database.entity.Role;
 import by.kozlov.spring.dto.LoginDto;
 import by.kozlov.spring.service.UserService;
+import by.kozlov.spring.validation.LoginError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -19,20 +16,21 @@ public class LoginController {
 
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping()
     public String loginPage() {
         return "user/login";
     }
 
-    @PostMapping("/login")
+    @PostMapping()
     public String login(@ModelAttribute("login") LoginDto loginDto, RedirectAttributes redirectAttributes) {
 
         var user = userService.login(loginDto);
+        //var loginError = new LoginError("log err","No login or email in database. Please register");
         if(user.isPresent()) {
-            redirectAttributes.addFlashAttribute("user",user.orElseThrow());
-            var id = user.orElseThrow().getId();
-            if(user.orElseThrow().getRole().equals(Role.ADMIN)) {
-                return "redirect:/users";
+            redirectAttributes.addFlashAttribute("user",user.get());
+            var id = user.get().getId();
+            if(user.get().getRole().equals(Role.ADMIN)) {
+                return "redirect:/workers/admin";
             } else {
                 return "redirect:/users/" + id;
             }
