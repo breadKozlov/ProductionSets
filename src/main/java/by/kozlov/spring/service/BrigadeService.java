@@ -2,7 +2,10 @@ package by.kozlov.spring.service;
 
 import by.kozlov.spring.database.repository.BrigadeRepository;
 import by.kozlov.spring.dto.BrigadeDto;
+import by.kozlov.spring.dto.BrigadeReadDto;
 import by.kozlov.spring.mapper.BrigadeMapper;
+import by.kozlov.spring.mapper.BrigadeReadMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,23 +14,19 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BrigadeService {
 
     private final BrigadeRepository brigadeRepository;
-    private final BrigadeMapper brigadeMapper;
-    @Autowired
-    public BrigadeService(BrigadeRepository brigadeRepository, BrigadeMapper brigadeMapper) {
-        this.brigadeRepository = brigadeRepository;
-        this.brigadeMapper = brigadeMapper;
-    }
+    private final BrigadeReadMapper brigadeReadMapper;
 
-    public List<BrigadeDto> findAll() {
+    public List<BrigadeReadDto> findAll() {
         return brigadeRepository.findAll().stream()
-                    .map(brigadeMapper::mapFrom).collect(Collectors.toList());
+                    .map(brigadeReadMapper::map).collect(Collectors.toList());
     }
 
-    public Optional<BrigadeDto> findById(Integer id) {
+    public Optional<BrigadeReadDto> findById(Integer id) {
         return brigadeRepository.findById(id)
-                    .map(brigadeMapper::mapFrom);
+                    .map(brigadeReadMapper::map);
     }
 }

@@ -5,7 +5,7 @@ import by.kozlov.spring.database.entity.Set;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SetMapper implements Mapper<Set, SetDto>{
+public class SetMapper implements OlderMapper<Set, SetDto> {
 
     @Override
     public SetDto mapFrom(Set object) {

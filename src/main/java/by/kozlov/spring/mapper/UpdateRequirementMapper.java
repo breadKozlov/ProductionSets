@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UpdateRequirementMapper implements Mapper<UpdateRequirementDto, Requirement> {
+public class UpdateRequirementMapper implements OlderMapper<UpdateRequirementDto, Requirement> {
     private final SetRepository setRepository;
     private final MaterialRepository materialRepository;
 

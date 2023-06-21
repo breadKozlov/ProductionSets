@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WorkerMapper implements Mapper<Worker, WorkerDto> {
+public class WorkerMapper implements OlderMapper<Worker, WorkerDto> {
 
     private final BrigadeMapper brigadeMapper;
 

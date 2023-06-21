@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import by.kozlov.spring.dto.CreateProductionDto;
 
 @Component
-public class CreateProductionMapper implements Mapper<CreateProductionDto, Production> {
+public class CreateProductionMapper implements OlderMapper<CreateProductionDto, Production> {
 
     private final SetRepository setRepository;
     private final WorkerRepository workerRepository;

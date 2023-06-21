@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RequirementMapper implements Mapper<Requirement, RequirementDto>{
+public class RequirementMapper implements OlderMapper<Requirement, RequirementDto> {
     private final SetMapper setMapper;
     private final MaterialMapper materialMapper;
 

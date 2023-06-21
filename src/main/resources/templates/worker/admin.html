@@ -5,8 +5,10 @@
     <title>Users</title>
 </head>
 <body>
+<p th:text="|Hello, ${session.user.name}|">Hello, User</p>
+<h2>Workers:</h2>
 <div th:each="worker : ${workers}">
-    <a th:href="@{'/workers/' + ${worker.id}}" th:text="|${worker.id}. ${worker.nameOfWorker}|">Worker</a>
+    <a th:href="@{'/workers/' + ${worker.id}}" th:text="|${worker.id}. ${worker.nameOfWorker} ${worker.surnameOfWorker}|">Worker</a>
 </div>
 </body>
 </html>

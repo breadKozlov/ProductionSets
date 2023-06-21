@@ -5,7 +5,7 @@ import by.kozlov.spring.database.entity.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserMapper implements Mapper<User, UserDto> {
+public class UserMapper implements OlderMapper<User, UserDto> {
 
     @Override
     public UserDto mapFrom(User object) {

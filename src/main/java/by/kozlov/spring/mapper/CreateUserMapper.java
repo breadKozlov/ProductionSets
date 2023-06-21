@@ -9,7 +9,7 @@ import by.kozlov.spring.utils.LocalDateFormatter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CreateUserMapper implements Mapper<CreateUserDto, User> {
+public class CreateUserMapper implements OlderMapper<CreateUserDto, User> {
     @Override
     public User mapFrom(CreateUserDto object) {
         return User.builder()

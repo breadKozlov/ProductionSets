@@ -1,15 +1,13 @@
 package by.kozlov.spring.mapper;
 
-import by.kozlov.spring.dto.MaterialDto;
 import by.kozlov.spring.database.entity.Material;
-import org.springframework.stereotype.Component;
+import by.kozlov.spring.dto.MaterialReadDto;
 
-@Component
-public class MaterialMapper implements OlderMapper<Material, MaterialDto> {
+public class MaterialsReadMapper implements Mapper<Material, MaterialReadDto> {
 
     @Override
-    public MaterialDto mapFrom(Material object) {
-        return MaterialDto.builder()
+    public MaterialReadDto map(Material object) {
+        return MaterialReadDto.builder()
                 .id(object.getId())
                 .nameOfMaterial(object.getNameOfMaterial())
                 .description(object.getDescription())

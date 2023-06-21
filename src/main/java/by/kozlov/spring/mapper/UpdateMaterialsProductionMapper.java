@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UpdateMaterialsProductionMapper implements Mapper<UpdateMaterialsProductionDto, MaterialsProduction> {
+public class UpdateMaterialsProductionMapper implements OlderMapper<UpdateMaterialsProductionDto, MaterialsProduction> {
 
     private final MaterialRepository materialRepository;
     private final BrigadeRepository brigadeRepository;

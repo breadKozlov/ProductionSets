@@ -27,12 +27,12 @@ public class MaterialsProduction implements BaseEntity<Integer> {
     @Column(name = "date_of_production")
     private LocalDate dateOfProduction;
 
-    private void setBrigade(Brigade brigade) {
+    public void setBrigade(Brigade brigade) {
         this.brigade = brigade;
         this.brigade.getMaterialsProduction().add(this);
     }
 
-    private void setMaterial(Material material) {
+    public void setMaterial(Material material) {
         this.material = material;
         this.material.getMaterialsProduction().add(this);
     }

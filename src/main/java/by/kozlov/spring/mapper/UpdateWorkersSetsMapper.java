@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UpdateWorkersSetsMapper implements Mapper<UpdateWorkersSetsDto, WorkersSets> {
+public class UpdateWorkersSetsMapper implements OlderMapper<UpdateWorkersSetsDto, WorkersSets> {
 
     private final SetRepository setRepository;
     private final WorkerRepository workerRepository;

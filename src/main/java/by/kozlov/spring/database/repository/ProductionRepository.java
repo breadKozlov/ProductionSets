@@ -1,6 +1,7 @@
 package by.kozlov.spring.database.repository;
 
 import by.kozlov.spring.database.entity.Production;
+import io.micrometer.common.lang.NonNullApi;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,10 +31,14 @@ public interface ProductionRepository extends JpaRepository<Production,Integer> 
             from Requirement R group by name order by name asc
             """;
 
+    String FIND_BY_ID_WORKER_HQL = FIND_ALL_HQL + """
+             WHERE P.worker.id = :id
+            """;
     @Query(FIND_SUM_ALL_SETS)
     List<Object[]> findSumAllProdSets();
 
-    List<Production> findAllByWorkerId(Integer idWorker, Sort sort);
+    @Query(FIND_BY_ID_WORKER_HQL)
+    List<Production> findAllByWorkerId(@Param("id") @NotNull Integer idWorker, Sort sort);
 
     @Override
     @Query(FIND_BY_ID_HQL)
