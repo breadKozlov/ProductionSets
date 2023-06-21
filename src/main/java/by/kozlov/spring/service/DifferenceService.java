@@ -1,5 +1,6 @@
 package by.kozlov.spring.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import by.kozlov.spring.dto.DifferenceDto;
@@ -11,20 +12,12 @@ import java.util.Arrays;
 import java.util.ArrayList;
 
 @Service
+@RequiredArgsConstructor
 public class DifferenceService {
 
     private final RequirementService requirementService;
     private final ProductionService productionService;
     private final WorkersSetsService workersSetsService;
-
-    @Autowired
-    public DifferenceService(RequirementService requirementService,
-                             ProductionService productionService,
-                             WorkersSetsService workersSetsService) {
-        this.requirementService = requirementService;
-        this.productionService = productionService;
-        this.workersSetsService = workersSetsService;
-    }
 
     public List<DifferenceDto> findAllDifferenceProductionMaterials() {
         var objects = requirementService.findSumReqMaterials();

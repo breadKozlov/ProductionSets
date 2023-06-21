@@ -1,36 +1,31 @@
 package by.kozlov.spring.service;
 
-import by.kozlov.spring.dto.MaterialDto;
-import by.kozlov.spring.mapper.MaterialMapper;
 import by.kozlov.spring.database.repository.MaterialRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import by.kozlov.spring.dto.MaterialReadDto;
+import by.kozlov.spring.mapper.MaterialReadMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.stream.Collectors;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class MaterialService {
 
     private final MaterialRepository materialRepository;
-    private final MaterialMapper materialMapper;
+    private final MaterialReadMapper materialReadMapper;
 
-    @Autowired
-    public MaterialService(MaterialRepository materialRepository, MaterialMapper materialMapper) {
-        this.materialRepository = materialRepository;
-        this.materialMapper = materialMapper;
-    }
-
-    public List<MaterialDto> findAll() {
+    public List<MaterialReadDto> findAll() {
 
         return materialRepository.findAll().stream()
-                .map(materialMapper::mapFrom).collect(Collectors.toList());
+                .map(materialReadMapper::map).toList();
     }
 
-    public Optional<MaterialDto> findById(Integer id) {
+    public Optional<MaterialReadDto> findById(Integer id) {
 
         return materialRepository.findById(id)
-                .map(materialMapper::mapFrom);
+                .map(materialReadMapper::map);
     }
 
 }

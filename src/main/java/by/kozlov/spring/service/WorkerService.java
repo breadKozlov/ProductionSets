@@ -1,38 +1,32 @@
 package by.kozlov.spring.service;
 
-import by.kozlov.spring.dto.WorkerDto;
-import by.kozlov.spring.mapper.WorkerMapper;
 import by.kozlov.spring.database.repository.WorkerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import by.kozlov.spring.dto.WorkerReadDto;
+import by.kozlov.spring.mapper.WorkerReadMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class WorkerService {
 
-    private final WorkerMapper workerMapper;
+    private final WorkerReadMapper workerReadMapper;
     private final WorkerRepository workerRepository;
 
-    @Autowired
-    public WorkerService(WorkerMapper workerMapper, WorkerRepository workerRepository) {
-        this.workerMapper = workerMapper;
-        this.workerRepository = workerRepository;
+    public Optional<WorkerReadDto> findById(Integer id) {
+        return workerRepository.findById(id).map(workerReadMapper::map);
     }
 
-    public Optional<WorkerDto> findById(Integer id) {
-        return workerRepository.findById(id).map(workerMapper::mapFrom);
+    public Optional<WorkerReadDto> findByEmail(String email) {
+        return workerRepository.findByEmail(email).map(workerReadMapper::map);
     }
 
-    public Optional<WorkerDto> findByEmail(String email) {
-        return workerRepository.findByEmail(email).map(workerMapper::mapFrom);
-    }
-
-    public List<WorkerDto> findAll() {
+    public List<WorkerReadDto> findAll() {
 
         return workerRepository.findAll().stream()
-                .map(workerMapper::mapFrom).collect(Collectors.toList());
+                .map(workerReadMapper::map).toList();
     }
 }

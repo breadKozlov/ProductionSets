@@ -1,12 +1,9 @@
 package by.kozlov.spring.service;
 
 import by.kozlov.spring.database.repository.BrigadeRepository;
-import by.kozlov.spring.dto.BrigadeDto;
 import by.kozlov.spring.dto.BrigadeReadDto;
-import by.kozlov.spring.mapper.BrigadeMapper;
 import by.kozlov.spring.mapper.BrigadeReadMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -2,14 +2,15 @@ package by.kozlov.spring.service;
 
 import by.kozlov.spring.dto.CreateWorkersSetsDto;
 import by.kozlov.spring.dto.UpdateWorkersSetsDto;
-import by.kozlov.spring.dto.WorkersSetsDto;
 import by.kozlov.spring.database.entity.WorkersSets;
-import by.kozlov.spring.mapper.CreateWorkersSetsMapper;
-import by.kozlov.spring.mapper.UpdateWorkersSetsMapper;
-import by.kozlov.spring.mapper.WorkersSetsMapper;
 import by.kozlov.spring.database.repository.WorkersSetsRepository;
+import by.kozlov.spring.dto.WorkersSetsCreateEditDto;
+import by.kozlov.spring.dto.WorkersSetsReadDto;
+import by.kozlov.spring.mapper.WorkersSetsCreateEditMapper;
+import by.kozlov.spring.mapper.WorkersSetsReadMapper;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,27 +19,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class WorkersSetsService {
     private final WorkersSetsRepository workersSetsRepository;
-    private final WorkersSetsMapper workersSetsMapper;
-    private final CreateWorkersSetsMapper createWorkersSetsMapper;
-    private final UpdateWorkersSetsMapper updateWorkersSetsMapper;
+    private final WorkersSetsReadMapper workersSetsReadMapper;
+    private final WorkersSetsCreateEditMapper workersSetsCreateEditMapper;
 
-    @Autowired
-    public WorkersSetsService(WorkersSetsRepository workersSetsRepository,
-                              WorkersSetsMapper workersSetsMapper,
-                              CreateWorkersSetsMapper createWorkersSetsMapper,
-                              UpdateWorkersSetsMapper updateWorkersSetsMapper) {
-        this.workersSetsRepository = workersSetsRepository;
-        this.workersSetsMapper = workersSetsMapper;
-        this.createWorkersSetsMapper = createWorkersSetsMapper;
-        this.updateWorkersSetsMapper = updateWorkersSetsMapper;
-    }
-
-    public List<WorkersSetsDto> findAllByWorkerId(Integer id) {
+    public List<WorkersSetsReadDto> findAllByWorkerId(Integer id) {
 
         return workersSetsRepository.findAllByWorkerId(id).stream()
-                    .map(workersSetsMapper::mapFrom).collect(Collectors.toList());
+                    .map(workersSetsReadMapper::map).toList();
     }
 
     public List<Object[]> findAllProdSetsById(Integer id) {
@@ -48,12 +38,12 @@ public class WorkersSetsService {
         return sum;
     }
 
-    public List<WorkersSetsDto> findAll() {
+    public List<WorkersSetsReadDto> findAll() {
         return workersSetsRepository.findAll().stream()
-                .map(workersSetsMapper::mapFrom).collect(Collectors.toList());
+                .map(workersSetsReadMapper::map).toList();
     }
 
-    public Integer create(CreateWorkersSetsDto workersSetsDto) {
+    public WorkersSetsReadDto create(WorkersSetsCreateEditDto workersSetsDto) {
         try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
 
             var validator = validationFactory.getValidator();
@@ -61,27 +51,29 @@ public class WorkersSetsService {
             if (!validationResult.isEmpty()) {
                 throw new ConstraintViolationException(validationResult);
             }
-            var productionEntity = createWorkersSetsMapper.mapFrom(workersSetsDto);
-
-            productionEntity = workersSetsRepository.save(productionEntity);
-            return productionEntity.getId();
+            return Optional.of(workersSetsDto)
+                    .map(workersSetsCreateEditMapper::map)
+                    .map(workersSetsRepository::save)
+                    .map(workersSetsReadMapper::map)
+                    .orElseThrow();
         }
     }
 
     public boolean delete(Integer id) {
-
-        Optional<WorkersSets> maybe;
-        maybe = workersSetsRepository.findById(id);
-        maybe.ifPresent(it -> workersSetsRepository.delete(maybe.orElseThrow()));
-        return maybe.isPresent();
-    }
-
-    public Optional<WorkersSetsDto> findById(Integer id) {
         return workersSetsRepository.findById(id)
-                .map(workersSetsMapper::mapFrom);
+                .map(entity -> {
+                    workersSetsRepository.delete(entity);
+                    workersSetsRepository.flush();
+                    return true;
+                }).orElse(false);
     }
 
-    public void update(UpdateWorkersSetsDto workersSetsDto) {
+    public Optional<WorkersSetsReadDto> findById(Integer id) {
+        return workersSetsRepository.findById(id)
+                .map(workersSetsReadMapper::map);
+    }
+
+    public Optional<WorkersSetsReadDto> update(Integer id, WorkersSetsCreateEditDto workersSetsDto) {
         try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
 
             var validator = validationFactory.getValidator();
@@ -89,8 +81,10 @@ public class WorkersSetsService {
             if (!validationResult.isEmpty()) {
                 throw new ConstraintViolationException(validationResult);
             }
-            var productionEntity = updateWorkersSetsMapper.mapFrom(workersSetsDto);
-            workersSetsRepository.saveAndFlush(productionEntity);
+            return workersSetsRepository.findById(id)
+                    .map(entity -> workersSetsCreateEditMapper.map(workersSetsDto,entity))
+                    .map(workersSetsRepository::saveAndFlush)
+                    .map(workersSetsReadMapper::map);
         }
     }
 }

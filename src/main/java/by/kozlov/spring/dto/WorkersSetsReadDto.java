@@ -5,10 +5,9 @@ import lombok.Value;
 
 @Value
 @Builder
-public class WorkersSetsDto {
-
+public class WorkersSetsReadDto {
     Integer id;
-    SetDto set;
-    WorkerDto worker;
+    SetReadDto set;
+    WorkerReadDto worker;
     Integer requirement;
 }

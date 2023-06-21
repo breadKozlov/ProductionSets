@@ -1,13 +1,13 @@
 package by.kozlov.spring.service;
 
-import by.kozlov.spring.dto.*;
-import by.kozlov.spring.database.entity.MaterialsProduction;
-import by.kozlov.spring.mapper.*;
 import by.kozlov.spring.database.repository.MaterialsProductionRepository;
+import by.kozlov.spring.dto.MaterialsProductionCreateEditDto;
+import by.kozlov.spring.dto.MaterialsProductionReadDto;
+import by.kozlov.spring.mapper.MaterialsProductionCreateEditMapper;
+import by.kozlov.spring.mapper.MaterialsProductionReadMapper;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,6 +56,7 @@ public class MaterialsProductionService {
         }
     }
 
+    @Transactional
     public boolean delete(Integer id) {
         return materialProductionRepository.findById(id)
                 .map(entity -> {
@@ -65,6 +66,7 @@ public class MaterialsProductionService {
                 }).orElse(false);
     }
 
+    @Transactional
     public Optional<MaterialsProductionReadDto> update(Integer id, MaterialsProductionCreateEditDto productionDto) {
 
         try (var validationFactory = Validation.buildDefaultValidatorFactory()) {

@@ -6,16 +6,11 @@ import lombok.Value;
 
 @Value
 @Builder
-public class UpdateProductionDto {
-
+public class WorkersSetsCreateEditDto {
     @NotEmpty
-    String id;
+    Integer setId;
     @NotEmpty
-    String worker;
+    Integer workerId;
     @NotEmpty
-    String set;
-    @NotEmpty
-    String madeSets;
-    @NotEmpty
-    String dateOfProduction;
+    Integer requirement;
 }

@@ -2,7 +2,7 @@ package by.kozlov.spring.http.controller;
 
 import by.kozlov.spring.database.entity.Role;
 import by.kozlov.spring.dto.LoginDto;
-import by.kozlov.spring.dto.UserDto;
+import by.kozlov.spring.dto.UserReadDto;
 import by.kozlov.spring.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ public class LoginController {
     public String login(@ModelAttribute("login") LoginDto loginDto,
                         RedirectAttributes redirectAttributes) {
 
-        Optional<UserDto> user = userService.login(loginDto);
+        Optional<UserReadDto> user = userService.login(loginDto);
         //var loginError = new LoginError("log err","No login or email in database. Please register");
         if(user.isPresent()) {
             redirectAttributes.addFlashAttribute("user", user.get());

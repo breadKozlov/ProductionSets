@@ -1,15 +1,15 @@
 package by.kozlov.spring.mapper;
 
-import by.kozlov.spring.dto.UserDto;
 import by.kozlov.spring.database.entity.User;
+import by.kozlov.spring.dto.UserReadDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserMapper implements OlderMapper<User, UserDto> {
+public class UserReadMapper implements Mapper<User, UserReadDto> {
 
     @Override
-    public UserDto mapFrom(User object) {
-        return UserDto.builder()
+    public UserReadDto map(User object) {
+        return UserReadDto.builder()
                 .id(object.getId())
                 .name(object.getName())
                 .birthday(object.getBirthday())

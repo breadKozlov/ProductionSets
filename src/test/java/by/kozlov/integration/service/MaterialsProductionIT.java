@@ -1,12 +1,12 @@
 package by.kozlov.integration.service;
 
 import by.kozlov.annotation.IT;
-import by.kozlov.spring.dto.MaterialsProductionDto;
 import by.kozlov.spring.service.MaterialsProductionService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import by.kozlov.spring.dto.MaterialsProductionReadDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,7 +39,7 @@ public class MaterialsProductionIT {
         var production = materialsProductionService.findAllByBrigadeId(BRIGADE_ID,page);
 
         assertThat(production).hasSize(1);
-        var quantities = production.stream().map(MaterialsProductionDto::getQuantity).toList();
+        var quantities = production.stream().map(MaterialsProductionReadDto::getQuantity).toList();
         assertThat(quantities).contains(54.0);
     }
 }

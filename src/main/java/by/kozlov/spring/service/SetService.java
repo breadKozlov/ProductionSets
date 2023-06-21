@@ -1,51 +1,45 @@
 package by.kozlov.spring.service;
 
-import by.kozlov.spring.dto.SetDto;
-import by.kozlov.spring.dto.WorkersSetsDto;
-import by.kozlov.spring.mapper.SetMapper;
+import by.kozlov.spring.dto.SetReadDto;
 import by.kozlov.spring.database.repository.SetRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import by.kozlov.spring.dto.WorkersSetsReadDto;
+import by.kozlov.spring.mapper.SetReadMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SetService {
-    private final SetMapper setMapper;
+    private final SetReadMapper setReadMapper;
     private final SetRepository setRepository;
 
-    @Autowired
-    public SetService(SetRepository setRepository,SetMapper setMapper) {
-        this.setRepository = setRepository;
-        this.setMapper = setMapper;
-    }
-
-    public List<SetDto> findAll() {
+    public List<SetReadDto> findAll() {
         return setRepository.findAll().stream()
-                .map(setMapper::mapFrom).collect(Collectors.toList());
+                .map(setReadMapper::map).toList();
     }
 
-    public Optional<SetDto> findById(Integer id) {
+    public Optional<SetReadDto> findById(Integer id) {
         return setRepository.findById(id)
-                .map(setMapper::mapFrom);
+                .map(setReadMapper::map);
     }
 
-    public List<SetDto> findAllFreeSets(List<WorkersSetsDto> workersSetsDtoList) {
+    public List<SetReadDto> findAllFreeSets(List<WorkersSetsReadDto> workersSetsDtoList) {
 
-        List<SetDto> allList = this.findAll();
-        List<SetDto> resultList = new ArrayList<>();
+        List<SetReadDto> allList = this.findAll();
+        List<SetReadDto> resultList = new ArrayList<>();
 
         if (workersSetsDtoList.isEmpty()) {
             resultList = allList;
         } else {
-            for (SetDto set: allList) {
+            for (SetReadDto set: allList) {
 
                 boolean flag = false;
 
-                for(WorkersSetsDto workersSet: workersSetsDtoList) {
+                for(WorkersSetsReadDto workersSet: workersSetsDtoList) {
                     if (set.getNameOfSet().equals(workersSet.getSet().getNameOfSet())) {
                         flag = true;
                         break;

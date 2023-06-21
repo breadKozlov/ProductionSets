@@ -2,7 +2,9 @@ package by.kozlov.spring.mapper;
 
 import by.kozlov.spring.database.entity.Material;
 import by.kozlov.spring.dto.MaterialReadDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MaterialReadMapper implements Mapper<Material, MaterialReadDto> {
 
     @Override
