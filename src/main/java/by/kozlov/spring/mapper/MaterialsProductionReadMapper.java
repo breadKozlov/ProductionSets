@@ -13,7 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MaterialsProductionReadMapper implements Mapper<MaterialsProduction, MaterialsProductionReadDto> {
 
-    private final MaterialsReadMapper materialReadMapper;
+    private final MaterialReadMapper materialReadMapper;
     private final BrigadeReadMapper brigadeReadMapper;
 
     @Override

@@ -31,8 +31,8 @@ public class MaterialsProductionCreateEditMapper implements Mapper<MaterialsProd
         return toObject;
     }
 
-
-    private void copy(MaterialsProductionCreateEditDto object, MaterialsProduction materialsProduction) {
+    @Override
+    public void copy(MaterialsProductionCreateEditDto object, MaterialsProduction materialsProduction) {
         materialsProduction.setMaterial(getMaterial(object.getMaterialId()));
         materialsProduction.setBrigade(getBrigade(object.getBrigadeId()));
         materialsProduction.setQuantity(object.getQuantity());
