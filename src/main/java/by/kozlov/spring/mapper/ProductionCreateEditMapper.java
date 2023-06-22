@@ -47,6 +47,6 @@ public class ProductionCreateEditMapper implements Mapper<ProductionCreateEditDt
         toObject.setWorker(getWorker(fromObject.getWorkerId()));
         toObject.setSet(getSet(fromObject.getSetId()));
         toObject.setMadeSets(fromObject.getMadeSets());
-        toObject.setDateOfProduction(toObject.getDateOfProduction());
+        toObject.setDateOfProduction(fromObject.getDateOfProduction());
     }
 }

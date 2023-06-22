@@ -53,7 +53,7 @@ public class ProductionService {
             }
             return Optional.of(productionDto)
                     .map(productionCreateEditMapper::map)
-                    .map(productionRepository::save)
+                    .map(productionRepository::saveAndFlush)
                     .map(productionReadMapper::map)
                     .orElseThrow();
         }

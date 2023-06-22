@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Productions</title>
+    <style> table,th,td{
+        width: 900px;
+        height:30px;
+        border: solid 1px silver;
+        text-align:center;
+        border-collapse: collapse;
+    }
+    </style>
+</head>
+<body>
+<div th:insert="fragments/header.html :: header"> </div><br/>
+<div th:insert="fragments/adminReturn.html :: return"> </div>
+<div th:if="${production != null}">
+    <h2>Production: </h2>
+    <table>
+        <thead>
+        <tr><th>Name of worker</th><th>Surname of worker</th><th>Name of set</th>
+            <th>Made sets</th><th>Date of production</th><tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${production}">
+            <td th:text="${product.worker.nameOfWorker}">Name of worker</td>
+            <td th:text="${product.worker.surnameOfWorker}">Surname of worker</td>
+            <td th:text="${product.set.nameOfSet}">Name of set</td>
+            <td th:text="${product.madeSets}">Made sets</td>
+            <td th:text="${product.dateOfProduction}">Date of production</td>
+            <td><form th:action="@{/production/{productId}/delete(productId=${product.id})}" method="post">
+                <button type="submit">Delete</button>
+            </form></td>
+            <td><form th:action="@{/production/{productId}/update(productId=${product.id})}">
+                <button type="submit">Update</button>
+            </form></td></tr>
+        </tbody>
+    </table>
+</div><br/>
+<div>
+    <form th:action="@{/production/createProduct}">
+        <button type="submit">Add a note</button>
+    </form>
+</div>
+</body>
+</html>

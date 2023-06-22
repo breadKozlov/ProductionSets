@@ -7,14 +7,14 @@
 <body>
 <div th:insert="fragments/header.html :: header"> </div><br/>
 <div th:insert="fragments/adminReturn.html :: return"> </div><br/>
-<form th:action="@{/production/{productId}/update(productId=${product.id})}" method="post" th:object="${product}">
-    <input type="hidden" th:value="*{worker.id}" name="workerId"/>
+<form th:action="@{/production/createProductForWorker}" method="post" th:object="${product}">
+    <input type="hidden" th:value="${workerId}" name="workerId"/>
     <div>
         <label for="set">Kit:
             <select id="set" name="setId">
                 <option th:each="kit : ${kits}"
                         th:value="${kit.id}"
-                        th:selected="${kit.id == product.set.id}"
+                        th:selected="${kit.id == product.setId}"
                         th:text="${kit.nameOfSet}">Name of kit</option>
             </select>
         </label>
@@ -27,9 +27,9 @@
     <div>
         <label for="dateOfProduction">Date of production:
             <input id="dateOfProduction" type="date" name="dateOfProduction" th:value="*{dateOfProduction}">
-        </label>
+        </label><br/>
     </div><br/>
-    <button type="submit">Update</button>
+    <button type="submit">Add</button>
 </form>
 </body>
 </html>

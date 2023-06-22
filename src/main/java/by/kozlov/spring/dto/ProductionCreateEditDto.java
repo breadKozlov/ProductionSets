@@ -12,7 +12,6 @@ import java.time.LocalDate;
 
 @Value
 @Builder
-@FieldNameConstants
 public class ProductionCreateEditDto {
 
     @NotNull
@@ -21,7 +20,7 @@ public class ProductionCreateEditDto {
     Integer setId;
     @NotNull
     Integer madeSets;
-    @NotNull
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    //@NotEmpty
+    //@DateTimeFormat(pattern = "dd-MM-yyyy")
     LocalDate dateOfProduction;
 }
