@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<p th:text="|Hello, ${session.user.name}|">Hello, User</p>
+<h2>Workers:</h2>
+<div th:each="worker : ${workers}">
+    <a th:href="@{'/admins/worker/' + ${worker.id}}" th:text="|${worker.id}. ${worker.nameOfWorker} ${worker.surnameOfWorker}|">Worker</a>
+</div>
+<a href='./productionAdmin'>Production</a><br/>
+<a href='./requirement'>Requirement</a><br/>
+<a href='./materialsProductionAdmin'>Materials production</a><br/>
+<a href='./planProduction'>Plan production</a>
+</body>
+</html>

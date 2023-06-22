@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<form th:action="@{/production/{productId}/update(productId=${product.id})}" method="post" th:object="${product}">
+    <input type="hidden" id="workerId" th:value="${workerId}" name="workerId"/>
+    <div>
+        <label for="set">Kit:
+            <select id="set" name="setId">
+                <option th:each="kit : ${kits}"
+                        th:value="${kit.id}"
+                        th:selected="${kit.id == product.set.id}"
+                        th:text="${kit.nameOfSet}">Name of kit</option>
+            </select>
+        </label>
+    </div>
+    <label for="madeSets">Made sets:
+        <input id="madeSets" type="number" required step="1" min="10" max="1000" name="madeSets" th:value="*{madeSets}">
+    </label><br/>
+    <label for="dateOfProduction">Date of production:
+        <input id="dateOfProduction" type="date" name="dateOfProduction" th:value="*{dateOfProduction}">
+    </label><br/>
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>

@@ -59,6 +59,7 @@ public class ProductionService {
         }
     }
 
+    @Transactional
     public boolean delete(Integer id) {
         return productionRepository.findById(id)
                 .map(entity -> {
@@ -69,6 +70,7 @@ public class ProductionService {
     }
 
 
+    @Transactional
     public Optional<ProductionReadDto> update(Integer id, ProductionCreateEditDto productionDto) {
 
         try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
