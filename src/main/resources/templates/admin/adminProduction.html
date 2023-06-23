@@ -29,10 +29,12 @@
             <td th:text="${product.set.nameOfSet}">Name of set</td>
             <td th:text="${product.madeSets}">Made sets</td>
             <td th:text="${product.dateOfProduction}">Date of production</td>
-            <td><form th:action="@{/production/{productId}/delete(productId=${product.id})}" method="post">
+            <td><form th:action="@{/production/{productId}/delete(productId=${product.id})}" method="post" >
+                <input type="hidden" th:value="${flag}" name="flag"/>
                 <button type="submit">Delete</button>
             </form></td>
             <td><form th:action="@{/production/{productId}/update(productId=${product.id})}">
+                <input type="hidden" th:value="${flag}" name="flag"/>
                 <button type="submit">Update</button>
             </form></td></tr>
         </tbody>
@@ -40,6 +42,7 @@
 </div><br/>
 <div>
     <form th:action="@{/production/createProduct}">
+        <input type="hidden" th:value="${flag}" name="flag"/>
         <button type="submit">Add a note</button>
     </form>
 </div>

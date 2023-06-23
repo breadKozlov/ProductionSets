@@ -1,12 +1,8 @@
 package by.kozlov.spring.dto;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Value;
-import lombok.experimental.FieldNameConstants;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -20,7 +16,7 @@ public class ProductionCreateEditDto {
     Integer setId;
     @NotNull
     Integer madeSets;
-    //@NotEmpty
+    @NotNull
     //@DateTimeFormat(pattern = "dd-MM-yyyy")
     LocalDate dateOfProduction;
 }
