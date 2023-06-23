@@ -12,8 +12,8 @@
     <a th:href="@{'/admins/worker/' + ${worker.id}}" th:text="|${worker.id}. ${worker.nameOfWorker} ${worker.surnameOfWorker}|">Worker</a>
 </div><br/>
 <a th:href="@{'/production'}">Production</a><br/>
-<a href='./requirement'>Requirement</a><br/>
-<a href='./materialsProductionAdmin'>Materials production</a><br/>
-<a href='./planProduction'>Plan production</a>
+<a th:href="@{'/requirement'}">Requirement</a><br/>
+<a th:href="@{'/materialsProduction'}">Materials Production</a><br/>
+<a th:href="@{'/pranningProduction'}">Planning Production</a><br/>
 </body>
 </html>

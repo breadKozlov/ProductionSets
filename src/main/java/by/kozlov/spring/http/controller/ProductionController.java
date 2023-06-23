@@ -35,7 +35,7 @@ public class ProductionController {
             var page = PageRequest.of(0,
                     100,
                     Sort.by("dateOfProduction"));
-            model.addAttribute("flag", "flag");
+            model.addAttribute("flag", "flag");//для разделения редиректов в рамках одного контроллера
             model.addAttribute("production",productionService.findAll(page));
             return "admin/adminProduction";
         } else {
@@ -54,7 +54,6 @@ public class ProductionController {
         if (flag != null) {
             var workers = workerService.findAll();
             model.addAttribute("workers",workers);
-            model.addAttribute("flag",flag);
             return "admin/adminEditProduction";
         } else {
             return "admin/adminEditWorkerProduction";
