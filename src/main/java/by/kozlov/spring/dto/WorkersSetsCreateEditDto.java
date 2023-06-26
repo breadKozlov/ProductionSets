@@ -1,16 +1,16 @@
 package by.kozlov.spring.dto;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Value;
 
 @Value
 @Builder
 public class WorkersSetsCreateEditDto {
-    @NotEmpty
+    @NotNull
     Integer setId;
-    @NotEmpty
+    @NotNull
     Integer workerId;
-    @NotEmpty
+    @NotNull
     Integer requirement;
 }

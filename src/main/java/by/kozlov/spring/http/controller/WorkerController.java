@@ -39,6 +39,5 @@ public class WorkerController {
         model.addAttribute("diffSets",differenceService.findAllDifferenceWorkerSets(worker.getId()));
 
         return "worker/workerStartPage";
-
     }
 }

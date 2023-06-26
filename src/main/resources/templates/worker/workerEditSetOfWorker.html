@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User</title>
+</head>
+<body>
+<div th:insert="fragments/header.html :: header"> </div><br/>
+<!--<div th:insert="fragments/adminReturn.html :: return"> </div><br/> -->
+<form th:action="@{/workersSets/{setOfWorkerId}/update(setOfWorkerId=${setOfWorker.id})}" method="post" th:object="${setOfWorker}">
+  <input type="hidden" th:value="*{worker.id}" name="workerId"/>
+  <div>
+    <label for="set">Kit:
+      <select id="set" name="setId">
+        <option th:each="kit : ${kits}"
+                th:value="${kit.id}"
+                th:selected="${kit.id == setOfWorker.set.id}"
+                th:text="${kit.nameOfSet}">Name of kit</option>
+      </select>
+    </label>
+  </div><br/>
+  <div>
+    <label for="requirement">Planed requirement:
+      <input id="requirement" type="number" required step="1" min="10" max="1000" name="requirement" th:value="*{requirement}">
+    </label>
+  </div><br/>
+  <button type="submit">Update</button>
+</form>
+</body>
+</html>

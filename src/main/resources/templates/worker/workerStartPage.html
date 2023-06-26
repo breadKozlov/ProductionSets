@@ -15,26 +15,29 @@
 <body>
 <div th:insert="fragments/header.html :: header"> </div><br/>
 <p th:text="|Hello, ${session.user.name}|">Hello, User</p>
+<p th:text="|Short info about user: ${worker.nameOfWorker} ${worker.surnameOfWorker} -
+${worker.brigade.nameOfBrigade}, ${worker.brigade.phoneNumberOfForeman}|">Info</p>
 <div>
-    <h2>His released sets: </h2>
-    <table th:with="totalWorker=0">
+    <h2>Your planned sets: </h2>
+    <table>
         <thead>
             <tr><th>Name of set</th><th>Plan</th><th>Unit cost</th><th>Planed total cost</th><tr>
         </thead>
         <tbody>
         <tr th:each="setOfWorker : ${setsOfWorker}"><td th:text="${setOfWorker.set.nameOfSet}">Name of set</td>
             <td th:text="${setOfWorker.requirement}">Plan</td>
-            <td th:text="${#numbers.formatDecimal(setOfWorker.set.rateOfSet,3,'POINT',2,'COMMA')}">Unit cost</td>
+            <td th:text="${#numbers.formatDecimal(setOfWorker.set.rateOfSet,1,2,'COMMA')}">Unit cost</td>
             <td th:with="allCost=${setOfWorker.set.rateOfSet * setOfWorker.requirement}"
-                th:text="${#numbers.formatDecimal(allCost,3,'POINT',2,'COMMA')}">Planed total cost</td>
-            <p th:with="allCost=${setOfWorker.set.rateOfSet * setOfWorker.requirement}, totalWorker = ${totalWorker + allCost}"></p>
+                th:text="${#numbers.formatDecimal(allCost,1,2,'COMMA')}">Planed total cost</td>
             <td><form th:action="@{/workersSets/{setOfWorkerId}/delete(setOfWorkerId=${setOfWorker.id})}" method="post">
                 <button type="submit">Delete</button>
             </form></td>
             <td><form th:action="@{/workersSets/{setOfWorkerId}/update(setOfWorkerId=${setOfWorker.id})}">
                 <button type="submit">Update</button>
             </form></td></tr>
-        <tr><td colspan="3"><b>Total sum:</b></td><td th:text="${#numbers.formatDecimal(totalWorker,3,'POINT',2,'COMMA')}"><b>Total sum</b></td></tr>
+        <tr><td colspan="3"><b>Total sum:</b></td><td
+                th:with="totalWorker=${#aggregates.sum(setsOfWorker.![set.rateOfSet * requirement])}"
+                th:text="${#numbers.formatDecimal(totalWorker,1,2,'COMMA')}"><b>Total sum</b></td></tr>
         </tbody>
     </table>
 </div><br/>

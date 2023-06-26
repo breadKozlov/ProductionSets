@@ -1,8 +1,5 @@
 package by.kozlov.spring.service;
 
-import by.kozlov.spring.dto.CreateWorkersSetsDto;
-import by.kozlov.spring.dto.UpdateWorkersSetsDto;
-import by.kozlov.spring.database.entity.WorkersSets;
 import by.kozlov.spring.database.repository.WorkersSetsRepository;
 import by.kozlov.spring.dto.WorkersSetsCreateEditDto;
 import by.kozlov.spring.dto.WorkersSetsReadDto;
@@ -11,15 +8,15 @@ import by.kozlov.spring.mapper.WorkersSetsReadMapper;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class WorkersSetsService {
     private final WorkersSetsRepository workersSetsRepository;
     private final WorkersSetsReadMapper workersSetsReadMapper;
@@ -43,6 +40,7 @@ public class WorkersSetsService {
                 .map(workersSetsReadMapper::map).toList();
     }
 
+    @Transactional
     public WorkersSetsReadDto create(WorkersSetsCreateEditDto workersSetsDto) {
         try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
 
@@ -59,6 +57,7 @@ public class WorkersSetsService {
         }
     }
 
+    @Transactional
     public boolean delete(Integer id) {
         return workersSetsRepository.findById(id)
                 .map(entity -> {
@@ -73,6 +72,7 @@ public class WorkersSetsService {
                 .map(workersSetsReadMapper::map);
     }
 
+    @Transactional
     public Optional<WorkersSetsReadDto> update(Integer id, WorkersSetsCreateEditDto workersSetsDto) {
         try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
 
