@@ -70,7 +70,7 @@ public class ProductionController {
                     if (flag != null) {
                         return "redirect:/production";
                     } else {
-                         return "redirect:/admins/worker/" + product.getWorkerId();
+                         return "redirect:/admin/worker/" + product.getWorkerId();
                         }
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -86,7 +86,7 @@ public class ProductionController {
         if (flag != null) {
             return "redirect:/production";
         } else {
-            return "redirect:/admins/worker/" + workerId;
+            return "redirect:/admin/worker/" + workerId;
         }
     }
 
@@ -102,7 +102,7 @@ public class ProductionController {
 
     @PostMapping("/createProductForWorker")
     public String createProductForWorker(@ModelAttribute ProductionCreateEditDto product) {
-        return "redirect:/admins/worker/" + productionService.create(product).getWorker().getId();
+        return "redirect:/admin/worker/" + productionService.create(product).getWorker().getId();
     }
 
     @GetMapping("/createProduct")

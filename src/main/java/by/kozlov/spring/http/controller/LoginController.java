@@ -34,9 +34,9 @@ public class LoginController {
             redirectAttributes.addFlashAttribute("user", user.get());
             var id = user.get().getId();
             if(user.get().getRole().equals(Role.ADMIN)) {
-                return "redirect:/admins/workers";
+                return "redirect:/admin/workers";
             } else {
-                return "redirect:/users/" + id;
+                return "redirect:/worker";
             }
         }
         return "redirect:/login";
