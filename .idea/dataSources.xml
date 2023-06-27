@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="eurosets_db@localhost" uuid="8662fab6-c957-4f37-925b-c8b3822df178">
+    <data-source source="LOCAL" name="eurosets_db@localhost" uuid="86d99a81-acee-4aaf-9469-2a70e20da150">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>

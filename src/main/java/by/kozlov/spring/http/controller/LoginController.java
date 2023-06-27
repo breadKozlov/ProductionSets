@@ -4,6 +4,7 @@ import by.kozlov.spring.database.entity.Role;
 import by.kozlov.spring.dto.LoginDto;
 import by.kozlov.spring.dto.UserReadDto;
 import by.kozlov.spring.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class LoginController {
 
     @GetMapping()
     public String loginPage() {
+
         return "user/login";
     }
 
@@ -39,6 +41,12 @@ public class LoginController {
                 return "redirect:/worker";
             }
         }
+        return "redirect:/login";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
         return "redirect:/login";
     }
 

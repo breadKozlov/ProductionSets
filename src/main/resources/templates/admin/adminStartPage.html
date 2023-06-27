@@ -5,11 +5,11 @@
     <title>Users</title>
 </head>
 <body>
-<div th:insert="fragments/header.html :: header"> </div>
+<div th:insert="~{fragments/header.html :: header}"> </div>
 <p th:text="|Hello, ${session.user.name}|">Hello, User</p>
 <h2>Workers:</h2>
 <div th:each="worker : ${workers}">
-    <a th:href="@{'/admins/worker/' + ${worker.id}}" th:text="|${worker.id}. ${worker.nameOfWorker} ${worker.surnameOfWorker}|">Worker</a>
+    <a th:href="@{'/admin/worker/' + ${worker.id}}" th:text="|${worker.id}. ${worker.nameOfWorker} ${worker.surnameOfWorker}|">Worker</a>
 </div><br/>
 <a th:href="@{'/production'}">Production</a><br/>
 <a th:href="@{'/requirement'}">Requirement</a><br/>

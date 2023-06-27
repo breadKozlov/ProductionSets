@@ -45,64 +45,92 @@ public class ProductionController {
 
     @GetMapping("/{id}/update")
     public String update(@PathVariable("id") Integer id, Model model,
-                         @ModelAttribute("flag") String flag) {
+                         @ModelAttribute("flag") String flag,
+                         @ModelAttribute("user") UserReadDto user) {
 
         var product = productionService.findById(id).orElseThrow();
         var kits = setService.findAll();
         model.addAttribute("product",product);
         model.addAttribute("kits",kits);
-        if (flag != null) {
-            var workers = workerService.findAll();
-            model.addAttribute("workers",workers);
-            return "admin/adminEditProduction";
+        if(user.getRole().equals(Role.ADMIN)) {
+            if (flag != null) {
+                var workers = workerService.findAll();
+                model.addAttribute("workers",workers);
+                return "admin/adminEditProduction";
+            } else {
+                return "admin/adminEditWorkerProduction";
+            }
         } else {
-            return "admin/adminEditWorkerProduction";
+            return "worker/workerEditProduction";
         }
     }
 
     @PostMapping("/{id}/update")
     public String update(@PathVariable("id") Integer id,
                          @ModelAttribute("product") ProductionCreateEditDto product,
-                         @ModelAttribute("flag") String flag) {
+                         @ModelAttribute("flag") String flag,
+                         @ModelAttribute("user") UserReadDto user) {
 
         return productionService.update(id,product)
                 .map(it -> {
-                    if (flag != null) {
-                        return "redirect:/production";
-                    } else {
-                         return "redirect:/admin/worker/" + product.getWorkerId();
+                    if(user.getRole().equals(Role.ADMIN)) {
+                        if (flag != null) {
+                            return "redirect:/production";
+                        } else {
+                            return "redirect:/admin/worker/" + product.getWorkerId();
                         }
+                    } else {
+                        return "redirect:/worker";
+                    }
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/{id}/delete")
-    public String delete(@PathVariable("id") Integer id, @ModelAttribute("flag") String flag) {
+    public String delete(@PathVariable("id") Integer id, @ModelAttribute("flag") String flag,
+                         @ModelAttribute("user") UserReadDto user) {
 
         var workerId = productionService.findById(id).orElseThrow().getWorker().getId();
         if(!productionService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        if (flag != null) {
-            return "redirect:/production";
+        if(user.getRole().equals(Role.ADMIN)) {
+            if (flag != null) {
+                return "redirect:/production";
+            } else {
+                return "redirect:/admin/worker/" + workerId;
+            }
         } else {
-            return "redirect:/admin/worker/" + workerId;
+            return "redirect:/worker";
         }
     }
 
     @GetMapping("{id}/createProductForWorker")
     public String createProductForWorker(@PathVariable("id") Integer id, Model model,
-                                         @ModelAttribute ProductionCreateEditDto product) {
+                                         @ModelAttribute ProductionCreateEditDto product,
+                                         @ModelAttribute("user") UserReadDto user) {
         var kits = setService.findAll();
         model.addAttribute("kits",kits);
         model.addAttribute("workerId",id);
         model.addAttribute("product",product);
-        return "admin/adminCreateWorkerProduction";
+        if(user.getRole().equals(Role.ADMIN)) {
+            return "admin/adminCreateWorkerProduction";
+        } else {
+            return "worker/workerCreateProduction";
+        }
+
     }
 
     @PostMapping("/createProductForWorker")
-    public String createProductForWorker(@ModelAttribute ProductionCreateEditDto product) {
-        return "redirect:/admin/worker/" + productionService.create(product).getWorker().getId();
+    public String createProductForWorker(@ModelAttribute ProductionCreateEditDto product,
+                                         @ModelAttribute("user") UserReadDto user) {
+        if(user.getRole().equals(Role.ADMIN)) {
+            return "redirect:/admin/worker/" + productionService.create(product).getWorker().getId();
+        } else {
+            productionService.create(product);
+            return "redirect:/worker";
+        }
+
     }
 
     @GetMapping("/createProduct")
