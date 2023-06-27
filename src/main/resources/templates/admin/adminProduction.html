@@ -13,8 +13,8 @@
     </style>
 </head>
 <body>
-<div th:insert="fragments/header.html :: header"> </div><br/>
-<div th:insert="fragments/adminReturn.html :: return"> </div>
+<div th:insert="~{fragments/header.html :: header}"> </div><br/>
+<div th:insert="~{fragments/adminReturn.html :: return}"> </div>
 <div th:if="${production != null}">
     <h2>Production: </h2>
     <table>
