@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Productions</title>
+    <style> table,th,td{
+        width: 900px;
+        height:30px;
+        border: solid 1px silver;
+        text-align:center;
+        border-collapse: collapse;
+    }
+    </style>
+</head>
+<body>
+<div th:insert="~{fragments/header.html :: header}"> </div><br/>
+<div th:insert="~{fragments/adminReturn.html :: return}"> </div>
+<div th:if="${materials != null}">
+    <h2>Material production plan: </h2>
+    <table>
+        <thead>
+        <tr><th>Name of material</th><th>Required</th><th>Released</th><th>Difference</th><tr>
+        </thead>
+        <tbody>
+        <tr th:each="material : ${materials}">
+            <td th:text="${material.nameOfProduct}">Name of material</td>
+            <td th:text="${#numbers.formatDecimal(material.requiredQuantity,1,2,'COMMA')}">Required</td>
+            <td th:text="${#numbers.formatDecimal(material.releasedQuantity,1,2,'COMMA')}">Released</td>
+            <td th:text="${#numbers.formatDecimal(material.difference(),1,2,'COMMA')}">Difference</td></tr>
+        </tbody>
+    </table>
+</div><br/>
+<div th:if="${kits != null}">
+    <h2>Kit production plan: </h2>
+    <table>
+        <thead>
+        <tr><th>Name of kit</th><th>Required</th><th>Released</th><th>Difference</th><tr>
+        </thead>
+        <tbody>
+        <tr th:each="kit : ${kits}">
+            <td th:text="${kit.nameOfProduct}">Name of kit</td>
+            <td th:text="${#numbers.formatDecimal(kit.requiredQuantity,1,0,'COMMA')}">Required</td>
+            <td th:text="${#numbers.formatDecimal(kit.releasedQuantity,1,0,'COMMA')}">Released</td>
+            <td th:text="${#numbers.formatDecimal(kit.difference(),1,0,'COMMA')}">Difference</td></tr>
+        </tbody>
+    </table>
+</div><br/>
+</body>
+</html>

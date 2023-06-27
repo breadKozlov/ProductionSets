@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Productions</title>
+    <style> table,th,td{
+        width: 900px;
+        height:30px;
+        border: solid 1px silver;
+        text-align:center;
+        border-collapse: collapse;
+    }
+    </style>
+</head>
+<body>
+<div th:insert="fragments/header.html :: header"> </div><br/>
+<p th:text="|Name of brigade: ${worker.brigade.nameOfBrigade}|">Name of brigade</p>
+<div th:if="${materials != null}">
+    <h2>Materials production: </h2>
+    <table>
+        <thead>
+        <tr><th>Name of material</th><th>Quantity</th><th>Date of production</th><tr>
+        </thead>
+        <tbody >
+        <tr th:each="material : ${materials}"><td th:text="${material.material.nameOfMaterial}">Name of material</td>
+            <td th:text="${#numbers.formatDecimal(material.quantity,1,1,'COMMA')}">Quantity</td>
+            <td th:text="${material.dateOfProduction}">Date of production</td>
+            <td><form th:action="@{/production/{productId}/delete(productId=${material.id})}" method="post">
+                <button type="submit">Delete</button>
+            </form></td>
+            <td><form th:action="@{/production/{productId}/update(productId=${material.id})}">
+                <button type="submit">Update</button>
+            </form></td>
+        </tbody>
+    </table>
+</div><br/>
+<div>
+    <form th:action="@{/production/{workerId}/createProductForWorker(workerId=${worker.id})}">
+        <button type="submit">Add a note</button>
+    </form>
+</div>
+</body>
+</html>

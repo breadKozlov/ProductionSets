@@ -21,7 +21,7 @@ ${worker.brigade.nameOfBrigade}, ${worker.brigade.phoneNumberOfForeman}|">Info</
     <h2>Your planned sets: </h2>
     <table>
         <thead>
-            <tr><th>Name of set</th><th>Plan</th><th>Unit cost</th><th>Planed total cost</th><tr>
+            <tr><th>Name of kit</th><th>Plan</th><th>Unit cost</th><th>Planed total cost</th><tr>
         </thead>
         <tbody>
         <tr th:each="setOfWorker : ${setsOfWorker}"><td th:text="${setOfWorker.set.nameOfSet}">Name of set</td>
@@ -44,6 +44,55 @@ ${worker.brigade.nameOfBrigade}, ${worker.brigade.phoneNumberOfForeman}|">Info</
 <div>
     <form th:action="@{/workersSets/{workerId}/createSetForWorker(workerId=${worker.id})}">
         <button type="submit">Add a note</button>
+    </form>
+</div>
+<div th:if="${releasedSets != null}">
+    <h2>Your released sets: </h2>
+    <table>
+        <thead>
+        <tr><th>Name of kit</th><th>Made kits</th><th>Date of production</th><th>Unit cost</th><th>Total released cost</th><tr>
+        </thead>
+        <tbody >
+        <tr th:each="product : ${releasedSets}"><td th:text="${product.set.nameOfSet}">Name of set</td>
+            <td th:text="${product.madeSets}">Made sets</td>
+            <td th:text="${product.dateOfProduction}">Date of production</td>
+            <td th:text="${#numbers.formatDecimal(product.set.rateOfSet,1,2,'COMMA')}">Unit cost</td>
+            <td th:with="totalCost=${product.madeSets * product.set.rateOfSet}"
+                th:text="${#numbers.formatDecimal(totalCost,1,2,'COMMA')}">Total released cost</td>
+            <td><form th:action="@{/production/{productId}/delete(productId=${product.id})}" method="post">
+                <button type="submit">Delete</button>
+            </form></td>
+            <td><form th:action="@{/production/{productId}/update(productId=${product.id})}">
+                <button type="submit">Update</button>
+            </form></td>
+        <tr><td colspan="4"><b>Total sum:</b></td><td
+                th:with="totalSum=${#aggregates.sum(releasedSets.![set.rateOfSet * madeSets])}"
+                th:text="${#numbers.formatDecimal(totalSum,1,2,'COMMA')}"><b>Total sum</b></td></tr>
+        </tbody>
+    </table>
+</div><br/>
+<div>
+    <form th:action="@{/production/{workerId}/createProductForWorker(workerId=${worker.id})}">
+        <button type="submit">Add a note</button>
+    </form>
+</div>
+<div th:if="${diffSets != null}">
+    <h2>Execution plan: </h2>
+    <table>
+        <thead>
+        <tr><th>Name of kit</th><th>Required</th><th>Released</th><th>Difference</th><tr>
+        </thead>
+        <tbody>
+        <tr th:each="diffSet : ${diffSets}"><td th:text="${diffSet.nameOfProduct}">Name of set</td>
+            <td th:text="${#numbers.formatDecimal(diffSet.requiredQuantity,1,0,'COMMA')}">Required</td>
+            <td th:text="${#numbers.formatDecimal(diffSet.releasedQuantity,1,0,'COMMA')}">Released</td>
+            <td th:text="${#numbers.formatDecimal(diffSet.difference(),1,0,'COMMA')}">Difference</td></tr>
+        </tbody>
+    </table>
+</div><br/>
+<div th:if="${worker.speciality == 'extruder foreman'}" >
+    <form th:action="@{/materialsProduction/{workerId}(workerId=${worker.id})}">
+        <button type="submit">Go to release report</button>
     </form>
 </div>
 </body>
