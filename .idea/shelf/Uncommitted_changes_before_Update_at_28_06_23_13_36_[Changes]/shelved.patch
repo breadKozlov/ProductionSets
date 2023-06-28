@@ -1,0 +1,198 @@
+Index: .idea/workspace.xml
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+deleted file mode 100644
+--- a/.idea/workspace.xml	(revision ec7658fc2ee9deb3b4abebaf3776a9f45ba2c0c1)
++++ /dev/null	(revision ec7658fc2ee9deb3b4abebaf3776a9f45ba2c0c1)
+@@ -1,190 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="AutoImportSettings">
+-    <option name="autoReloadType" value="SELECTIVE" />
+-  </component>
+-  <component name="ChangeListManager">
+-    <list default="true" id="c04e28bc-6a8e-4684-9b19-37a9b77eb17d" name="Changes" comment="Add some functional in production controller" />
+-    <option name="SHOW_DIALOG" value="false" />
+-    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+-    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+-    <option name="LAST_RESOLUTION" value="IGNORE" />
+-  </component>
+-  <component name="FileTemplateManagerImpl">
+-    <option name="RECENT_TEMPLATES">
+-      <list>
+-        <option value="Interface" />
+-        <option value="Class" />
+-        <option value="HTML File" />
+-      </list>
+-    </option>
+-  </component>
+-  <component name="Git.Settings">
+-    <option name="RECENT_BRANCH_BY_REPOSITORY">
+-      <map>
+-        <entry key="$PROJECT_DIR$" value="HIbernateEnd" />
+-      </map>
+-    </option>
+-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+-    <option name="UPDATE_TYPE" value="REBASE" />
+-  </component>
+-  <component name="MavenImportPreferences">
+-    <option name="generalSettings">
+-      <MavenGeneralSettings>
+-        <option name="useMavenConfig" value="true" />
+-      </MavenGeneralSettings>
+-    </option>
+-  </component>
+-  <component name="ProjectId" id="2RVHbSg3TcF2tx9IssMzQ80V9tb" />
+-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+-  <component name="ProjectViewState">
+-    <option name="hideEmptyMiddlePackages" value="true" />
+-    <option name="showLibraryContents" value="true" />
+-  </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Павел/IdeaProjects/ProductionSets&quot;,
+-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;spring.configuration.checksum&quot;: &quot;a8d47036cde4f7c8124a92575af39c93&quot;,
+-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+-  },
+-  &quot;keyToStringList&quot;: {
+-    &quot;DatabaseDriversLRU&quot;: [
+-      &quot;postgresql&quot;
+-    ]
+-  }
+-}</component>
+-  <component name="RunManager">
+-    <configuration name="ApplicationRunner" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+-      <module name="ProductionSets" />
+-      <option name="SPRING_BOOT_MAIN_CLASS" value="by.kozlov.spring.ApplicationRunner" />
+-      <method v="2">
+-        <option name="Make" enabled="true" />
+-      </method>
+-    </configuration>
+-  </component>
+-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+-  <component name="TaskManager">
+-    <task active="true" id="Default" summary="Default task">
+-      <changelist id="c04e28bc-6a8e-4684-9b19-37a9b77eb17d" name="Changes" comment="Delete dao and valid" />
+-      <created>1687328401002</created>
+-      <option name="number" value="Default" />
+-      <option name="presentableId" value="Default" />
+-      <updated>1687328401002</updated>
+-      <workItem from="1687328403926" duration="3743000" />
+-      <workItem from="1687332706794" duration="16841000" />
+-      <workItem from="1687418764083" duration="20042000" />
+-      <workItem from="1687501099927" duration="8923000" />
+-      <workItem from="1687770730256" duration="10969000" />
+-      <workItem from="1687864000111" duration="4862000" />
+-      <workItem from="1687869541817" duration="230000" />
+-      <workItem from="1687947743233" duration="336000" />
+-    </task>
+-    <task id="LOCAL-00001" summary="Delete dao and valid">
+-      <created>1687328614345</created>
+-      <option name="number" value="00001" />
+-      <option name="presentableId" value="LOCAL-00001" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1687328614345</updated>
+-    </task>
+-    <task id="LOCAL-00002" summary="Add production read and edit class">
+-      <created>1687349280250</created>
+-      <option name="number" value="00002" />
+-      <option name="presentableId" value="LOCAL-00002" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1687349280250</updated>
+-    </task>
+-    <task id="LOCAL-00003" summary="Add production read and edit class">
+-      <created>1687349414516</created>
+-      <option name="number" value="00003" />
+-      <option name="presentableId" value="LOCAL-00003" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1687349414516</updated>
+-    </task>
+-    <task id="LOCAL-00004" summary="Change requirement Service">
+-      <created>1687352917673</created>
+-      <option name="number" value="00004" />
+-      <option name="presentableId" value="LOCAL-00004" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1687352917673</updated>
+-    </task>
+-    <task id="LOCAL-00005" summary="Change requirement Service">
+-      <created>1687440411531</created>
+-      <option name="number" value="00005" />
+-      <option name="presentableId" value="LOCAL-00005" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1687440411531</updated>
+-    </task>
+-    <task id="LOCAL-00006" summary="Add some functional in production controller">
+-      <created>1687510781798</created>
+-      <option name="number" value="00006" />
+-      <option name="presentableId" value="LOCAL-00006" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1687510781798</updated>
+-    </task>
+-    <task id="LOCAL-00007" summary="Add some functional in production controller">
+-      <created>1687510794755</created>
+-      <option name="number" value="00007" />
+-      <option name="presentableId" value="LOCAL-00007" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1687510794755</updated>
+-    </task>
+-    <task id="LOCAL-00008" summary="Add some functional in production controller">
+-      <created>1687511260110</created>
+-      <option name="number" value="00008" />
+-      <option name="presentableId" value="LOCAL-00008" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1687511260110</updated>
+-    </task>
+-    <task id="LOCAL-00009" summary="Add some functional in production controller">
+-      <created>1687785447395</created>
+-      <option name="number" value="00009" />
+-      <option name="presentableId" value="LOCAL-00009" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1687785447395</updated>
+-    </task>
+-    <task id="LOCAL-00010" summary="Add some functional in production controller">
+-      <created>1687869605419</created>
+-      <option name="number" value="00010" />
+-      <option name="presentableId" value="LOCAL-00010" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1687869605419</updated>
+-    </task>
+-    <task id="LOCAL-00011" summary="Add some functional in production controller">
+-      <created>1687947832973</created>
+-      <option name="number" value="00011" />
+-      <option name="presentableId" value="LOCAL-00011" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1687947832973</updated>
+-    </task>
+-    <option name="localTasksCounter" value="12" />
+-    <servers />
+-  </component>
+-  <component name="TypeScriptGeneratedFilesManager">
+-    <option name="version" value="3" />
+-  </component>
+-  <component name="VcsManagerConfiguration">
+-    <MESSAGE value="Delete dao and valid" />
+-    <MESSAGE value="Add production read and edit class" />
+-    <MESSAGE value="Change requirement Service" />
+-    <MESSAGE value="Add some functional in production controller" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Add some functional in production controller" />
+-  </component>
+-  <component name="XDebuggerManager">
+-    <pin-to-top-manager>
+-      <pinned-members>
+-        <PinnedItemInfo parentTag="by.kozlov.hibernate.starter.dao.BrigadeRepository" memberName="entityManager" />
+-      </pinned-members>
+-    </pin-to-top-manager>
+-  </component>
+-</project>
+\ No newline at end of file

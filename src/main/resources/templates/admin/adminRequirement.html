@@ -23,23 +23,15 @@
         </thead>
         <tbody>
         <tr th:each="requirement : ${requirementList}">
-            <td th:text="${requirement.set.nameOfSet}">Name of set</td>
+            <td th:text="${requirement.set.nameOfSet}">Name of kit</td>
             <td th:text="${requirement.material.nameOfMaterial}">Name of material</td>
             <td th:text="${#numbers.formatDecimal(requirement.unitCost,1,3,'COMMA')}">Cost of unit</td>
-            <td th:text="${requirement.totalSets}">Total sets</td>
-            <td><form th:action="@{/production/{productId}/delete(productId=${requirement.id})}" method="post" >
-                <button type="submit">Delete</button>
-            </form></td>
-            <td><form th:action="@{/production/{productId}/update(productId=${requirement.id})}">
+            <td th:text="${requirement.totalSets}">Total kits</td>
+            <td><form th:action="@{/requirement/{requirementId}/update(requirementId=${requirement.id})}">
                 <button type="submit">Update</button>
             </form></td></tr>
         </tbody>
     </table>
 </div><br/>
-<div>
-    <form th:action="@{/production/createProduct}">
-        <button type="submit">Add a note</button>
-    </form>
-</div>
 </body>
 </html>

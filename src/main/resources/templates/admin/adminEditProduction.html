@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:insert="~{fragments/header.html :: header}"> </div><br/>
-<div th:insert="~{/adminReturn.html :: return}"> </div><br/>
+<div th:insert="~{fragments/adminReturn.html :: return}"> </div><br/>
 <form th:action="@{/production/{productId}/update(productId=${product.id})}" method="post" th:object="${product}">
     <input type="hidden" th:value="${flag}" name="flag"/>
     <div>

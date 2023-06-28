@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<div th:insert="~{fragments/header.html :: header}"> </div><br/>
+<div th:insert="~{fragments/adminReturn.html :: return}"> </div><br/>
+<form th:action="@{/requirement/{requirementId}/update(requirementId=${requirement.id})}" method="post" th:object="${requirement}">
+    <input type="hidden" th:value="*{set.id}" name="setId"/>
+    <input type="hidden" th:value="*{material.id}" name="materialId"/>
+    <input type="hidden" th:value="*{unitCost}" name="unitCost"/>
+    <div>
+        <label for="totalSets">Required kits:
+            <input id="totalSets" type="number" required step="1" min="0" max="1000" name="totalSets" th:value="*{totalSets}">
+        </label>
+    </div><br/>
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>

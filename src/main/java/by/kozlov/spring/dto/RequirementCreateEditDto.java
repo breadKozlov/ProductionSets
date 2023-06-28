@@ -1,6 +1,7 @@
 package by.kozlov.spring.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Value;
 
@@ -8,12 +9,12 @@ import lombok.Value;
 @Builder
 public class RequirementCreateEditDto {
 
-    @NotEmpty
+    @NotNull
     Integer setId;
-    @NotEmpty
+    @NotNull
     Integer materialId;
-    @NotEmpty
+    @NotNull
     Double unitCost;
-    @NotEmpty
+    @NotNull
     Integer totalSets;
 }

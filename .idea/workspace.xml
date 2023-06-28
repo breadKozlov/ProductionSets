@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="750a417e-5e91-42be-8216-4613c2c5ba25" name="Changes" comment="Add some functional in production controller">
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/database/repository/MaterialsProductionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/database/repository/MaterialsProductionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/database/repository/ProductionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/database/repository/ProductionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/database/repository/RequirementRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/database/repository/RequirementRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/database/repository/WorkerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/database/repository/WorkerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/database/repository/WorkersSetsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/database/repository/WorkersSetsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/dto/RequirementCreateEditDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/dto/RequirementCreateEditDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/http/controller/ProductionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/http/controller/ProductionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/http/controller/RequirementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/http/controller/RequirementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/service/RequirementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/service/RequirementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/adminEditProduction.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/adminEditProduction.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/adminRequirement.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/adminRequirement.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/worker/workerCreateProduction.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/worker/workerCreateProduction.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/worker/workerEditProduction.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/worker/workerEditProduction.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "node.js.selected.package.tslint": "(autodetect)"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="ApplicationRunner" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="ProductionSets" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="by.kozlov.spring.ApplicationRunner" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="by.kozlov.hibernate.starter.dao.BrigadeRepository" memberName="entityManager" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+</project>

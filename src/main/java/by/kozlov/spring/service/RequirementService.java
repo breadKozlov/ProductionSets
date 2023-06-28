@@ -8,6 +8,7 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +31,8 @@ public class RequirementService {
                 .map(requirementReadMapper::map).toList();
     }
 
-    public List<RequirementReadDto> findAll() {
-        return requirementRepository.findAll().stream()
+    public List<RequirementReadDto> findAll(Sort sort) {
+        return requirementRepository.findAll(sort).stream()
                 .map(requirementReadMapper::map).toList();
     }
 
@@ -46,6 +47,7 @@ public class RequirementService {
                 .map(requirementReadMapper::map);
     }
 
+    @Transactional
     public RequirementReadDto create(RequirementCreateEditDto requirementDto) {
         try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
 
@@ -62,15 +64,7 @@ public class RequirementService {
         }
     }
 
-    public boolean delete(Integer id) {
-        return requirementRepository.findById(id)
-                .map(entity -> {
-                    requirementRepository.delete(entity);
-                    requirementRepository.flush();
-                    return true;
-                }).orElse(false);
-    }
-
+    @Transactional
     public Optional<RequirementReadDto> update(Integer id, RequirementCreateEditDto requirementDto) {
 
         try (var validationFactory = Validation.buildDefaultValidatorFactory()) {

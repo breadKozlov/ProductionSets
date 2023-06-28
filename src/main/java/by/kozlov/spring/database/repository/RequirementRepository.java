@@ -1,10 +1,13 @@
 package by.kozlov.spring.database.repository;
 
 import by.kozlov.spring.database.entity.Requirement;
+import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.lang.NonNullApi;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -39,11 +42,11 @@ public interface RequirementRepository extends JpaRepository<Requirement,Integer
 
     @Override
     @Query(FIND_BY_ID_HQL)
-    @NotNull
-    Optional<Requirement> findById(@Param("id") @NotNull Integer id);
+    @Nonnull
+    Optional<Requirement> findById(@Param("id") @Nonnull Integer id);
 
     @Override
     @Query(FIND_ALL_HQL)
-    @NotNull
-    List<Requirement> findAll();
+    @Nonnull
+    List<Requirement> findAll(@Nonnull Sort sort);
 }
