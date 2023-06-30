@@ -13,11 +13,13 @@
     </style>
 </head>
 <body>
-<div th:insert="fragments/header.html :: header"> </div><br/>
+<div th:insert="~{fragments/header.html :: header}"> </div><br/>
+<div th:insert="~{fragments/workerReturn.html :: return}"> </div>
 <p th:text="|Name of brigade: ${worker.brigade.nameOfBrigade}|">Name of brigade</p>
-<div th:if="${materials != null}">
+<div>
     <h2>Materials production: </h2>
-    <table>
+    <p th:if="${materials.isEmpty()}" th:text="|Production is empty|">Message</p>
+    <table th:if="${!materials.isEmpty()}">
         <thead>
         <tr><th>Name of material</th><th>Quantity</th><th>Date of production</th><tr>
         </thead>
@@ -25,17 +27,17 @@
         <tr th:each="material : ${materials}"><td th:text="${material.material.nameOfMaterial}">Name of material</td>
             <td th:text="${#numbers.formatDecimal(material.quantity,1,1,'COMMA')}">Quantity</td>
             <td th:text="${material.dateOfProduction}">Date of production</td>
-            <td><form th:action="@{/production/{productId}/delete(productId=${material.id})}" method="post">
+            <td><form th:action="@{/materialsProduction/{materialId}/delete(materialId=${material.id})}" method="post">
                 <button type="submit">Delete</button>
             </form></td>
-            <td><form th:action="@{/production/{productId}/update(productId=${material.id})}">
+            <td><form th:action="@{/materialsProduction/{materialId}/update(materialId=${material.id})}">
                 <button type="submit">Update</button>
             </form></td>
         </tbody>
     </table>
 </div><br/>
 <div>
-    <form th:action="@{/production/{workerId}/createProductForWorker(workerId=${worker.id})}">
+    <form th:action="@{/materialsProduction/{workerId}/createMaterialProductionForWorker(workerId=${worker.id})}">
         <button type="submit">Add a note</button>
     </form>
 </div>

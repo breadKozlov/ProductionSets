@@ -13,13 +13,15 @@
     </style>
 </head>
 <body>
-<div th:insert="fragments/header.html :: header"> </div><br/>
+<div th:insert="fragments/header.html :: header"></div>
 <p th:text="|Hello, ${session.user.name}|">Hello, User</p>
 <p th:text="|Short info about user: ${worker.nameOfWorker} ${worker.surnameOfWorker} -
 ${worker.brigade.nameOfBrigade}, ${worker.brigade.phoneNumberOfForeman}|">Info</p>
+
 <div>
     <h2>Your planned sets: </h2>
-    <table>
+    <p th:if="${setsOfWorker.isEmpty()}" th:text="|Plan is empty|">Message</p>
+    <table th:if="${!setsOfWorker.isEmpty()}">
         <thead>
             <tr><th>Name of kit</th><th>Plan</th><th>Unit cost</th><th>Planed total cost</th><tr>
         </thead>
@@ -46,9 +48,10 @@ ${worker.brigade.nameOfBrigade}, ${worker.brigade.phoneNumberOfForeman}|">Info</
         <button type="submit">Add a note</button>
     </form>
 </div>
-<div th:if="${releasedSets != null}">
+<div>
     <h2>Your released sets: </h2>
-    <table>
+    <p th:if="${releasedSets.isEmpty()}" th:text="|Released is empty|">Message</p>
+    <table th:if="${!releasedSets.isEmpty()}">
         <thead>
         <tr><th>Name of kit</th><th>Made kits</th><th>Date of production</th><th>Unit cost</th><th>Total released cost</th><tr>
         </thead>
@@ -76,9 +79,10 @@ ${worker.brigade.nameOfBrigade}, ${worker.brigade.phoneNumberOfForeman}|">Info</
         <button type="submit">Add a note</button>
     </form>
 </div>
-<div th:if="${diffSets != null}">
+<div>
     <h2>Execution plan: </h2>
-    <table>
+    <p th:if="${diffSets.isEmpty()}" th:text="|Execution is empty|">Message</p>
+    <table th:if="${!diffSets.isEmpty()}">
         <thead>
         <tr><th>Name of kit</th><th>Required</th><th>Released</th><th>Difference</th><tr>
         </thead>

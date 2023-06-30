@@ -6,25 +6,16 @@
 </head>
 <body>
 <div th:insert="~{fragments/header.html :: header}"> </div><br/>
-<div th:insert="~{fragments/adminReturn.html :: return}"> </div><br/>
-<form th:action="@{/materialsProduction/createMaterialProduction}" method="post" th:object="${materialProduction}">
+
+<form th:action="@{/materialsProduction/{materialId}/update(materialId=${materialProduction.id})}" method="post" th:object="${materialProduction}">
+    <input type="hidden" th:value="${worker.brigade.id}" name="brigadeId"/>
     <div>
         <label for="material">Material:
             <select id="material" name="materialId">
                 <option th:each="material : ${materials}"
                         th:value="${material.id}"
-                        th:selected="${material.id == materialProduction.materialId}"
+                        th:selected="${material.id == materialProduction.material.id}"
                         th:text="|${material.nameOfMaterial}|">Name of material</option>
-            </select>
-        </label>
-    </div><br/>
-    <div>
-        <label for="brigade">Brigade:
-            <select id="brigade" name="brigadeId">
-                <option th:each="brigade : ${brigades}"
-                        th:value="${brigade.id}"
-                        th:selected="${brigade.id == materialProduction.brigadeId}"
-                        th:text="${brigade.nameOfBrigade}">Name of brigade</option>
             </select>
         </label>
     </div><br/>

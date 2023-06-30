@@ -15,9 +15,10 @@
 <body>
 <div th:insert="~{fragments/header.html :: header}"> </div><br/>
 <div th:insert="~{fragments/adminReturn.html :: return}"> </div>
-<div th:if="${materials != null}">
+<div>
     <h2>Production: </h2>
-    <table>
+    <p th:if="${materials.isEmpty()}" th:text="|Production of materials is empty|">Message</p>
+    <table th:if="${!materials.isEmpty()}">
         <thead>
         <tr><th>Name of material</th><th>Name of brigade</th><th>Quantity</th>
             <th>Date of production</th><tr>
@@ -28,7 +29,7 @@
             <td th:text="${material.brigade.nameOfBrigade}">Name of brigade</td>
             <td th:text="${material.quantity}">Quantity</td>
             <td th:text="${material.dateOfProduction}">Date of production</td>
-            <td><form th:action="@{/materialsProduction/{maerialId}/delete(mateiralId=${material.id})}" method="post" >
+            <td><form th:action="@{/materialsProduction/{materialId}/delete(materialId=${material.id})}" method="post" >
                 <button type="submit">Delete</button>
             </form></td>
             <td><form th:action="@{/materialsProduction/{materialId}/update(materialId=${material.id})}">
@@ -38,7 +39,7 @@
     </table>
 </div><br/>
 <div>
-    <form th:action="@{/production/createProduct}">
+    <form th:action="@{/materialsProduction/createMaterialProduction}">
         <button type="submit">Add a note</button>
     </form>
 </div>

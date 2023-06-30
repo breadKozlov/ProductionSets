@@ -15,9 +15,10 @@
 <body>
 <div th:insert="~{fragments/header.html :: header}"> </div><br/>
 <div th:insert="~{fragments/adminReturn.html :: return}"> </div>
-<div th:if="${production != null}">
+<div>
     <h2>Production: </h2>
-    <table>
+    <p th:if="${production.isEmpty()}" th:text="|Production is empty|">Message</p>
+    <table th:if="${!production.isEmpty()}">
         <thead>
         <tr><th>Name of worker</th><th>Surname of worker</th><th>Name of kit</th>
             <th>Made kits</th><th>Date of production</th><tr>

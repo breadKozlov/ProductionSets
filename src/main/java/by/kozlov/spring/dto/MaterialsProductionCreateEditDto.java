@@ -1,6 +1,7 @@
 package by.kozlov.spring.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Value;
 
@@ -10,12 +11,12 @@ import java.time.LocalDate;
 @Value
 public class MaterialsProductionCreateEditDto {
 
-    @NotEmpty
+    @NotNull
     Integer materialId;
-    @NotEmpty
+    @NotNull
     Integer brigadeId;
-    @NotEmpty
+    @NotNull
     Double quantity;
-    @NotEmpty
+    @NotNull
     LocalDate dateOfProduction;
 }
