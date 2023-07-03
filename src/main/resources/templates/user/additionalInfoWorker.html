@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<div th:insert="~{fragments/header.html :: header}"> </div><br/>
+<form th:action="@{/worker/create}" method="post" th:object="${worker}">
+    <input type="hidden" th:value="${email}" name="email"/>
+    <div>
+        <label for="nameOfWorker">Your firstname:
+            <input id="nameOfWorker" type="text" name="nameOfWorker" th:value="*{nameOfWorker}">
+        </label><br/>
+    </div><br/>
+    <div>
+        <label for="surnameOfWorker">Your firstname:
+            <input id="surnameOfWorker" type="text" name="surnameOfWorker" th:value="*{surnameOfWorker}">
+        </label><br/>
+    </div><br/>
+    <div>
+        <label for="speciality">Speciality:
+            <select id="speciality" name="speciality">
+                <option th:each="speciality : ${specialities}"
+                        th:value="${speciality.toString()}"
+                        th:selected="${speciality == worker.speciality}"
+                        th:text="${speciality}">Speciality</option>
+            </select>
+        </label>
+    </div><br/>
+    <div>
+        <label for="rank">Rank:
+            <input id="rank" type="number" required step="1" min="1" max="6" name="rank" th:value="*{rank}">
+        </label>
+    </div><br/>
+    <div>
+        <label for="experience">Experience:
+            <input id="experience" type="number" required step="1" min="0" max="100" name="experience" th:value="*{experience}">
+        </label>
+    </div><br/>
+    <div>
+        <label for="brigade">Brigade:
+            <select id="brigade" name="brigadeId">
+                <option th:each="brigade : ${brigades}"
+                        th:value="${brigade.id}"
+                        th:selected="${brigade.id == worker.brigadeId}"
+                        th:text="${brigade.nameOfBrigade}">Name of brigade</option>
+            </select>
+        </label>
+    </div><br/>
+    <button type="submit">Add info</button>
+</form>
+</body>
+</html>
