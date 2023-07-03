@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<div th:insert="~{fragments/header.html :: header}"> </div><br/>
+
+<form th:action="@{/materialsProduction/{workerId}/createMaterialProductionForWorker(workerId = ${worker.id})}" method="post" th:object="${materialProduction}">
+    <input type="hidden" th:value="${worker.brigade.id}" name="brigadeId"/>
+    <div>
+        <label for="material">Material:
+            <select id="material" name="materialId">
+                <option th:each="material : ${materials}"
+                        th:value="${material.id}"
+                        th:selected="${material.id == materialProduction.materialId}"
+                        th:text="|${material.nameOfMaterial}|">Name of material</option>
+            </select>
+        </label>
+    </div><br/>
+    <div>
+        <label for="quantity">Quantity:
+            <input id="quantity" type="number" required step="0.5" min="10" max="3000" name="quantity" th:value="*{quantity}">
+        </label>
+    </div><br/>
+    <div>
+        <label for="dateOfProduction">Date of production:
+            <input id="dateOfProduction" type="date" name="dateOfProduction" th:value="*{dateOfProduction}">
+        </label>
+    </div><br/>
+    <button type="submit">Add a note</button>
+</form>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package by.kozlov.spring.database.repository;
 
 import by.kozlov.spring.database.entity.MaterialsProduction;
+import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,11 +28,11 @@ public interface MaterialsProductionRepository extends JpaRepository<MaterialsPr
 
     @Override
     @Query(FIND_BY_ID_HQL)
-    @NotNull
-    Optional<MaterialsProduction> findById(@Param("id") @NotNull Integer id);
+    @Nonnull
+    Optional<MaterialsProduction> findById(@Param("id") @Nonnull Integer id);
 
     @Override
     @Query(FIND_ALL_HQL)
-    @NotNull
-    Page<MaterialsProduction> findAll(@NotNull Pageable pageable);
+    @Nonnull
+    Page<MaterialsProduction> findAll(@Nonnull Pageable pageable);
 }

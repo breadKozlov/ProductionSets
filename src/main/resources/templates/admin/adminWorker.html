@@ -15,12 +15,14 @@
 <body>
 <div th:insert="~{fragments/header.html :: header}"> </div><br/>
 <div th:insert="~{fragments/adminReturn.html :: return}"> </div>
-<div th:if="${production != null}">
-        <h2>His released sets: </h2>
-        <table>
-            <thead>
+
+<div>
+    <h2>His released sets: </h2>
+    <p th:if="${production.isEmpty()}" th:text="|His production is empty|">Message</p>
+    <table th:if="${!production.isEmpty()}">
+        <thead>
             <tr><th>Name of kit</th><th>Made kits</th><th>Date of production</th><tr>
-            </thead>
+        </thead>
             <tbody >
                 <tr th:each="product : ${production}"><td th:text="${product.set.nameOfSet}">Name of set</td>
                     <td th:text="${product.madeSets}">Made sets</td>
@@ -34,7 +36,7 @@
             </tbody>
         </table>
 </div><br/>
-<div>
+<div th:if="${!production.isEmpty()}">
     <form th:action="@{/production/{workerId}/createProductForWorker(workerId=${worker.id})}">
         <button type="submit">Add a note</button>
     </form>

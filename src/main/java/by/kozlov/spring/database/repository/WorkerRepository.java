@@ -1,6 +1,7 @@
 package by.kozlov.spring.database.repository;
 
 import by.kozlov.spring.database.entity.Worker;
+import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -29,12 +30,12 @@ public interface WorkerRepository extends JpaRepository<Worker,Integer> {
 
     @Override
     @Query(FIND_ALL_HQL)
-    @NotNull
+    @Nonnull
     List<Worker> findAll();
 
     @Override
     @Query(FIND_BY_ID_HQL)
-    @NotNull
-    Optional<Worker> findById(@Param("id") @NotNull Integer id);
+    @Nonnull
+    Optional<Worker> findById(@Param("id") @Nonnull Integer id);
 }
 

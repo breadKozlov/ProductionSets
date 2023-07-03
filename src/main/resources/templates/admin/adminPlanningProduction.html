@@ -15,7 +15,7 @@
 <body>
 <div th:insert="~{fragments/header.html :: header}"> </div><br/>
 <div th:insert="~{fragments/adminReturn.html :: return}"> </div>
-<div th:if="${materials != null}">
+<div>
     <h2>Material production plan: </h2>
     <table>
         <thead>
@@ -30,7 +30,7 @@
         </tbody>
     </table>
 </div><br/>
-<div th:if="${kits != null}">
+<div>
     <h2>Kit production plan: </h2>
     <table>
         <thead>

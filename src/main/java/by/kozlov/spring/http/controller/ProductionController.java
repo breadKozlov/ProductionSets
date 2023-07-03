@@ -53,7 +53,7 @@ public class ProductionController {
         model.addAttribute("product",product);
         model.addAttribute("kits",kits);
         if(user.getRole().equals(Role.ADMIN)) {
-            if (flag != null) {
+            if (flag.equals("flag")) {
                 var workers = workerService.findAll();
                 model.addAttribute("workers",workers);
                 return "admin/adminEditProduction";
@@ -74,7 +74,7 @@ public class ProductionController {
         return productionService.update(id,product)
                 .map(it -> {
                     if(user.getRole().equals(Role.ADMIN)) {
-                        if (flag != null) {
+                        if (flag.equals("flag")) {
                             return "redirect:/production";
                         } else {
                             return "redirect:/admin/worker/" + product.getWorkerId();
@@ -95,7 +95,7 @@ public class ProductionController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         if(user.getRole().equals(Role.ADMIN)) {
-            if (flag != null) {
+            if (flag.equals("flag")) {
                 return "redirect:/production";
             } else {
                 return "redirect:/admin/worker/" + workerId;

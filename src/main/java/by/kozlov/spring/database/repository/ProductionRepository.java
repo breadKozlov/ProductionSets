@@ -2,6 +2,7 @@ package by.kozlov.spring.database.repository;
 
 import by.kozlov.spring.database.entity.Production;
 import io.micrometer.common.lang.NonNullApi;
+import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,11 +43,11 @@ public interface ProductionRepository extends JpaRepository<Production,Integer> 
 
     @Override
     @Query(FIND_BY_ID_HQL)
-    @NotNull
-    Optional<Production> findById(@Param("id") @NotNull Integer id);
+    @Nonnull
+    Optional<Production> findById(@Param("id") @Nonnull Integer id);
 
     @Override
     @Query(FIND_ALL_HQL)
-    @NotNull
-    Page<Production> findAll(@NotNull Pageable page);
+    @Nonnull
+    Page<Production> findAll(@Nonnull Pageable page);
 }
