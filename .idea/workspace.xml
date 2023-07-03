@@ -5,12 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c04e28bc-6a8e-4684-9b19-37a9b77eb17d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/86d99a81-acee-4aaf-9469-2a70e20da150.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/86d99a81-acee-4aaf-9469-2a70e20da150.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/83ba7651-0878-4ff5-961c-1343ae3fe486.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/83ba7651-0878-4ff5-961c-1343ae3fe486.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/dto/UserCreateEditDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/dto/UserCreateEditDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/http/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/http/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/http/controller/WorkerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/http/controller/WorkerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/service/WorkerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/service/WorkerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/validation/LoginError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/validation/LoginError.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/user/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/user/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/user/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/user/registration.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/worker/workerCreateMaterialsProduction.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/worker/workerCreateMaterialsProduction.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/worker/workerCreateProduction.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/worker/workerCreateProduction.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/worker/workerCreateSetOfWorker.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/worker/workerCreateSetOfWorker.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/worker/workerEditMaterialsProduction.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/worker/workerEditMaterialsProduction.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/worker/workerEditProduction.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/worker/workerEditProduction.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/worker/workerEditSetOfWorker.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/worker/workerEditSetOfWorker.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/worker/workerStartPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/worker/workerStartPage.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +119,7 @@
       <workItem from="1687770730256" duration="10969000" />
       <workItem from="1687864000111" duration="4862000" />
       <workItem from="1687880545231" duration="8161000" />
-      <workItem from="1688376420147" duration="6632000" />
+      <workItem from="1688376420147" duration="10292000" />
     </task>
     <task id="LOCAL-00001" summary="Delete dao and valid">
       <created>1687328614345</created>
@@ -183,7 +192,15 @@
       <option name="project" value="LOCAL" />
       <updated>1687889326397</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="add user create and worker create">
+      <option name="closed" value="true" />
+      <created>1688383372586</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1688383372586</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,7 +212,8 @@
     <MESSAGE value="Change requirement Service" />
     <MESSAGE value="Add some functional in production controller" />
     <MESSAGE value="Add requirement and some functional in user acc" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add requirement and some functional in user acc" />
+    <MESSAGE value="add user create and worker create" />
+    <option name="LAST_COMMIT_MESSAGE" value="add user create and worker create" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

@@ -8,8 +8,10 @@ import by.kozlov.spring.dto.UserReadDto;
 import by.kozlov.spring.dto.WorkerCreateEditDto;
 import by.kozlov.spring.service.BrigadeService;
 import by.kozlov.spring.service.UserService;
+import by.kozlov.spring.validation.LoginError;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,17 +32,21 @@ public class LoginController {
     private final BrigadeService brigadeService;
 
     @GetMapping()
-    public String loginPage() {
+    public String loginPage(Model model, @ModelAttribute("error") LoginError loginError) {
 
+       if(loginError != null) {
+            model.addAttribute("error",loginError);
+       }
         return "user/login";
     }
 
     @PostMapping()
-    public String login(@ModelAttribute("login") LoginDto loginDto,
+    public String login(Model model,
+                        @ModelAttribute("login") LoginDto loginDto,
                         RedirectAttributes redirectAttributes) {
 
         Optional<UserReadDto> user = userService.login(loginDto);
-        //var loginError = new LoginError("log err","No login or email in database. Please register");
+
         if(user.isPresent()) {
             redirectAttributes.addFlashAttribute("user", user.get());
             if(user.get().getRole().equals(Role.ADMIN)) {
@@ -48,8 +54,13 @@ public class LoginController {
             } else {
                 return "redirect:/worker";
             }
+        } else {
+            LoginError loginError = new LoginError("log err","Incorrect login or email. Please retry or register");
+            redirectAttributes.addFlashAttribute("error",loginError);
+            return "redirect:/login";
         }
-        return "redirect:/login";
+
+
     }
 
     @PostMapping("/logout")

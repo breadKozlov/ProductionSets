@@ -19,21 +19,21 @@
       <ObjectId>40560</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
-    <database id="3" parent="1" name="postgres">
+    <database id="3" parent="1" name="flight_repo"/>
+    <database id="4" parent="1" name="kozlovdb"/>
+    <database id="5" parent="1" name="moduledb"/>
+    <database id="6" parent="1" name="postgres">
       <Comment>default administrative connection database</Comment>
       <ObjectId>5</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
-    <database id="4" parent="1" name="user_product">
+    <database id="7" parent="1" name="spring_data"/>
+    <database id="8" parent="1" name="template0"/>
+    <database id="9" parent="1" name="template1"/>
+    <database id="10" parent="1" name="user_product">
       <ObjectId>17799</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
-    <database id="5" parent="1" name="template1"/>
-    <database id="6" parent="1" name="template0"/>
-    <database id="7" parent="1" name="kozlovdb"/>
-    <database id="8" parent="1" name="flight_repo"/>
-    <database id="9" parent="1" name="moduledb"/>
-    <database id="10" parent="1" name="spring_data"/>
     <role id="11" parent="1" name="pg_database_owner">
       <ObjectId>6171</ObjectId>
     </role>

@@ -1,12 +1,5 @@
 package by.kozlov.spring.validation;
 
-import lombok.Getter;
-import lombok.Value;
+public record LoginError(String code, String message) {
 
-@Value
-@Getter
-public class LoginError {
-
-    String code;
-    String message;
 }

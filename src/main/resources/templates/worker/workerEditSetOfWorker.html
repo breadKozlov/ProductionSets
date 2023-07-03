@@ -5,8 +5,8 @@
   <title>User</title>
 </head>
 <body>
-<div th:insert="fragments/header.html :: header"> </div><br/>
-<!--<div th:insert="fragments/adminReturn.html :: return"> </div><br/> -->
+<div th:insert="~{fragments/header.html :: header}"> </div><br/>
+<div th:insert="~{fragments/workerReturn.html :: return}"> </div><br/>
 <form th:action="@{/workersSets/{setOfWorkerId}/update(setOfWorkerId=${setOfWorker.id})}" method="post" th:object="${setOfWorker}">
   <input type="hidden" th:value="*{worker.id}" name="workerId"/>
   <div>

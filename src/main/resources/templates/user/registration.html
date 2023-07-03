@@ -32,7 +32,7 @@
             <select id="role" name="role">
                 <option th:each="role : ${roles}"
                         th:value="${role}"
-                        th:selected="${role == user.role}"
+                        th:selected="${role == userCreate.role}"
                         th:text="${role}">Role</option>
             </select>
         </label>
