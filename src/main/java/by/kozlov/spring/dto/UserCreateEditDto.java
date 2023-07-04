@@ -2,6 +2,7 @@ package by.kozlov.spring.dto;
 
 import by.kozlov.spring.database.entity.Gender;
 import by.kozlov.spring.database.entity.Role;
+import by.kozlov.spring.validation.UserAge;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 
 @Value
 @Builder
+@UserAge
 public class UserCreateEditDto {
     @NotEmpty
     String name;

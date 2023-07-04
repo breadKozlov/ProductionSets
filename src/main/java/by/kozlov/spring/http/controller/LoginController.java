@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -85,7 +86,13 @@ public class LoginController {
                                RedirectAttributes redirectAttributes) {
 
         if(bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errors",bindingResult.getAllErrors());
+            var errors = bindingResult.getAllErrors();
+            var errorAge = errors.stream().filter(it -> Objects.equals(it.getDefaultMessage(), "Your age less than 18")).findFirst();
+            if(errorAge.isPresent()) {
+                redirectAttributes.addFlashAttribute("error",errorAge);
+                return "exceptions/attentionAge";
+            }
+            redirectAttributes.addFlashAttribute("errors",errors);
             return "redirect:/login/registration";
         }
         redirectAttributes.addFlashAttribute("user",userService.create(user));
