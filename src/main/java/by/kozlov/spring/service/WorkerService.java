@@ -41,20 +41,11 @@ public class WorkerService {
 
     @Transactional
     public WorkerReadDto create(WorkerCreateEditDto workerDto) {
-
-        try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
-
-            var validator = validationFactory.getValidator();
-            var validationResult = validator.validate(workerDto);
-            if (!validationResult.isEmpty()) {
-                throw new ConstraintViolationException(validationResult);
-            }
-            return Optional.of(workerDto)
-                    .map(workerCreateEditMapper::map)
-                    .map(workerRepository::saveAndFlush)
-                    .map(workerReadMapper::map)
-                    .orElseThrow();
-        }
+        return Optional.of(workerDto)
+                .map(workerCreateEditMapper::map)
+                .map(workerRepository::saveAndFlush)
+                .map(workerReadMapper::map)
+                .orElseThrow();
     }
 
     @Transactional

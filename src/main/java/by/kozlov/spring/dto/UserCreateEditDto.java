@@ -13,14 +13,14 @@ import java.time.LocalDate;
 @Value
 @Builder
 public class UserCreateEditDto {
-    @NotNull
+    @NotEmpty
     String name;
     @NotNull
     LocalDate birthday;
-    @NotNull
+    @NotEmpty
     @Email
     String email;
-    @NotNull
+    @NotEmpty
     String password;
     @NotNull
     Role role;

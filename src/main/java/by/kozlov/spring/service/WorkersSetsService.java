@@ -42,19 +42,11 @@ public class WorkersSetsService {
 
     @Transactional
     public WorkersSetsReadDto create(WorkersSetsCreateEditDto workersSetsDto) {
-        try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
-
-            var validator = validationFactory.getValidator();
-            var validationResult = validator.validate(workersSetsDto);
-            if (!validationResult.isEmpty()) {
-                throw new ConstraintViolationException(validationResult);
-            }
-            return Optional.of(workersSetsDto)
-                    .map(workersSetsCreateEditMapper::map)
-                    .map(workersSetsRepository::save)
-                    .map(workersSetsReadMapper::map)
-                    .orElseThrow();
-        }
+        return Optional.of(workersSetsDto)
+                .map(workersSetsCreateEditMapper::map)
+                .map(workersSetsRepository::save)
+                .map(workersSetsReadMapper::map)
+                .orElseThrow();
     }
 
     @Transactional
@@ -74,18 +66,10 @@ public class WorkersSetsService {
 
     @Transactional
     public Optional<WorkersSetsReadDto> update(Integer id, WorkersSetsCreateEditDto workersSetsDto) {
-        try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
-
-            var validator = validationFactory.getValidator();
-            var validationResult = validator.validate(workersSetsDto);
-            if (!validationResult.isEmpty()) {
-                throw new ConstraintViolationException(validationResult);
-            }
-            return workersSetsRepository.findById(id)
-                    .map(entity -> workersSetsCreateEditMapper.map(workersSetsDto,entity))
-                    .map(workersSetsRepository::saveAndFlush)
-                    .map(workersSetsReadMapper::map);
-        }
+        return workersSetsRepository.findById(id)
+                .map(entity -> workersSetsCreateEditMapper.map(workersSetsDto,entity))
+                .map(workersSetsRepository::saveAndFlush)
+                .map(workersSetsReadMapper::map);
     }
 }
 

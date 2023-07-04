@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:if="${err != null}">
+    <p style="color: red" th:text="|${err.message()}|">Error message</p>
+</div>
+<div>
+    <form th:action="@{/admin/delete}" method="post">
+        <button type="submit">Delete account</button>
+    </form>
+</div>
+</body>
+</html>

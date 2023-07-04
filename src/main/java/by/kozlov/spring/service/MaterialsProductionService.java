@@ -42,18 +42,11 @@ public class MaterialsProductionService {
 
     @Transactional
     public MaterialsProductionReadDto create(MaterialsProductionCreateEditDto materialsProductionDto) {
-        try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
-            var validator = validationFactory.getValidator();
-            var validationResult = validator.validate(materialsProductionDto);
-            if (!validationResult.isEmpty()) {
-                throw new ConstraintViolationException(validationResult);
-            }
-            return Optional.of(materialsProductionDto)
-                    .map(materialsProductionCreateEditMapper::map)
-                    .map(materialProductionRepository::save)
-                    .map(materialsProductionReadMapper::map)
-                    .orElseThrow();
-        }
+        return Optional.of(materialsProductionDto)
+                .map(materialsProductionCreateEditMapper::map)
+                .map(materialProductionRepository::save)
+                .map(materialsProductionReadMapper::map)
+                .orElseThrow();
     }
 
     @Transactional
@@ -68,18 +61,10 @@ public class MaterialsProductionService {
 
     @Transactional
     public Optional<MaterialsProductionReadDto> update(Integer id, MaterialsProductionCreateEditDto productionDto) {
+        return materialProductionRepository.findById(id)
+                .map(entity -> materialsProductionCreateEditMapper.map(productionDto,entity))
+                .map(materialProductionRepository::saveAndFlush)
+                .map(materialsProductionReadMapper::map);
 
-        try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
-            var validator = validationFactory.getValidator();
-            var validationResult = validator.validate(productionDto);
-            if (!validationResult.isEmpty()) {
-                throw new ConstraintViolationException(validationResult);
-            }
-            return materialProductionRepository.findById(id)
-                    .map(entity -> materialsProductionCreateEditMapper.map(productionDto,entity))
-                    .map(materialProductionRepository::saveAndFlush)
-                    .map(materialsProductionReadMapper::map);
-        }
     }
-
 }

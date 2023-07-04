@@ -43,20 +43,12 @@ public class ProductionService {
 
     @Transactional
     public ProductionReadDto create(ProductionCreateEditDto productionDto) {
+        return Optional.of(productionDto)
+                .map(productionCreateEditMapper::map)
+                .map(productionRepository::saveAndFlush)
+                .map(productionReadMapper::map)
+                .orElseThrow();
 
-        try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
-
-            var validator = validationFactory.getValidator();
-            var validationResult = validator.validate(productionDto);
-            if (!validationResult.isEmpty()) {
-                throw new ConstraintViolationException(validationResult);
-            }
-            return Optional.of(productionDto)
-                    .map(productionCreateEditMapper::map)
-                    .map(productionRepository::saveAndFlush)
-                    .map(productionReadMapper::map)
-                    .orElseThrow();
-        }
     }
 
     @Transactional
@@ -72,22 +64,13 @@ public class ProductionService {
 
     @Transactional
     public Optional<ProductionReadDto> update(Integer id, ProductionCreateEditDto productionDto) {
-
-        try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
-            var validator = validationFactory.getValidator();
-            var validationResult = validator.validate(productionDto);
-            if (!validationResult.isEmpty()) {
-                throw new ConstraintViolationException(validationResult);
-            }
-            return productionRepository.findById(id)
-                    .map(entity -> productionCreateEditMapper.map(productionDto,entity))
-                    .map(productionRepository::saveAndFlush)
-                    .map(productionReadMapper::map);
-        }
+        return productionRepository.findById(id)
+                .map(entity -> productionCreateEditMapper.map(productionDto,entity))
+                .map(productionRepository::saveAndFlush)
+                .map(productionReadMapper::map);
     }
 
     public List<Object[]> findSumReqMaterials() {
-
         List<Object[]> sum;
         sum = productionRepository.findSumAllProdSets();
         return sum;

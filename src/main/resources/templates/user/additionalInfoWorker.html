@@ -14,7 +14,7 @@
         </label><br/>
     </div><br/>
     <div>
-        <label for="surnameOfWorker">Your firstname:
+        <label for="surnameOfWorker">Your lastname:
             <input id="surnameOfWorker" type="text" name="surnameOfWorker" th:value="*{surnameOfWorker}">
         </label><br/>
     </div><br/>
@@ -50,5 +50,9 @@
     </div><br/>
     <button type="submit">Add info</button>
 </form>
+<div th:if="${errors}">
+    <p style="color: red" th:each="error : ${errors}" th:text="|${error.getField().substring(0,1).toUpperCase()}${error.getField().substring(1)}
+     ${error.defaultMessage}|">Error message</p>
+</div>
 </body>
 </html>

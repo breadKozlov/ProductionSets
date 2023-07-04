@@ -5,23 +5,22 @@ import by.kozlov.spring.database.entity.Role;
 import by.kozlov.spring.dto.LoginDto;
 import by.kozlov.spring.dto.UserCreateEditDto;
 import by.kozlov.spring.dto.UserReadDto;
-import by.kozlov.spring.dto.WorkerCreateEditDto;
 import by.kozlov.spring.service.BrigadeService;
 import by.kozlov.spring.service.UserService;
 import by.kozlov.spring.validation.LoginError;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Optional;
 
 @Controller
@@ -57,12 +56,11 @@ public class LoginController {
                 return "redirect:/worker";
             }
         } else {
-            LoginError loginError = new LoginError("log err","Incorrect login or email. Please retry or register");
+            LoginError loginError = new LoginError("log err","Incorrect login or email." +
+                    " Please retry or register");
             redirectAttributes.addFlashAttribute("err",loginError);
             return "redirect:/login";
         }
-
-
     }
 
     @PostMapping("/logout")

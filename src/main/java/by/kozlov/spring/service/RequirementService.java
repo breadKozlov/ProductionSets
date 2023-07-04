@@ -26,7 +26,6 @@ public class RequirementService {
     private final RequirementCreateEditMapper requirementCreateEditMapper;
 
     public List<RequirementReadDto> findAllBySetId(Integer id) {
-
         return requirementRepository.findAllBySetId(id).stream()
                 .map(requirementReadMapper::map).toList();
     }
@@ -49,35 +48,18 @@ public class RequirementService {
 
     @Transactional
     public RequirementReadDto create(RequirementCreateEditDto requirementDto) {
-        try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
-
-            var validator = validationFactory.getValidator();
-            var validationResult = validator.validate(requirementDto);
-            if (!validationResult.isEmpty()) {
-                throw new ConstraintViolationException(validationResult);
-            }
-            return Optional.of(requirementDto)
-                    .map(requirementCreateEditMapper::map)
-                    .map(requirementRepository::save)
-                    .map(requirementReadMapper::map)
-                    .orElseThrow();
-        }
+        return Optional.of(requirementDto)
+                .map(requirementCreateEditMapper::map)
+                .map(requirementRepository::save)
+                .map(requirementReadMapper::map)
+                .orElseThrow();
     }
 
     @Transactional
     public Optional<RequirementReadDto> update(Integer id, RequirementCreateEditDto requirementDto) {
-
-        try (var validationFactory = Validation.buildDefaultValidatorFactory()) {
-
-            var validator = validationFactory.getValidator();
-            var validationResult = validator.validate(requirementDto);
-            if (!validationResult.isEmpty()) {
-                throw new ConstraintViolationException(validationResult);
-            }
-            return requirementRepository.findById(id)
-                    .map(entity -> requirementCreateEditMapper.map(requirementDto,entity))
-                    .map(requirementRepository::saveAndFlush)
-                    .map(requirementReadMapper::map);
-        }
+        return requirementRepository.findById(id)
+                .map(entity -> requirementCreateEditMapper.map(requirementDto,entity))
+                .map(requirementRepository::saveAndFlush)
+                .map(requirementReadMapper::map);
     }
 }

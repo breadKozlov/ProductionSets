@@ -35,11 +35,11 @@ public class Worker implements BaseEntity<Integer> {
     private String email;
 
     @Builder.Default
-    @OneToMany(mappedBy = "worker")
+    @OneToMany(mappedBy = "worker",cascade = CascadeType.ALL)
     private List<Production> productions = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "worker")
+    @OneToMany(mappedBy = "worker",cascade = CascadeType.ALL)
     private List<WorkersSets> workersSets = new ArrayList<>();
 
 }

@@ -3,6 +3,7 @@ package by.kozlov.spring.http.controller;
 import by.kozlov.spring.dto.UserReadDto;
 import by.kozlov.spring.service.ProductionService;
 import by.kozlov.spring.service.SetService;
+import by.kozlov.spring.service.UserService;
 import by.kozlov.spring.service.WorkerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -21,6 +22,7 @@ public class AdminController {
     private final WorkerService workerService;
     private final ProductionService productionService;
     private final SetService setService;
+    private final UserService userService;
 
     @GetMapping("/workers")
     public String findAll(Model model) {
@@ -42,9 +44,9 @@ public class AdminController {
 
     @PostMapping("/delete")
     public String delete(@ModelAttribute("user")UserReadDto user) {
-        if(!workerService.delete(user.getId())) {
+        if(!userService.delete(user.getId())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return "redirect:/login/logout";
+        return "redirect:/login";
     }
 }
