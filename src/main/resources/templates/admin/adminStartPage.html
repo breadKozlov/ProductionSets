@@ -9,11 +9,16 @@
 <p th:text="|Hello, ${session.user.name}|">Hello, User</p>
 <h2>Workers:</h2>
 <div th:each="worker : ${workers}">
-    <a th:href="@{'/admin/worker/' + ${worker.id}}" th:text="|${worker.id}. ${worker.nameOfWorker} ${worker.surnameOfWorker}|">Worker</a>
+    <a th:href="@{'/admin/' + ${worker.id} + '/worker'}" th:text="|${worker.id}. ${worker.nameOfWorker} ${worker.surnameOfWorker}|">Worker</a>
 </div><br/>
 <a th:href="@{'/production'}">Production</a><br/>
 <a th:href="@{'/requirement'}">Requirement</a><br/>
 <a th:href="@{'/materialsProduction'}">Materials Production</a><br/>
-<a th:href="@{'/planningProduction'}">Planning Production</a><br/>
+<a th:href="@{'/planningProduction'}">Planning Production</a><br/><br/>
+<div>
+    <form th:action="@{/admin/delete}" method="post">
+        <button type="submit">Delete account</button>
+    </form>
+</div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 package by.kozlov.spring.http.controller;
 
-import by.kozlov.spring.dto.ProductionCreateEditDto;
+import by.kozlov.spring.dto.UserReadDto;
 import by.kozlov.spring.service.ProductionService;
 import by.kozlov.spring.service.SetService;
 import by.kozlov.spring.service.WorkerService;
@@ -24,13 +24,12 @@ public class AdminController {
 
     @GetMapping("/workers")
     public String findAll(Model model) {
-//        model.addAttribute("users", userService.findAll());
         var workers = workerService.findAll();
         model.addAttribute("workers", workers);
         return "admin/adminStartPage";
     }
 
-    @GetMapping("worker/{id}")
+    @GetMapping("{id}/worker")
     public String findById(@PathVariable("id") Integer id, Model model) {
 
         Sort sort = Sort.by("dateOfProduction");
@@ -38,7 +37,14 @@ public class AdminController {
         var worker = workerService.findById(id).orElseThrow();
         model.addAttribute("production", production);
         model.addAttribute("worker",worker);
-        //model.addAttribute("user", user);
         return "admin/adminWorker";
+    }
+
+    @PostMapping("/delete")
+    public String delete(@ModelAttribute("user")UserReadDto user) {
+        if(!workerService.delete(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return "redirect:/login/logout";
     }
 }

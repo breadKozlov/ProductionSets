@@ -56,4 +56,14 @@ public class WorkerService {
                     .orElseThrow();
         }
     }
+
+    @Transactional
+    public boolean delete(Integer id) {
+        return workerRepository.findById(id)
+                .map(entity -> {
+                    workerRepository.delete(entity);
+                    workerRepository.flush();
+                    return true;
+                }).orElse(false);
+    }
 }

@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,10 +34,10 @@ public class LoginController {
     private final BrigadeService brigadeService;
 
     @GetMapping()
-    public String loginPage(Model model, @ModelAttribute("error") LoginError loginError) {
+    public String loginPage(Model model, @ModelAttribute("err") LoginError loginError) {
 
        if(loginError != null) {
-            model.addAttribute("error",loginError);
+            model.addAttribute("err",loginError);
        }
         return "user/login";
     }
@@ -56,7 +58,7 @@ public class LoginController {
             }
         } else {
             LoginError loginError = new LoginError("log err","Incorrect login or email. Please retry or register");
-            redirectAttributes.addFlashAttribute("error",loginError);
+            redirectAttributes.addFlashAttribute("err",loginError);
             return "redirect:/login";
         }
 
@@ -70,7 +72,8 @@ public class LoginController {
     }
 
     @GetMapping("/registration")
-    public String registration(Model model, @ModelAttribute("userCreate") UserCreateEditDto user) {
+    public String registration(Model model,
+                               @ModelAttribute("userCreate") UserCreateEditDto user) {
 
         model.addAttribute("userCreate",user);
         model.addAttribute("roles",Role.values());
@@ -79,9 +82,14 @@ public class LoginController {
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("userCreate") UserCreateEditDto user,
+    public String registration(@ModelAttribute("userCreate") @Validated UserCreateEditDto user,
+                               BindingResult bindingResult,
                                RedirectAttributes redirectAttributes) {
 
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors",bindingResult.getAllErrors());
+            return "redirect:/login/registration";
+        }
         redirectAttributes.addFlashAttribute("user",userService.create(user));
         if (user.getRole().equals(Role.ADMIN)){
             return "redirect:/admin/workers";

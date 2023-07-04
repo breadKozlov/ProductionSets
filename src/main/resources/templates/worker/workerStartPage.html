@@ -98,6 +98,11 @@ ${worker.brigade.nameOfBrigade}, ${worker.brigade.phoneNumberOfForeman}|">Info</
     <form th:action="@{/materialsProduction/{workerId}(workerId=${worker.id})}">
         <button type="submit">Go to release report</button>
     </form>
+</div><br/>
+<div>
+    <form th:action="@{/worker/{workerId}/delete(workerId=${worker.id})}" method="post">
+        <button type="submit">Delete account</button>
+    </form>
 </div>
 </body>
 </html>
