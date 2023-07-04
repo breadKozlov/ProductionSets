@@ -14,8 +14,11 @@
     </label><br/><br/>
     <button type="submit">Login</button>
 </form><br/>
-<form action="/users/registration">
+<form action="/login/registration">
     <button type="submit">Registration</button>
 </form>
+<div th:if="${error != null}">
+    <p style="color: red" th:text="|${error.message()}|">Error message</p>
+</div>
 </body>
 </html>

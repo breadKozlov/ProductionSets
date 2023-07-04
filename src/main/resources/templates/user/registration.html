@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<div th:insert="~{fragments/header.html :: header}"> </div><br/>
+<form th:action="@{/login/registration}" method="post" th:object="${userCreate}">
+    <div>
+        <label for="login">Your login:
+            <input id="login" type="text" name="name" th:value="*{name}">
+        </label><br/>
+    </div><br/>
+    <div>
+        <label for="birthday">Birthday:
+            <input id="birthday" type="date" name="birthday" th:value="*{birthday}">
+        </label><br/>
+    </div><br/>
+    <div>
+        <label for="email">Email:
+            <input id="email" type="email" name="email" th:value="*{email}">
+        </label><br/>
+    </div><br/>
+    <div>
+        <label for="password">Password:
+            <input id="password" type="password" name="password" th:value="*{password}">
+        </label><br/>
+    </div><br/>
+    <div>
+        <label for="role">Role:
+            <select id="role" name="role">
+                <option th:each="role : ${roles}"
+                        th:value="${role}"
+                        th:selected="${role == userCreate.role}"
+                        th:text="${role}">Role</option>
+            </select>
+        </label>
+    </div><br/>
+    <div th:each="gender : ${genders}">
+        <input th:id="${gender}" type="radio" name="gender" th:value="${gender}" th:checked="${gender == userCreate.gender}">
+        <label th:for="${gender}" th:text="${gender}">Gender</label>
+    </div>
+    <button type="submit">Register</button>
+</form>
+</body>
+</html>

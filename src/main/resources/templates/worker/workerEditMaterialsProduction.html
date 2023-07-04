@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:insert="~{fragments/header.html :: header}"> </div><br/>
-
+<div th:insert="~{fragments/workerReturn.html :: return}"> </div><br/>
 <form th:action="@{/materialsProduction/{materialId}/update(materialId=${materialProduction.id})}" method="post" th:object="${materialProduction}">
     <input type="hidden" th:value="${worker.brigade.id}" name="brigadeId"/>
     <div>

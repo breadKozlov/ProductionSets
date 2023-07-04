@@ -1,19 +1,17 @@
 package by.kozlov.spring.http.controller;
 
 import by.kozlov.spring.dto.UserReadDto;
-import by.kozlov.spring.service.DifferenceService;
-import by.kozlov.spring.service.ProductionService;
-import by.kozlov.spring.service.WorkerService;
-import by.kozlov.spring.service.WorkersSetsService;
+import by.kozlov.spring.dto.WorkerCreateEditDto;
+import by.kozlov.spring.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Arrays;
 
 @Controller
 @RequestMapping("/worker")
@@ -25,6 +23,7 @@ public class WorkerController {
     private final WorkersSetsService workersSetsService;
     private final ProductionService productionService;
     private final DifferenceService differenceService;
+    private final BrigadeService brigadeService;
 
     @GetMapping()
     public String findWorker(Model model, @ModelAttribute("user")UserReadDto user) {
@@ -39,5 +38,25 @@ public class WorkerController {
         model.addAttribute("diffSets",differenceService.findAllDifferenceWorkerSets(worker.getId()));
 
         return "worker/workerStartPage";
+    }
+
+    @GetMapping("/create")
+    public String create(Model model, @ModelAttribute("user") UserReadDto user,
+                         @ModelAttribute WorkerCreateEditDto worker) {
+
+        var specialities = Arrays.asList("extruder operator","extruder foreman");
+        var brigades = brigadeService.findAll();
+        model.addAttribute("email",user.getEmail());
+        model.addAttribute("worker",worker);
+        model.addAttribute("specialities",specialities);
+        model.addAttribute("brigades",brigades);
+        return "user/additionalInfoWorker";
+    }
+
+    @PostMapping("/create")
+    public String create(@ModelAttribute WorkerCreateEditDto worker,
+                         RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute(workerService.create(worker));
+        return "redirect:/worker";
     }
 }

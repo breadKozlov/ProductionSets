@@ -4,6 +4,7 @@ import by.kozlov.spring.database.entity.Gender;
 import by.kozlov.spring.database.entity.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Value;
 
@@ -12,17 +13,17 @@ import java.time.LocalDate;
 @Value
 @Builder
 public class UserCreateEditDto {
-    @NotEmpty
+    @NotNull
     String name;
-    @NotEmpty
+    @NotNull
     LocalDate birthday;
-    @NotEmpty
+    @NotNull
     @Email
     String email;
-    @NotEmpty
+    @NotNull
     String password;
-    @NotEmpty
+    @NotNull
     Role role;
-    @NotEmpty
+    @NotNull
     Gender gender;
 }
