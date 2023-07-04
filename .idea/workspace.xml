@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="750a417e-5e91-42be-8216-4613c2c5ba25" name="Changes" comment="Add view materials production in admin">
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/http/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/http/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/http/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/http/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/http/controller/WorkerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/http/controller/WorkerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/service/WorkerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/by/kozlov/spring/service/WorkerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/adminStartPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/adminStartPage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/user/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/user/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/user/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/user/registration.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/worker/workerStartPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/worker/workerStartPage.html" afterDir="false" />
-    </list>
+    <list default="true" id="750a417e-5e91-42be-8216-4613c2c5ba25" name="Changes" comment="Add view materials production in admin" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,7 +73,7 @@
       <option name="presentableId" value="Default" />
       <updated>1688107001295</updated>
       <workItem from="1688107007677" duration="11751000" />
-      <workItem from="1688456878756" duration="4058000" />
+      <workItem from="1688456878756" duration="4174000" />
     </task>
     <task id="LOCAL-00001" summary="Add view materials production in admin">
       <created>1688127539387</created>
@@ -106,7 +96,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688459087332</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add view materials production in admin">
+      <created>1688461975804</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688461975804</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
