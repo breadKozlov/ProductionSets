@@ -1,13 +1,14 @@
 package by.kozlov.spring.http.controller;
 
 import by.kozlov.spring.database.entity.Role;
-import by.kozlov.spring.dto.ProductionCreateEditDto;
-import by.kozlov.spring.dto.UserReadDto;
+import by.kozlov.spring.dto.*;
 import by.kozlov.spring.service.ProductionService;
 import by.kozlov.spring.service.SetService;
 import by.kozlov.spring.service.WorkerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -30,17 +31,22 @@ public class ProductionController {
 
 
     @GetMapping
-    public String findAll(Model model, @ModelAttribute("user") UserReadDto user) {
-        if(user.getRole().equals(Role.ADMIN)) {
-            var page = PageRequest.of(0,
-                    100,
-                    Sort.by("dateOfProduction"));
-            model.addAttribute("flag", "flag");//для разделения редиректов в рамках одного контроллера
-            model.addAttribute("production",productionService.findAll(page));
-            return "admin/adminProduction";
-        } else {
-            return "user/userProduction";
-        }
+    public String findAll(Model model, ProductionFilter filter, Pageable pageable,
+                          @ModelAttribute("user") UserReadDto user) {
+
+//        var page = PageRequest.of(0,
+//                    100,
+//                    Sort.by("dateOfProduction"));
+        Page<ProductionReadDto> page = productionService.findAll(filter,pageable);
+        var workers = workerService.findAll();
+        var kits = setService.findAll();
+        model.addAttribute("workers",workers);
+        model.addAttribute("kits",kits);
+        model.addAttribute("flag", "flag");//для разделения редиректов в рамках одного контроллера
+        model.addAttribute("production", PageResponse.of(page));
+        model.addAttribute("filter",filter);
+        return "admin/adminProduction";
+
     }
 
     @GetMapping("/{id}/update")

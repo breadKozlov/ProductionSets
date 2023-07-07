@@ -1,5 +1,6 @@
 package by.kozlov.spring.service;
 
+import by.kozlov.spring.database.repository.QPredicates;
 import by.kozlov.spring.dto.*;
 import by.kozlov.spring.database.entity.Production;
 import by.kozlov.spring.mapper.*;
@@ -9,11 +10,12 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import static by.kozlov.spring.database.entity.QProduction.production;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,6 +31,17 @@ public class ProductionService {
     public List<ProductionReadDto> findAllByWorkerId(Integer id, Sort sort) {
         return productionRepository.findAllByWorkerId(id,sort).stream()
                     .map(productionReadMapper::map).toList();
+    }
+
+    public Page<ProductionReadDto> findAll(ProductionFilter filter, Pageable pageable) {
+
+        var predicate = QPredicates.builder()
+                .add(filter.workerId(),production.worker.id::eq)
+                .add(filter.setId(),production.set.id::eq)
+                .add(filter.dateOfProduction(),production.dateOfProduction::before)
+                .build();
+        return productionRepository.findAll(predicate,pageable)
+                .map(productionReadMapper::map);
     }
 
     public List<ProductionReadDto> findAll(Pageable page) {

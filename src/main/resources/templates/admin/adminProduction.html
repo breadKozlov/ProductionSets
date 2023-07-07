@@ -14,17 +14,59 @@
 </head>
 <body>
 <div th:insert="~{fragments/header.html :: header}"> </div><br/>
-<div th:insert="~{fragments/adminReturn.html :: return}"> </div>
+<div th:insert="~{fragments/adminReturn.html :: return}"> </div><br/>
+<form th:action="@{/production}">
+ <!--   <label for="workerId">Worker:
+        <input id="workerId" type="number" name="workerId" th:value="${filter.workerId()}">
+    </label>
+    <label for="setId">Kit:
+        <input id="setId" type="number" name="setId" th:value="${filter.setId()}">
+    </label> -->
+    <div>
+        <label for="worker">Worker:
+            <select id="worker" name="workerId">
+                <option value="">Select worker</option>
+                <option th:each="worker : ${workers}"
+                        th:value="${worker.id}"
+                        th:selected="${worker.id == filter.workerId()}"
+                        th:text="|${worker.nameOfWorker} ${worker.surnameOfWorker}|">Name of worker</option>
+            </select>
+        </label>
+    </div><br/>
+    <div>
+        <label for="set">Kit:
+            <select id="set" name="setId">
+                <option value="">Select kit</option>
+                <option th:each="kit : ${kits}"
+                        th:value="${kit.id}"
+                        th:selected="${kit.id == filter.setId()}"
+                        th:text="${kit.nameOfSet}">Name of kit</option>
+            </select>
+        </label>
+    </div><br/>
+    <label for="dateOfProduction">Date of production:
+        <input id="dateOfProduction" type="date" name="dateOfProduction" th:value="${filter.dateOfProduction()}">
+    </label><br/>
+    <div>
+        <label for="page">Page:
+            <input id="page" type="number" name="page" th:value="${production.metadata.page}">
+        </label>
+        <label for="size">Size:
+            <input id="size" type="number" name="size" th:value="${production.metadata.size}">
+        </label>
+    </div>
+    <button type="submit">Filter</button>
+</form>
 <div>
     <h2>Production: </h2>
-    <p th:if="${production.isEmpty()}" th:text="|Production is empty|">Message</p>
-    <table th:if="${!production.isEmpty()}">
+    <p th:if="${production.content.isEmpty()}" th:text="|Production is empty|">Message</p>
+    <table th:if="${!production.content.isEmpty()}">
         <thead>
         <tr><th>Name of worker</th><th>Surname of worker</th><th>Name of kit</th>
             <th>Made kits</th><th>Date of production</th><tr>
         </thead>
         <tbody>
-        <tr th:each="product : ${production}">
+        <tr th:each="product : ${production.content}">
             <td th:text="${product.worker.nameOfWorker}">Name of worker</td>
             <td th:text="${product.worker.surnameOfWorker}">Surname of worker</td>
             <td th:text="${product.set.nameOfSet}">Name of set</td>
