@@ -7,6 +7,7 @@ import by.kozlov.spring.dto.UserCreateEditDto;
 import by.kozlov.spring.dto.UserReadDto;
 import by.kozlov.spring.service.BrigadeService;
 import by.kozlov.spring.service.UserService;
+import by.kozlov.spring.service.WorkerService;
 import by.kozlov.spring.validation.LoginError;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ import java.util.Optional;
 public class LoginController {
 
     private final UserService userService;
-    private final BrigadeService brigadeService;
+    private final WorkerService workerService;
 
     @GetMapping()
     public String loginPage(Model model, @ModelAttribute("err") LoginError loginError) {
@@ -89,17 +90,33 @@ public class LoginController {
             var errors = bindingResult.getAllErrors();
             var errorAge = errors.stream().filter(it -> Objects.equals(it.getDefaultMessage(), "Your age less than 18")).findFirst();
             if(errorAge.isPresent()) {
-                redirectAttributes.addFlashAttribute("error",errorAge);
-                return "exceptions/attentionAge";
+                redirectAttributes.addFlashAttribute("error",errorAge.orElseThrow());
+                return "redirect:/login/attentionAge";
             }
             redirectAttributes.addFlashAttribute("errors",errors);
             return "redirect:/login/registration";
         }
+        if(userService.checkEmail(user.getEmail())) {
+            return "redirect:/login/crashEmail";
+        }
         redirectAttributes.addFlashAttribute("user",userService.create(user));
+        if(workerService.findByEmail(user.getEmail()).isPresent()) {
+            return "redirect:/worker";
+        }
         if (user.getRole().equals(Role.ADMIN)){
             return "redirect:/admin/workers";
         } else {
             return "redirect:/worker/create";
         }
+    }
+
+    @GetMapping("crashEmail")
+    public String crashEmail() {
+        return "exceptions/crashEmail";
+    }
+
+    @GetMapping("/attentionAge")
+    public String attentionAge() {
+        return "exceptions/attentionAge";
     }
 }

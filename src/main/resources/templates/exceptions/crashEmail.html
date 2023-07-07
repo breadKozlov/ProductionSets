@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Users</title>
+  <meta charset="UTF-8">
+  <title>Users</title>
 </head>
 <body>
 <div th:insert="~{fragments/registrationReturn.html :: return}"></div>
-<div th:if="${error}">
-    <p style="color: red" th:text="|${error.defaultMessage}|">Error message</p>
+<div>
+  <p style="color: red" >User with this email is already registered</p>
 </div>
 </body>
 </html>

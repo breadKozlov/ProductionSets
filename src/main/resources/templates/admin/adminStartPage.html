@@ -7,6 +7,10 @@
 <body>
 <div th:insert="~{fragments/header.html :: header}"></div>
 <p th:text="|Hello, ${session.user.name}|">Hello, User</p>
+
+<div th:if="${session.user.image}" enctype="multipart/form-data">
+    <img width="60" th:src="@{/api/v1/users/{userId}/avatar(userId=${session.user.id})}" alt="User Image"/>
+</div>
 <h2>Workers:</h2>
 <div th:each="worker : ${workers}">
     <a th:href="@{'/admin/' + ${worker.id} + '/worker'}" th:text="|${worker.id}. ${worker.nameOfWorker} ${worker.surnameOfWorker}|">Worker</a>

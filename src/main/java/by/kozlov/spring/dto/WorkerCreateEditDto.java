@@ -9,17 +9,17 @@ import lombok.Value;
 @Value
 public class WorkerCreateEditDto {
 
-    @NotEmpty
+    @NotEmpty(message = "Name is not be empty")
     String nameOfWorker;
-    @NotEmpty
+    @NotEmpty(message = "Surname is not be empty")
     String surnameOfWorker;
-    @NotEmpty
+    @NotEmpty(message = "Speciality is not be empty")
     String speciality;
-    @NotNull
+    @NotNull(message = "Rank is not be empty")
     Integer rank;
-    @NotNull
+    @NotNull(message = "Experience is not be empty")
     Integer experience;
-    @NotNull
+    @NotNull(message = "Brigade is not be empty")
     Integer brigadeId;
     String email;
 }

@@ -3,6 +3,10 @@ package by.kozlov.spring.mapper;
 import by.kozlov.spring.database.entity.User;
 import by.kozlov.spring.dto.UserCreateEditDto;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Optional;
+import java.util.function.Predicate;
 
 @Component
 public class UserCreateEditMapper implements Mapper<UserCreateEditDto,User> {
@@ -27,5 +31,9 @@ public class UserCreateEditMapper implements Mapper<UserCreateEditDto,User> {
         toObject.setPassword(fromObject.getPassword());
         toObject.setRole(fromObject.getRole());
         toObject.setGender(fromObject.getGender());
+
+        Optional.ofNullable(fromObject.getImage())
+                .filter(Predicate.not(MultipartFile::isEmpty))
+                .ifPresent(image -> toObject.setImage(image.getOriginalFilename()));
     }
 }

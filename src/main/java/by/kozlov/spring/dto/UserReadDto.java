@@ -14,6 +14,7 @@ public class UserReadDto {
     String name;
     LocalDate birthday;
     String email;
+    String image;
     Role role;
     Gender gender;
 }

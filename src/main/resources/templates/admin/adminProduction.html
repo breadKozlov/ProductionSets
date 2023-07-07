@@ -16,12 +16,6 @@
 <div th:insert="~{fragments/header.html :: header}"> </div><br/>
 <div th:insert="~{fragments/adminReturn.html :: return}"> </div><br/>
 <form th:action="@{/production}">
- <!--   <label for="workerId">Worker:
-        <input id="workerId" type="number" name="workerId" th:value="${filter.workerId()}">
-    </label>
-    <label for="setId">Kit:
-        <input id="setId" type="number" name="setId" th:value="${filter.setId()}">
-    </label> -->
     <div>
         <label for="worker">Worker:
             <select id="worker" name="workerId">
@@ -44,9 +38,11 @@
             </select>
         </label>
     </div><br/>
-    <label for="dateOfProduction">Date of production:
-        <input id="dateOfProduction" type="date" name="dateOfProduction" th:value="${filter.dateOfProduction()}">
-    </label><br/>
+    <div>
+        <label for="dateOfProduction">Date of production:
+            <input id="dateOfProduction" type="date" name="dateOfProduction" th:value="${filter.dateOfProduction()}">
+        </label>
+    </div><br/>
     <div>
         <label for="page">Page:
             <input id="page" type="number" name="page" th:value="${production.metadata.page}">
@@ -54,7 +50,7 @@
         <label for="size">Size:
             <input id="size" type="number" name="size" th:value="${production.metadata.size}">
         </label>
-    </div>
+    </div><br/>
     <button type="submit">Filter</button>
 </form>
 <div>

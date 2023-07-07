@@ -13,6 +13,7 @@ public class UserReadMapper implements Mapper<User, UserReadDto> {
                 .id(object.getId())
                 .name(object.getName())
                 .birthday(object.getBirthday())
+                .image(object.getImage())
                 .email(object.getEmail())
                 .role(object.getRole())
                 .gender(object.getGender())

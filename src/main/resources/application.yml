@@ -10,6 +10,10 @@ spring:
       show_sql: true
       format_sql: true
       hbm2ddl.auto: validate
+
+app:
+  image:
+    bucket: /home/pahadaha/workMaven/ProductionSets/images
 ---
 spring:
   config:

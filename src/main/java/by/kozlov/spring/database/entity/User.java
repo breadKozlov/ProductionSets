@@ -19,6 +19,7 @@ public class User implements BaseEntity<Integer> {
     private String name;
     private LocalDate birthday;
     private String email;
+    private String image;
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;

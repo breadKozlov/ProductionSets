@@ -78,7 +78,8 @@ create table public.users (
   email varchar(124) not null unique,
   password varchar(32) not null,
   role varchar(32) not null,
-  gender varchar(32) not null
+  gender varchar(32) not null,
+  image varchar(128)
 );
 
 create table public.workers_sets(

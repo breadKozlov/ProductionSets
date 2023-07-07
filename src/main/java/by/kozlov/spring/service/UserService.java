@@ -1,31 +1,31 @@
 package by.kozlov.spring.service;
 
-import by.kozlov.spring.database.entity.Role;
-import by.kozlov.spring.database.repository.WorkerRepository;
+import by.kozlov.spring.database.repository.UserRepository;
 import by.kozlov.spring.dto.LoginDto;
 import by.kozlov.spring.dto.UserCreateEditDto;
 import by.kozlov.spring.dto.UserReadDto;
 import by.kozlov.spring.mapper.UserCreateEditMapper;
-import by.kozlov.spring.database.repository.UserRepository;
 import by.kozlov.spring.mapper.UserReadMapper;
-import jakarta.persistence.NoResultException;
-import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.Validation;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+import by.kozlov.spring.database.entity.User;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
 
     private final UserRepository userRepository;
     private final UserCreateEditMapper userCreateEditMapper;
     private final UserReadMapper userReadMapper;
-    private final WorkerRepository workerRepository;
+    private final ImageService imageService;
+
     public Optional<UserReadDto> login(LoginDto loginDto) {
         try {
             Optional<UserReadDto> user;
@@ -37,12 +37,34 @@ public class UserService {
         }
     }
 
+    public boolean checkEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
+
+    @Transactional
     public UserReadDto create(UserCreateEditDto userDto) {
         return Optional.of(userDto)
-                .map(userCreateEditMapper::map)
-                .map(userRepository::save)
+                .map(dto -> {
+                    uploadImage(dto.getImage());
+                    return userCreateEditMapper.map(dto);
+                })
+                .map(userRepository::saveAndFlush)
                 .map(userReadMapper::map)
                 .orElseThrow();
+    }
+
+    @SneakyThrows
+    private void uploadImage(MultipartFile image) {
+        if(!image.isEmpty()) {
+            imageService.upload(image.getOriginalFilename(), image.getInputStream());
+        }
+    }
+
+    public Optional<byte[]> findAvatar(Integer id) {
+        return userRepository.findById(id)
+                .map(User::getImage)
+                .filter(StringUtils::hasText)
+                .flatMap(imageService::get);
     }
 
     @Transactional

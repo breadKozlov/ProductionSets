@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Value;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -15,17 +16,18 @@ import java.time.LocalDate;
 @Builder
 @UserAge
 public class UserCreateEditDto {
-    @NotEmpty
+    @NotEmpty(message = "Login is not be empty")
     String name;
     @NotNull
     LocalDate birthday;
-    @NotEmpty
+    @NotEmpty(message = "Email is not be empty")
     @Email
     String email;
-    @NotEmpty
+    @NotEmpty(message = "Password is not be empty")
     String password;
     @NotNull
     Role role;
-    @NotNull
+    @NotNull(message = "Gender is not be empty")
     Gender gender;
+    MultipartFile image;
 }

@@ -25,8 +25,9 @@ public class AdminController {
     private final UserService userService;
 
     @GetMapping("/workers")
-    public String findAll(Model model) {
+    public String findAll(Model model, @ModelAttribute("user") UserReadDto user) {
         var workers = workerService.findAll();
+        model.addAttribute("link",user.getEmail());
         model.addAttribute("workers", workers);
         return "admin/adminStartPage";
     }

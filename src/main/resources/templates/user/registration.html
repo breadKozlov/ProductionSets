@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:insert="~{fragments/header.html :: header}"> </div><br/>
-<form th:action="@{/login/registration}" method="post" th:object="${userCreate}">
+<form th:action="@{/login/registration}" method="post" enctype="multipart/form-data" th:object="${userCreate}">
     <div>
         <label for="login">Your login:
             <input id="login" type="text" name="name" th:value="*{name}">
@@ -14,7 +14,7 @@
     </div><br/>
     <div>
         <label for="birthday">Birthday:
-            <input id="birthday" type="date" name="birthday" th:value="*{birthday}">
+            <input id="birthday" type="date" name="birthday" required th:value="*{birthday}">
         </label><br/>
     </div><br/>
     <div>
@@ -26,6 +26,11 @@
         <label for="password">Password:
             <input id="password" type="password" name="password" th:value="*{password}">
         </label><br/>
+    </div><br/>
+    <div>
+        <label for="image">Image:
+            <input id="image" type="file" name="image">
+        </label>
     </div><br/>
     <div>
         <label for="role">Role:
@@ -45,8 +50,7 @@
     <button type="submit">Register</button>
 </form>
 <div th:if="${errors}">
-    <p style="color: red" th:each="error : ${errors}" th:text="|${error.getField().substring(0,1).toUpperCase()}${error.getField().substring(1)}
-     ${error.defaultMessage}|">Error message</p>
+    <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
 </div>
 </body>
 </html>
