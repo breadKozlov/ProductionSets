@@ -32,7 +32,7 @@ public class AdminController {
         return "admin/adminStartPage";
     }
 
-    @GetMapping("{id}/worker")
+    @GetMapping("/worker/{id}")
     public String findById(@PathVariable("id") Integer id, Model model) {
 
         Sort sort = Sort.by("dateOfProduction");

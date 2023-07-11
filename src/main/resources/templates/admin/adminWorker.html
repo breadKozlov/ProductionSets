@@ -36,7 +36,7 @@
             </tbody>
         </table>
 </div><br/>
-<div th:if="${!production.isEmpty()}">
+<div>
     <form th:action="@{/production/{workerId}/createProductForWorker(workerId=${worker.id})}">
         <button type="submit">Add a note</button>
     </form>

@@ -52,7 +52,6 @@ public class MaterialsProductionController {
                          Model model,
                          @ModelAttribute("user") UserReadDto user){
 
-        var worker = workerService.findByEmail(user.getEmail()).orElseThrow();
         var materialProduction = materialsProductionService.findById(id).orElseThrow();
         var materials = materialService.findAll();
         model.addAttribute("materials",materials);
@@ -62,6 +61,7 @@ public class MaterialsProductionController {
             model.addAttribute("brigades",brigades);
             return "admin/adminEditMaterialsProduction";
         } else {
+            var worker = workerService.findByEmail(user.getEmail()).orElseThrow();
             model.addAttribute("worker",worker);
             return "worker/workerEditMaterialsProduction";
         }
@@ -72,12 +72,13 @@ public class MaterialsProductionController {
                          @ModelAttribute("materialProduction") MaterialsProductionCreateEditDto material,
                          @ModelAttribute("user") UserReadDto user) {
 
-        var worker = workerService.findByEmail(user.getEmail()).orElseThrow();
+
         return materialsProductionService.update(id,material)
                 .map(it -> {
                     if(user.getRole().equals(Role.ADMIN)) {
                             return "redirect:/materialsProduction";
                     } else {
+                        var worker = workerService.findByEmail(user.getEmail()).orElseThrow();
                         return "redirect:/materialsProduction/" + worker.getId();
                     }
                 })
@@ -88,13 +89,14 @@ public class MaterialsProductionController {
     public String delete(@PathVariable("id") Integer id,
                          @ModelAttribute("user") UserReadDto user) {
 
-        var worker = workerService.findByEmail(user.getEmail()).orElseThrow();
+
         if(!materialsProductionService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         if(user.getRole().equals(Role.ADMIN)) {
             return "redirect:/materialsProduction";
         } else {
+            var worker = workerService.findByEmail(user.getEmail()).orElseThrow();
             return "redirect:/materialsProduction/" + worker.getId();
         }
     }
@@ -107,6 +109,12 @@ public class MaterialsProductionController {
         model.addAttribute("materials",materials);
         model.addAttribute("materialProduction",materialProduction);
         return "admin/adminCreateMaterialsProduction";
+    }
+
+    @PostMapping("/createMaterialProduction")
+    public String createMaterialProduction(@ModelAttribute MaterialsProductionCreateEditDto materialProduction) {
+        materialsProductionService.create(materialProduction);
+        return "redirect:/materialsProduction";
     }
 
     @GetMapping("/{id}/createMaterialProductionForWorker")
