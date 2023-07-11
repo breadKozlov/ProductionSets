@@ -110,7 +110,7 @@ public class LoginController {
         }
     }
 
-    @GetMapping("crashEmail")
+    @GetMapping("/crashEmail")
     public String crashEmail() {
         return "exceptions/crashEmail";
     }

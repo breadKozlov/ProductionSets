@@ -5,11 +5,12 @@
     <title>Login</title>
 </head>
 <body>
+<div th:insert="~{fragments/header.html :: locale}"> </div><br/>
 <form action="/login" method="post">
-    <label for="email">Email:
+    <label for="email"><span th:text="#{login.email}">Email:</span>
         <input id="email" type="text" name="email">
     </label><br/><br/>
-    <label for="password">Password:
+    <label for="password"><span th:text="#{login.password}">Password:</span>
         <input id="password" type="password" name="password">
     </label><br/><br/>
     <button type="submit">Login</button>
