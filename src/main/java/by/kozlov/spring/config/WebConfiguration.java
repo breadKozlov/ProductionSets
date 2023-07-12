@@ -1,4 +1,4 @@
-package by.kozlov.spring;
+package by.kozlov.spring.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
