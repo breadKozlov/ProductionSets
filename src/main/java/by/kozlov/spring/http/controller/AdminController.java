@@ -5,6 +5,7 @@ import by.kozlov.spring.service.ProductionService;
 import by.kozlov.spring.service.SetService;
 import by.kozlov.spring.service.UserService;
 import by.kozlov.spring.service.WorkerService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -44,7 +45,8 @@ public class AdminController {
     }
 
     @PostMapping("/delete")
-    public String delete(@ModelAttribute("user")UserReadDto user) {
+    public String delete(@ModelAttribute("user")UserReadDto user, HttpSession session) {
+        session.invalidate();
         if(!userService.delete(user.getId())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

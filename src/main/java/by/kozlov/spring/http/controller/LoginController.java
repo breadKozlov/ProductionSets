@@ -16,10 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Objects;
@@ -28,7 +25,7 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/login")
-//@SessionAttributes("user")
+@SessionAttributes("user")
 public class LoginController {
 
     private final UserService userService;
@@ -44,13 +41,14 @@ public class LoginController {
     }
 
     @PostMapping()
-    public String login(Model model,
-                        @ModelAttribute("login") LoginDto loginDto,
+    public String login(@ModelAttribute("login") LoginDto loginDto, HttpSession session,
                         RedirectAttributes redirectAttributes) {
 
         Optional<UserReadDto> user = userService.login(loginDto);
 
+
         if(user.isPresent()) {
+            session.setAttribute("user",user.get());
             redirectAttributes.addFlashAttribute("user", user.get());
             if(user.get().getRole().equals(Role.ADMIN)) {
                 return "redirect:/admin/workers";
@@ -84,7 +82,8 @@ public class LoginController {
     @PostMapping("/registration")
     public String registration(@ModelAttribute("userCreate") @Validated UserCreateEditDto user,
                                BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes) {
+                               RedirectAttributes redirectAttributes,
+                               HttpSession session) {
 
         if(bindingResult.hasErrors()) {
             var errors = bindingResult.getAllErrors();
@@ -99,7 +98,9 @@ public class LoginController {
         if(userService.checkEmail(user.getEmail())) {
             return "redirect:/login/crashEmail";
         }
-        redirectAttributes.addFlashAttribute("user",userService.create(user));
+        var userRead = userService.create(user);
+        redirectAttributes.addFlashAttribute("user",userRead);
+        session.setAttribute("user",userRead);
         if(workerService.findByEmail(user.getEmail()).isPresent()) {
             return "redirect:/worker";
         }

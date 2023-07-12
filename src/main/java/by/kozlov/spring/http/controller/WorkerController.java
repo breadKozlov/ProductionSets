@@ -5,6 +5,7 @@ import by.kozlov.spring.dto.UserReadDto;
 import by.kozlov.spring.dto.WorkerCreateEditDto;
 import by.kozlov.spring.service.*;
 import by.kozlov.spring.validation.LoginError;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
@@ -81,9 +82,19 @@ public class WorkerController {
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable("id") Integer id,
-                         @ModelAttribute("user") UserReadDto user) {
+                         @ModelAttribute("user") UserReadDto user, HttpSession session) {
 
+        session.invalidate();
         if(!workerService.delete(id) || !userService.delete(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return "redirect:/login";
+    }
+
+    @PostMapping("/delete")
+    public String delete(@ModelAttribute("user")UserReadDto user, HttpSession session) {
+        session.invalidate();
+        if(!userService.delete(user.getId())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return "redirect:/login";
