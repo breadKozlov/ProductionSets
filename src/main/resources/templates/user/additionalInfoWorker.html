@@ -51,8 +51,7 @@
     <button type="submit">Add info</button>
 </form>
 <div th:if="${errors}">
-    <p style="color: red" th:each="error : ${errors}" th:text="|${error.getField().substring(0,1).toUpperCase()}${error.getField().substring(1)}
-     ${error.defaultMessage}|">Error message</p>
+    <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
 </div>
 </body>
 </html>

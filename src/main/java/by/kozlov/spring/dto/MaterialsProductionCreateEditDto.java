@@ -17,6 +17,6 @@ public class MaterialsProductionCreateEditDto {
     Integer brigadeId;
     @NotNull
     Double quantity;
-    @NotNull
+    @NotNull(message = "Date of production is not be empty")
     LocalDate dateOfProduction;
 }

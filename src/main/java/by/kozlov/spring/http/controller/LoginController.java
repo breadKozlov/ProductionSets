@@ -25,7 +25,6 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/login")
-@SessionAttributes("user")
 public class LoginController {
 
     private final UserService userService;
@@ -65,7 +64,7 @@ public class LoginController {
 
     @PostMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate();
+        session.removeAttribute("user");
         return "redirect:/login";
     }
 

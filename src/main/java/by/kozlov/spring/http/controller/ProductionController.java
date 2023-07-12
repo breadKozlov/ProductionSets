@@ -13,8 +13,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -128,8 +131,9 @@ public class ProductionController {
     }
 
     @PostMapping("/createProductForWorker")
-    public String createProductForWorker(@ModelAttribute ProductionCreateEditDto product,
+    public String createProductForWorker(@ModelAttribute @Validated ProductionCreateEditDto product,
                                          @ModelAttribute("user") UserReadDto user) {
+
         if(user.getRole().equals(Role.ADMIN)) {
             return "redirect:/admin/worker/" + productionService.create(product).getWorker().getId();
         } else {
@@ -152,7 +156,14 @@ public class ProductionController {
     }
 
     @PostMapping("/createProduct")
-    public String createProduct(@ModelAttribute ProductionCreateEditDto product) {
+    public String createProduct(@ModelAttribute @Validated ProductionCreateEditDto product,
+                                BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes) {
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("product",product);
+            redirectAttributes.addFlashAttribute("errors",bindingResult.getAllErrors());
+            return "redirect:/production/createProduct";
+        }
         productionService.create(product);
         return "redirect:/production";
     }

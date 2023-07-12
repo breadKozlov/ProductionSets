@@ -15,8 +15,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/materialsProduction")
@@ -112,7 +115,14 @@ public class MaterialsProductionController {
     }
 
     @PostMapping("/createMaterialProduction")
-    public String createMaterialProduction(@ModelAttribute MaterialsProductionCreateEditDto materialProduction) {
+    public String createMaterialProduction(@ModelAttribute @Validated MaterialsProductionCreateEditDto materialProduction,
+                                           BindingResult bindingResult,
+                                           RedirectAttributes redirectAttributes) {
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("materialProduction",materialProduction);
+            redirectAttributes.addFlashAttribute("errors",bindingResult.getAllErrors());
+            return "redirect:/materialsProduction/createMaterialProduction";
+        }
         materialsProductionService.create(materialProduction);
         return "redirect:/materialsProduction";
     }
@@ -131,7 +141,15 @@ public class MaterialsProductionController {
 
     @PostMapping("/{id}/createMaterialProductionForWorker")
     public String createMaterialProductionForWorker(@PathVariable("id") Integer id,
-                                                    @ModelAttribute MaterialsProductionCreateEditDto materialProduction) {
+                                                    @ModelAttribute @Validated MaterialsProductionCreateEditDto materialProduction,
+                                                    BindingResult bindingResult,
+                                                    RedirectAttributes redirectAttributes) {
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("materialProduction",materialProduction);
+            redirectAttributes.addFlashAttribute("errors",bindingResult.getAllErrors());
+            return "redirect:/materialsProduction/" + id + "/createMaterialProductionForWorker";
+        }
+
         materialsProductionService.create(materialProduction);
         return "redirect:/materialsProduction/" + id;
     }
